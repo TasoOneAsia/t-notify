@@ -33,6 +33,7 @@ A FiveM implementation of the lightweight [SimpleNotification.js](https://github
  * Place ``t-notify`` in your ``resources`` directory
 
 **Start**
+
 Add the following to your server.cfg before any resources that have `t-notify` as a dependency
 
 	ensure t-notify
