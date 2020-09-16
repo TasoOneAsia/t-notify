@@ -24,6 +24,10 @@ a:hover {
     color: white;
 }
 
+h1 {
+    font-size: 1.2em;
+}
+
 .corner-4,
 .custom {
     border-radius: 4px;
