@@ -29,6 +29,7 @@ A FiveM implementation of the lightweight [SimpleNotification.js](https://github
 **Manually**
  * Visit [releases](https://github.com/TasoOneAsia/t-notify/releases/)
  * Download and unzip the latest release
+ * Rename the directory to ``t-notify``
  * Place ``t-notify`` in your ``resources`` directory
 
 **Start**
