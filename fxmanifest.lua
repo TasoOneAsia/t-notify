@@ -22,7 +22,7 @@ files {
 }
 
 exports {
-    'SendAlert',
+    'SendTextAlert',
     'SendAny',
     'SendImage'
 }
