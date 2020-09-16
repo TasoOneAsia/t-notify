@@ -1,0 +1,67 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: none;
+}
+
+body {
+    color: white;
+    text-shadow: 0 1px 1px black;
+}
+
+body .title {
+    color: white;
+}
+
+a:hover {
+    color: white;
+}
+
+.corner-4,
+.custom {
+    border-radius: 4px;
+    border: 2px solid #4F6372;
+    background-color: #3E4E5B;
+}
+
+.corner-4 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.corner-4>div {
+    max-width: 50%;
+    flex: 0 0 50%;
+}
+
+.columns {
+    margin-top: 0;
+}
+
+.label {
+    color: white;
+}
+
+.message {
+    text-shadow: none;
+}
+
+/* Custom Styles ENTER ALL NEW CUSTOM STYLES HERE!*/
+.gn-cs-under {
+    text-decoration: underline;
+}
+
+.gn-custom {
+    background-color: pink;
+    color: black;
+    text-shadow: 0 1px 1px white;
+}
