@@ -44,7 +44,7 @@ end
 
     @param {string} title OPTIONAL - title displayed by notification
 
-    @param {string} msg OPTIONAL - text displayed by notification
+    @param {string} message OPTIONAL - text displayed by notification
 
     @param {string URL} image OPTIONAL - url of image to display with notification
 
@@ -54,9 +54,9 @@ end
 
  ]]
 
-function SendAny(style, title, msg, image, duration, sound)
-    SendNotification(style, duration, title, msg, image, sound)
-    DebugPrint('Notification | Style: ' .. style .. ' | Title: ' .. tostring(msg) .. ' | Message: ' .. tostring(msg) .. ' | Image URL: ' .. tostring(image) ..' | Duration: ' ..tostring(duration) .. ' | Sound: ' .. tostring(sound))
+function SendAny(style, title, message, image, duration, sound)
+    SendNotification(style, duration, title, message, image, sound)
+    DebugPrint('Notification | Style: ' .. style .. ' | Title: ' .. tostring(title) .. ' | Message: ' .. tostring(message) .. ' | Image URL: ' .. tostring(image) ..' | Duration: ' ..tostring(duration) .. ' | Sound: ' .. tostring(sound))
 end
 
 --[[
@@ -86,7 +86,7 @@ end)
 
 RegisterNetEvent('tnotify:client:SendAny')
 AddEventHandler('tnotify:client:SendAny', function(data)
-    SendAny(data.style, data.title, data.message, data.duration, data.image, data.sound)
+    SendAny(data.style, data.title, data.message, data.image, data.duration, data.sound)
 end)
 
 RegisterNetEvent('tnotify:client:SendImage')
