@@ -49,7 +49,7 @@ T-Notify includes a small config that allows for various changes to how the reso
 	    }
 	}
 * **Position** - Will change the positioning of the notifications (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right)
-* **Sound** - Allows for the change of the notification alert sound. Reference [this](pastebin.com/DCeRiaLJ) for options.
+* **Sound** - Allows for the change of the notification alert sound. Reference [this](https://pastebin.com/DCeRiaLJ) for options.
 	* *name* - audioName
 	* *reference* - audioRef
 
