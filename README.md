@@ -3,7 +3,7 @@
 
 A FiveM implementation of the lightweight [SimpleNotification.js](https://github.com/Glagan/SimpleNotification) library created by [Glagan](https://github.com/Glagan/)
 
-Interested in updates to this release or you need support? Join my [!Discord](https://discord.gg/88PfF9r)!
+Interested in updates to this release or you need support? Join my [Discord](https://discord.gg/88PfF9r)!
 
 ## Table of Contents
 
