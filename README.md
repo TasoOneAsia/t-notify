@@ -64,7 +64,15 @@ T-Notify includes a small config that allows for various changes to how the reso
 
 T-Notify notifications can be triggered from either Client-Side or Server-Side.
 
-  
+**Function Descriptions**
+
+
+*SendTextAlert* - Send an alert styled notification with just a message, no title, no image.
+
+*SendAny* - Send a custom notification according to parameters chosen by you.
+
+*SendImage* - Send a image with an optional title
+
 
 **How to Use Exported Functions (Client Side)**
 
@@ -114,12 +122,6 @@ Lua Example:
 
 **Available Client Events (Server-Side)**
 
-*SendTextAlert* - Send a alert styled notification with just a message, no title, no image.
-
-*SendAny* - Send a custom notification according to parameters chosen by you.
-
-*SendImage* - Send a image with an optional title
-
 * SendTextAlert | ( style, message, duration, sound )
 	* Style STRING (Required) - One of the available styles as listed above.
 	* Message STRING (Required) - Message to display in the notification.
@@ -158,7 +160,7 @@ SimpleNotifications.js allows for *Markdown-like* tags to be used within the `ti
 Here's an example on how to use Markdown text in a notification called from the **server**
 
 	local player = 'ServerID of receiving client'
-	TriggerClientEvent('tnotify:client:SendAny', source, {
+	TriggerClientEvent('tnotify:client:SendAny', player, {
 		style  =  'success',
 		duration  =  10500,
 		title  =  'Markdown Formatting Example',
