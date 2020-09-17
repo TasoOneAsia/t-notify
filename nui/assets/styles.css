@@ -59,13 +59,6 @@ h1 {
     text-shadow: none;
 }
 
-/* Custom Styles ENTER ALL NEW CUSTOM STYLES HERE!*/
 .gn-cs-under {
     text-decoration: underline;
-}
-
-.gn-custom {
-    background-color: pink;
-    color: black;
-    text-shadow: 0 1px 1px white;
 }

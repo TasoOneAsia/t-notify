@@ -17,8 +17,9 @@ files {
     'nui/main.html',
     'nui/SimpleNotification/notification.css',
     'nui/SimpleNotification/notification.js',
-    'nui/script.js',
-    'nui/styles.css'
+    'nui/assets/script.js',
+    'nui/assets/styles.css',
+    'nui/custom.css'
 }
 
 exports {

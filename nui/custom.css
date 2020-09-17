@@ -1,0 +1,39 @@
+/* Place Custom Styling in this File! */
+
+/* Styling for Notification Positioning (Don't touch, unless you know what you are doing) */
+
+/* To change the positioning for these positions, please use this section rather than overwriting present properties found in Notification.css */
+
+.gn-top-right,
+.gn-bottom-right {
+}
+
+.gn-bottom-right {
+}
+
+.gn-top-left,
+.gn-bottom-left {
+}
+
+.gn-bottom-left {
+}
+
+.gn-top-center,
+.gn-bottom-center {
+}
+
+.gn-top-center {
+}
+
+.gn-bottom-center {
+}
+
+
+/* All custom styles have to use the prefix gn, place them below */
+/* EXAMPLE: Once added, you always need to set the "custom" property to true otherwise this style will not work properly. */
+
+.gn-example {
+    background-color: pink;
+    color: black;
+    text-shadow: 0 1px 1px white;
+}
