@@ -29,6 +29,8 @@ Interested in updates to this release or you need support? Join my [Discord](htt
 
 * Highly configurable
 
+* Configurable animation settings
+
 ## Screenshots
 
 ![Info styling](https://tasoagc.dev/u/trvQOP.png)
