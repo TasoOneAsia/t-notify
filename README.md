@@ -73,7 +73,8 @@ T-Notify includes a small config that allows for various changes to how the reso
 			removeAnimation = 'fadeout', -- Possible animation types: 'fadeout', 'scaleout', 'rotateout'
 			removeDuration = 600 -- Duration of the remove animation
 		}
-}
+	}
+	
 * **Position** - Will change the positioning of the notifications (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right)
 * **Sound** - Allows for the change of the notification alert sound. Reference [this](https://wiki.gtanet.work/index.php?title=FrontEndSoundlist) for options.
 	* *name* - Audio Name
