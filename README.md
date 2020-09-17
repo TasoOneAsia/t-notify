@@ -50,8 +50,8 @@ T-Notify includes a small config that allows for various changes to how the reso
 	}
 * **Position** - Will change the positioning of the notifications (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right)
 * **Sound** - Allows for the change of the notification alert sound. Reference [this](https://pastebin.com/DCeRiaLJ) for options.
-	* *name* - audioName
-	* *reference* - audioRef
+	* *name* - Audio Name
+	* *reference* - Audio Group
 
 ## Styles
 * Info
@@ -70,7 +70,11 @@ T-Notify notifications can be triggered from either Client-Side or Server-Side.
 
 To call a notification from the client, insert an export into your code like the example below:
 
-	exports['t-notify']:SendTextAlert('info', 'This is an info message', 5500, true)
+Lua Example:
+	
+	-- This sends a notification with the 'info' styling, an example messsage, a duration of 5500ms, and an audio alert
+	
+	exports['t-notify']:SendTextAlert('info', 'This is an example message', 5500, true)
 
 **Available Client Exports**
 * SendTextAlert | ( style, message, duration, sound )
@@ -95,8 +99,11 @@ To call a notification from the client, insert an export into your code like the
 **How to Use T-Notify Client Events (Server-Side)**
 
 To call a notification from the server-side, insert a TriggerClientEvent into your code like the example below:
+
+Lua Example:
 	
-	TriggerClientEvent('tnotify:client:SendTextAlert', source, {
+	local player = 'ServerID of receiving client'
+	TriggerClientEvent('tnotify:client:SendTextAlert', player, {
 		style  =  'error',
 		duration  =  10500,
 		message  =  'Alert Test',
@@ -106,6 +113,12 @@ To call a notification from the server-side, insert a TriggerClientEvent into yo
 *Unlike the export on the client side, the TriggerClientEvent requires that parameters **must** be placed in an object, as shown in the example above*
 
 **Available Client Events (Server-Side)**
+
+*SendTextAlert* - Send a alert styled notification with just a message, no title, no image.
+
+*SendAny* - Send a custom notification according to parameters chosen by you.
+
+*SendImage* - Send a image with an optional title
 
 * SendTextAlert | ( style, message, duration, sound )
 	* Style STRING (Required) - One of the available styles as listed above.
@@ -144,6 +157,7 @@ SimpleNotifications.js allows for *Markdown-like* tags to be used within the `ti
 **Example Code (Lua)**
 Here's an example on how to use Markdown text in a notification called from the **server**
 
+	local player = 'ServerID of receiving client'
 	TriggerClientEvent('tnotify:client:SendAny', source, {
 		style  =  'success',
 		duration  =  10500,
