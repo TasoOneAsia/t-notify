@@ -18,4 +18,4 @@
         - [Sample TriggerClientEvent](usage?id=triggerclientevent-example-server-side)  
     - [Markdown Formatting Tags](usage?id=markdown-formatting-tags)
 - [**Future Features**](future.md)
-- [**License**](license.md)
+- [**License**](LICENSE.md)
