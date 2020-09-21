@@ -5,14 +5,14 @@
 
 - [**Getting Started**](starting.md)
     - [Download & Installation](starting?id=installation-amp-download)
-    - [Initial Config](/starting?id=intial-config)
+    - [Config File](/starting?id=intial-config)
 
 - [**Usage**](usage.md)
     - [Base Styling](usage?id=base-styling)
     - [Custom Styling](usage?id=custom-classes-guide)
     - [Function Definitions](usage?id=function-definitions)
-    - [Server & Client Notification Triggers](usage?id=server-and-client-triggers)
-        - [Use Exports (Client-Side)](usage?id=exports-client-side)
+    - [Triggering Notifications](usage?id=server-and-client-triggers)
+        - [Using Exports (Client-Side)](usage?id=exports-client-side)
         - [Sample Export](usage?id=export-example-lua)
         - [TriggerClientEvents (Server-Side)](usage?id=trigger-client-events-server-side)
         - [Sample TriggerClientEvent](usage?id=triggerclientevent-example-server-side)  
