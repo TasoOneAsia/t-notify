@@ -3,6 +3,7 @@ let insertDuration
 let removeAnim
 let removeDuration
 let position
+let maxNotifications
 
 $(document).ready(() => {
     window.addEventListener('message', function (event) {
@@ -20,6 +21,7 @@ function initFunction(data) {
     insertDuration = data.insertDuration
     removeAnim = data.removeAnim
     removeDuration = data.removeDuration
+    maxNotifications = data.maxNotifications
 }
 
 //Notification Function
@@ -28,6 +30,7 @@ function playNotification (noti) {
         const options = {
             duration: noti.time,
             position: position,
+            maxNotifications: maxNotifications,
             insertAnimation: {
                 name: insertAnim,
                 duration: insertDuration

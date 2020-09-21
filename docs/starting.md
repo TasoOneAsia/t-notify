@@ -22,6 +22,7 @@ T-Notify includes a small config that allows for various changes to how the reso
 
 	cfg = {
 	    position = 'top-right', -- Changes the position of the notifications
+		maxNotifications = 0, --Max notifications to show on screen (0 indicates no limit)
 	    sound = { -- Change the alert sound
 	        name = '5_SEC_WARNING',
 	        reference = 'HUD_MINI_GAME_SOUNDSET'
@@ -31,10 +32,12 @@ T-Notify includes a small config that allows for various changes to how the reso
 			insertDuration = 1000, 
 			removeAnimation = 'fadeout', -- Possible animation types: 'fadeout', 'scaleout', 'rotateout'
 			removeDuration = 600 
-		}
+		},
+		debugMode = true --Toggle developer prints
 	}
 
 * **Position** - Will change the positioning of the notifications (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right)
+* **maxNotifications** - The max number of notifications to show on-screen at once.
 * **Sound** - Allows for the change of the notification alert sound. Reference [this](https://wiki.gtanet.work/index.php?title=FrontEndSoundlist) for options.
 	* *name* - Sound Name
 	* *reference* - Sound Set Name
@@ -43,3 +46,4 @@ T-Notify includes a small config that allows for various changes to how the reso
 	* *insertDuration* - Insert animation duration in *ms*
 	* *removeAnimation* - Remove animation ('fadeout', 'scaleout', 'rotateout')
 	* *removeDuration* - Remove animation duration in *ms*
+* **debugMode** - Toggle showing developer prints in console.

@@ -1,8 +1,6 @@
-local debugMode = false --Change this to toggle debug/dev prints
-
 --Debug Print Function
 function DebugPrint(msg)
-    if debugMode then
+    if cfg.debugMode then
         print(msg)
     end
 end
@@ -29,15 +27,17 @@ end
 
 --Initialize's Config after activated by Thread
 function InitConfig()
-    DebugPrint('Initializing T-Notify')
-    SendNUIMessage({
+    local initObject = {
         type = 'init',
         position = cfg.position,
         insertAnim = cfg.animations.insertAnimation,
         insertDuration = cfg.animations.insertDuration,
         removeAnim = cfg.animations.removeAnimation,
         removeDuration = cfg.animations.removeDuration,
-    })
+        maxNotifications = cfg.maxNotifications
+    }
+    DebugPrint('Sending Init Config: \n' .. json.encode(initObject))
+    SendNUIMessage(initObject)
 end
 
 --Thread that triggers config initialization after UI Frame is created
