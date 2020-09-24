@@ -29,8 +29,8 @@
 }
 
 
-/* All custom styles have to use the prefix gn, place them below */
-/* EXAMPLE: Once added, you always need to set the "custom" property to true otherwise this style will not work properly. */
+/* All custom styles have to use the prefix "gn-", place them below */
+/* NOTE: Once added, you always need to set the "custom" property to true otherwise this style will not work properly. */
 
 .gn-example {
     background-color: pink;

@@ -62,7 +62,7 @@ end)
 
 function SendTextAlert(style, msg, duration, sound, custom)
     SendNotification(style, duration, nil, msg, nil, sound, custom)
-    DebugPrint('Notification | Style: ' .. style .. ' | Message: ' .. msg .. ' | Duration: ' ..duration .. ' | Sound: ' .. tostring(sound) .. ' | Custom: ' .. tostring(custom))
+    DebugPrint('Notification | Style: ' .. tostring(style) .. ' | Message: ' .. tostring(msg) .. ' | Duration: ' ..tostring(duration) .. ' | Sound: ' .. tostring(sound) .. ' | Custom: ' .. tostring(custom))
 end
 
 --[[
