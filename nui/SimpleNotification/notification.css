@@ -132,8 +132,6 @@
 .gn-top-right,
 .gn-bottom-right {
     align-items: flex-end;
-    margin-right: 1%;
-    margin-top: 1%;
 }
 
 .gn-bottom-right {
@@ -174,11 +172,11 @@
     min-width: 10rem;
     max-width: 25rem;
     position: relative;
-    transition: background-color .2s ease-in-out;
+    transition: background-color 0.2s ease-in-out;
 }
 
 .gn-insert {
-    animation-timing-function: cubic-bezier(0.23, 1, 0.320, 1);
+    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
     animation-fill-mode: forwards;
 }
 
@@ -237,7 +235,7 @@
     height: 3px;
     width: 100%;
     background-color: #4dd0e1;
-    transition: height .4s ease-in-out, width 0s linear;
+    transition: height 0.4s ease-in-out, width 0s linear;
 }
 
 .gn-extinguish {
@@ -257,7 +255,7 @@
 }
 
 .gn-info {
-    background-color: #0289d1;
+    background-color: #0288d1;
     color: white;
 }
 
@@ -303,11 +301,12 @@
 .gn-content .gn-text {
     padding: 0.5rem;
     margin: 0;
+    width: 100%;
 }
 
 .gn-content .gn-text a {
     color: rgba(255, 255, 255, 0.8);
-    transition: all .2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 .gn-content .gn-text a:hover {
@@ -321,7 +320,7 @@
 }
 
 .gn-content .gn-text h1 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 
 .gn-content .gn-text h2 {
@@ -343,7 +342,7 @@
 }
 
 .gn-code {
-    font-family: SFMono-Regular, Menlo, "Lucida Console", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-family: SFMono-Regular, Menlo, 'Lucida Console', Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
     padding: 0.1rem 0.2rem;
     background-color: #333333;
     color: #f7f7f7;
@@ -353,8 +352,8 @@
 }
 
 .gn-message .gn-code {
-    background-color: #4D4D4D;
-    box-shadow: 0 0 1px #4D4D4D;
+    background-color: #4d4d4d;
+    box-shadow: 0 0 1px #4d4d4d;
 }
 
 .gn-separator {
@@ -364,7 +363,7 @@
     border-radius: 4px;
     height: 2px;
     line-height: 0px;
-    margin: .75rem 0;
+    margin: 0.75rem 0;
 }
 
 .gn-buttons {
@@ -380,7 +379,7 @@
 
 .gn-button {
     width: 100%;
-    padding: .5rem;
+    padding: 0.5rem;
     border: 0;
     cursor: pointer;
     border-right: 1px solid rgba(0, 0, 0, 0.4);
@@ -399,4 +398,8 @@
 
 .gn-button:last-child {
     border-right: 0;
+}
+
+.gn-float-right {
+    float: right;
 }
