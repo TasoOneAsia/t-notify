@@ -8,7 +8,8 @@ version '1.0.0'
 
 client_scripts {
     'config.lua',
-    'main.lua'
+    'main.lua',
+    'depreciated.lua'
 }
 
 ui_page('nui/main.html')
@@ -25,5 +26,8 @@ files {
 exports {
     'SendTextAlert',
     'SendAny',
-    'SendImage'
+    'SendImage',
+    'Alert',
+    'Custom',
+    'Image'
 }

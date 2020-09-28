@@ -11,5 +11,5 @@ cfg = {
 		removeAnimation = 'fadeout', --Possible animation types: 'fadeout', 'scaleout', 'rotateout'
 		removeDuration = 600, --Duration of the remove animation
 	},
-	debugMode = false --Toggle developer prints
+	debugMode = true --Toggle developer prints
 }
