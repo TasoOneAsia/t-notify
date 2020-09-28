@@ -63,10 +63,10 @@ function Custom(data)
 end
 
 function Image(data)
-    SendNotification(style, duration, title, nil, image, sound, custom)
+    SendNotification(data.style, data.duration, data.title, nil, data.image, data.sound, data.custom)
 end
 
---Event Handlers from Server
+--Event Handlers from Server (Objects)
 
 RegisterNetEvent('t-notify:client:Alert')
 AddEventHandler('t-notify:client:Alert', function(data)
