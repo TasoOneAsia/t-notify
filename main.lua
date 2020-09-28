@@ -17,6 +17,7 @@ function SendNotification(style, duration, title, message, image, sound, custom)
         print('T-Notify Error: Notification styling was equal to nil')
         return
     end
+    DebugPrintInfo(style, duration, title, message, image, sound, custom)
     SendNUIMessage({
         type = 'noti',
         style = style,
@@ -55,17 +56,14 @@ end)
 --OBJECT STYLED EXPORTS
 function Alert(data)
     SendNotification(data.style, data.duration, nil, data.message, nil, data.sound, data.custom)
-    DebugPrintInfo(data.style, data.duration, nil, data.message, nil, data.sound, data.custom)
 end
 
 function Custom(data)
     SendNotification(data.style, data.duration, data.title, data.message, data.image, data.sound, data.custom)
-    DebugPrintInfo(data.style, data.duration, data.title, data.message, data.image, data.sound, data.custom)
 end
 
 function Image(data)
     SendNotification(style, duration, title, nil, image, sound, custom)
-    DebugPrintInfo(data.style, data.duration, data.title, nil, data.image, data.sound, data.custom)
 end
 
 --Event Handlers from Server
