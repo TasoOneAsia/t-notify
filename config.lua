@@ -1,4 +1,4 @@
-cfg = {
+cfg = {  -- These are default values, by case values can be sent with events
     position = 'top-right', --Changes the position of the notifications
     sound = { --Change the alert sound
         name = '5_SEC_WARNING',
