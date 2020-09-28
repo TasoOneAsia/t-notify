@@ -939,7 +939,7 @@ SimpleNotification.tags = {
     floatRight: {
         type: 'span',
         class: 'gn-float-right',
-        open: '>*>',
+        open: '>>',
         close: '<',
     },
 };
