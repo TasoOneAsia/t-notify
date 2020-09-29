@@ -3,12 +3,14 @@
 *These are used when passing the `style` property*
 
 **Default Styles**
-* Info
-* Error
-* Warning
-* Success
+* `info`
+* `error`
+* `warning`
+* `success`
 
->T-Notify also allows for the addition of custom user-specified classes in the custom.css file that can be used in conjunction with the default styles. By default, there is an example notification style included in the custom.css that can be used as a reference to build upon. Here is a short guide utilizing that example class.
+T-Notify also allows for the addition of custom user-specified classes in the custom.css file that can be used in conjunction with the default styles. 
+
+>By default, there is an example notification style included in the custom.css that can be used as a reference to build upon. Below you can find a small guide referencing that class.
 
 ## Custom Classes Guide
 
@@ -48,98 +50,138 @@ On the other hand, if we **forget** to set the `custom` property as **True** the
 Uncaught TypeError: SimpleNotification[noti.style] is not a function
 ```
 
-## Function Definitions
+## Function Types
 
-> Notifications in T-Notify can either be triggered from the *client* or from the *server*. Take a look at what each function does below!
+>T-Notify has three main functions which can be used with either an `export` or a `TriggerClientEvent`
 
-**SendTextAlert** - *Send an alert styled notification with just a message, no title, no image.*
+**Alert** - *Send an alert styled notification with just a message, no title, no image.*
 
-**SendAny** - *Send a custom notification according to any properties chosen by the user.*
+**Custom** - *Send a custom notification according to any properties chosen by the user.*
 
-**SendImage** - *Send an image with an optional title.*
+**Image** - *Send an image with an optional title.*
 
-### Server and Client Triggers
+## Triggering Notifications
+> In versions of T-Notify below 1.3.0, Client-Side exports were triggered a little bit differently. See the [depreciated](/depreciated) methods for more details.
 
-### Exports (Client-Side)
+You can trigger notifications from both the Client-Side or the Server-Side. The object passed on either side has the exact same properties but an `export` is used on the Client-Side and a `TriggerClientEvent` is used on the Server-Side.
 
-* SendTextAlert (style, message, duration, sound, custom)
-	* Style {STRING} (Required) - One of the available styles as listed in the **Styling** Section.
-	* Message {STRING} (Required) - Message to display in the notification.
-	* Duration {INTEGER} (Optional) - Duration to display notification in ms. *Defaults to 2500ms*.
-	* Sound {BOOL} (Optional) - If true, the notification will also have an alert sound. *Defaults to false*.
-	* Custom {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that wasn't present by default. *Defaults to false*.
+Both of them require you pass an **Object**, here are some examples:
 
-* SendAny (style,  title,  message,  image,  duration, sound, custom)
-	* Style {STRING} (Required) - One of the available styles as listed above .
-	* Title {STRING} (Optional) - Title to display in the notification. *Defaults to nil*
-	* Message {STRING} (Optional) - Message to display in the notification. *Defaults to nil*
-	* Image {STRING} (Optional) - Accepts an Image URL to embed into the notification. *Defaults to nil*
-	* Duration {INTEGER} (Optional) - Duration to display notification in ms. *Defaults to 2500ms*.
-	* Sound {BOOL} (Optional) - If true, the notification will also have an alert sound. *Defaults to false*.
-	* Custom {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that wasn't present by default. *Defaults to false*.
-
-* SendImage (style,  title,  image,  duration,  sound, custom)
-	* Style {STRING} (Required) - One of the available styles as listed above.
-	* Title {STRING} (Optional) - Title to display in the notification. *Defaults to nil*
-	* Image {STRING} (Required) - Accepts an Image URL to embed into the notification
-	* Duration {INTEGER} (Optional) - Duration to display notification in ms. *Defaults to 2500ms*.
-	* Sound {BOOL} (Optional) - If true, the notification will also have an alert sound. *Defaults to false*.
-	* Custom {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that wasn't present by default. *Defaults to false*.
-
-#### Export Example (Lua)
-
-Here is an example of how to trigger a notification event using an `export` on the ***client-side***
-
+**Client**
 ```lua
--- This sends a notification with the 'info' styling, an example messsage, a duration of 5500ms, and an audio alert
-
-exports['t-notify']:SendTextAlert('info', 'This is an example message', 5500, true)
+exports['t-notify']:Alert({
+	style = 'error', 
+	message = 'Example alert from the client side'
+})
 ```
+**Server**
+```lua
+TriggerClientEvent('t-notify:client:Custom', player, {
+	style = 'info',
+	title = 'Notification Example',
+	message = 'Here is the message',
+	duration = 5500
+})
+```
+### Object Properties
+Depending on the function, the object can have optional and required properties. The properties and their respective functions can be found below.
 
-#### Trigger Client Events (Server-Side)
+* **Alert**
+  * `style` {STRING} (Required) - One of the available styles as listed in the **[base styling](usage?id=base-styling)** section.
+  * `message` {STRING} (Required) - Message to display in the alert.
+  * `duration` {NUMBER} (Optional) - Duration to display notification in ms. *Defaults to 2500ms*.
+  * `sound` {BOOL} (Optional) - If true, the notification will also have an alert sound. *Defaults to false*.
+  * `custom` {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that default. *Defaults to false.*
+* **Custom**
+  * `style` {STRING} (Required) - One of the available styles as listed in the **[base styling](usage?id=base-styling)** section.
+  * `title` {STRING} (Optional) - Title to display in the notification. *Defaults to nil*
+  * `message` {STRING} (Optional) - Message to display in the notification. *Defaults to nil*
+  * `image` {STRING} (Optional) - Accepts an Image URL to embed into the notification. *Defaults to nil*
+  * `duration` {NUMBER} (Optional) - Duration to display notification in ms. *Defaults to 2500ms*.
+  * `sound` {BOOL} (Optional) - If true, the notification will also have an alert sound. *Defaults to false*.
+  * `custom` {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that wasn't present by default. *Defaults to false*.
+* **Image**
+  * `style` {STRING} (Required) - One of the available styles as listed in the **[base styling](usage?id=base-styling)** section.
+  * `title` {STRING} (Optional) - Title to display in the notification. *Defaults to nil*
+  * `image` {STRING} (Required) - Accepts an Image URL to embed into the notification
+  * `duration` {NUMBER} (Optional) - Duration to display notification in ms. *Defaults to 2500ms*.
+  * `sound` {BOOL} (Optional) - If true, the notification will also have an alert sound. *Defaults to false*.
+  * `custom` {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that wasn't present by default. *Defaults to false*.
 
-* SendTextAlert ( style, message, duration, sound, custom)
-	* Style {STRING} (Required) - One of the available styles as listed in the **Styling** Section.
-	* Message {STRING} (Required) - Message to display in the notification.
-	* Duration {NUMBER} (Optional) - Duration to display notification in ms. *Defaults to 2500ms*.
-	* Sound {BOOL} (Optional) - If true, the notification will also have an alert sound. *Defaults to false*.
-	* Custom {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that wasn't present by default. *Defaults to false.*
+### Examples
 
-* SendAny (style,  title,  message,  image,  duration, sound, custom)
-	* Style {STRING} (Required) - One of the available styles as listed above .
-	* Title {STRING} (Optional) - Title to display in the notification. *Defaults to nil*
-	* Message {STRING} (Optional) - Message to display in the notification. *Defaults to nil*
-	* Image {STRING} (Optional) - Accepts an Image URL to embed into the notification. *Defaults to nil*
-	* Duration {NUMBER} (Optional) - Duration to display notification in ms. *Defaults to 2500ms*.
-	* Sound {BOOL} (Optional) - If true, the notification will also have an alert sound. *Defaults to false*.
-	* Custom {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that wasn't present by default. *Defaults to false*.
+Here are some example triggers for each of main functions.
 
-* SendImage (style,  title,  image,  duration,  sound, custom)
-	* Style {STRING} (Required) - One of the available styles as listed above .
-	* Title {STRING} (Optional) - Title to display in the notification. *Defaults to nil*
-	* Image {STRING} (Required) - Accepts an Image URL to embed into the notification
-	* Duration {NUMBER} (Optional) - Duration to display notification in ms. *Defaults to 2500ms*.
-	* Sound {BOOL} (Optional) - If true, the notification will also have an alert sound. *Defaults to false*.
-	* Custom {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that wasn't present by default. *Defaults to false*.
-
-#### TriggerClientEvent Example (Server-Side)
-
-Here is an example on how to trigger a notification using a `TriggerClientEvent` on the ***server-side***
-
-``` lua
-local player = 'ServerID of receiving client'
-
-TriggerClientEvent('tnotify:client:SendTextAlert', player, {
-	style  =  'error',
+**Custom**
+```lua
+-- Server-side
+TriggerClientEvent('tnotify:client:Custom', ServerID, {
+	style  =  'success',
 	duration  =  10500,
-	message  =  'Alert Test',
+	title  =  'Markdown Formatting Example',
+	message  =  '``Code``\n **Bolded Text** \n *Italics Yo* \n # Header 1\n ## Header 2\n',
+	sound  =  true
+})
+
+-- Client-side
+exports['t-notify']:Custom({
+	style  =  'success',
+	duration  =  10500,
+	title  =  'Markdown Formatting Example',
+	message  =  '``Code``\n **Bolded Text** \n *Italics Yo* \n # Header 1\n ## Header 2\n',
 	sound  =  true
 })
 ```
+This code snippet produced the following notification:
+
+![Custom Example](https://tasoagc.dev/u/RyYTAX.png)
+
+**Alert**
+```lua
+-- Server-side
+TriggerClientEvent('tnotify:client:Alert', ServerID, {
+	style  =  'error',
+	message  =  '✔️ This is a success alert'
+})
+
+-- Client-side
+exports['t-notify']:Alert({
+	style  =  'success',
+	message  =  '✔️ This is a success alert'
+})
+```
+
+This code snippet produced the following notification:
+
+![Alert Example](https://tasoagc.dev/u/WVzheO.png)
+
+**Image**
+```lua
+-- Server-side
+TriggerClientEvent('tnotify:client:Image', ServerID, {
+	style = 'info',
+	duration = 11500,
+	title = 'Notification with an Image',
+	image = 'https://tasoagc.dev/u/61Gg0W.png',
+	sound = true
+})
+
+-- Client-side
+exports['t-notify']:Image({
+	style = 'info',
+	duration = 11500,
+	title = 'Notification with an Image',
+	image = 'https://tasoagc.dev/u/61Gg0W.png',
+	sound = true
+})
+```
+This code snippet produced the following notification:
+
+![Image Example](https://tasoagc.dev/u/wmcisu.png)
 
 ## Markdown Formatting Tags
 
->SimpleNotifications allows for *Markdown-like* tags to be used within the `title` or the `message` properties, allowing for easy text styling. Many of these tags can be nested to combine Markdown effects.
+>Notifications allows for *Markdown-like* tags to be used within the `message` property, allowing for easy text styling. Many of these tags can be nested to combine Markdown effects.
 
 | Name | Description |
 |---|---|
@@ -158,8 +200,7 @@ TriggerClientEvent('tnotify:client:SendTextAlert', player, {
 Here's an example on how to use Markdown text in a notification called from the **server**
 
 ``` lua
-local player = 'ServerID of receiving client'
-TriggerClientEvent('tnotify:client:SendAny', player, {
+TriggerClientEvent('tnotify:client:SendAny', ServerID, {
 	style  =  'success',
 	duration  =  10500,
 	title  =  'Markdown Formatting Example',

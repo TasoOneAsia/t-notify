@@ -1,4 +1,4 @@
-# T-Notify Docs<small>v1.1.0</small>
+# T-Notify Docs<small>v1.3.0</small>
 
 > A FiveM implementation of the lightweight  
 [SimpleNotification](https://github.com/Glagan/SimpleNotification) 
