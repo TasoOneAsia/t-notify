@@ -10,7 +10,7 @@
 
 T-Notify also allows for the addition of custom user-specified classes in the custom.css file that can be used in conjunction with the default styles. 
 
->By default, there is an example notification style included in the custom.css that can be used as a reference to build upon. Below you can find a small guide referencing that class.
+>By default, there is an example custom notification style included in `/nui/custom.css` that can be used as a reference to build upon. Below you can find a small guide referencing that class.
 
 ## Custom Classes Guide
 
@@ -30,15 +30,15 @@ T-Notify also allows for the addition of custom user-specified classes in the cu
 
 In order to use a custom style when invoking a notification, the property ``custom`` ***MUST*** also be set to true. We'll use the example styling for this snippet:
 
-	lua
-	TriggerClientEvent('tnotify:client:SendAny', source, {
-        style = 'example',
-        duration = 6000,
-        title = 'Markdown Formatting Example',
-        message = '``Code``\n **Bolded Text** \n *Italics Yo* \n # Header 1\n ## Header 2\n',
-        sound = true,
-        custom = true
-    })
+```lua
+TriggerClientEvent('t-notify:client:Custom', ServerID, {
+	style = 'example',
+	duration = 6000,
+	title = 'Markdown Formatting Example',
+	message = '``Code``\n **Bolded Text** \n *Italics Yo* \n # Header 1\n ## Header 2\n',
+	sound = true,
+	custom = true
+```
 
 *This snippet produces the following notification:*
 
@@ -61,7 +61,7 @@ Uncaught TypeError: SimpleNotification[noti.style] is not a function
 **Image** - *Send an image with an optional title.*
 
 ## Triggering Notifications
-> In versions of T-Notify below 1.3.0, Client-Side exports were triggered a little bit differently. See the [depreciated](/depreciated) methods for more details.
+> In versions of T-Notify below v1.3.0, Client-Side exports were triggered a little bit differently. See the [depreciated](/depreciated) methods for more details.
 
 You can trigger notifications from both the Client-Side or the Server-Side. The object passed on either side has the exact same properties but an `export` is used on the Client-Side and a `TriggerClientEvent` is used on the Server-Side.
 
@@ -115,7 +115,7 @@ Here are some example triggers for each of main functions.
 **Custom**
 ```lua
 -- Server-side
-TriggerClientEvent('tnotify:client:Custom', ServerID, {
+TriggerClientEvent('t-notify:client:Custom', ServerID, {
 	style  =  'success',
 	duration  =  10500,
 	title  =  'Markdown Formatting Example',
@@ -139,7 +139,7 @@ This code snippet produced the following notification:
 **Alert**
 ```lua
 -- Server-side
-TriggerClientEvent('tnotify:client:Alert', ServerID, {
+TriggerClientEvent('t-notify:client:Alert', ServerID, {
 	style  =  'error',
 	message  =  '✔️ This is a success alert'
 })
@@ -158,7 +158,7 @@ This code snippet produced the following notification:
 **Image**
 ```lua
 -- Server-side
-TriggerClientEvent('tnotify:client:Image', ServerID, {
+TriggerClientEvent('t-notify:client:Image', ServerID, {
 	style = 'info',
 	duration = 11500,
 	title = 'Notification with an Image',
@@ -195,12 +195,12 @@ This code snippet produced the following notification:
 | Separator | ``\n---\n`` |
 | Float right | ``>*>Text<`` |
 
-**Example Code (Lua)**
+**Example Code**
 
 Here's an example on how to use Markdown text in a notification called from the **server**
 
 ``` lua
-TriggerClientEvent('tnotify:client:SendAny', ServerID, {
+TriggerClientEvent('t-notify:client:Custom', ServerID, {
 	style  =  'success',
 	duration  =  10500,
 	title  =  'Markdown Formatting Example',
