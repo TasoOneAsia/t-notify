@@ -4,7 +4,7 @@ game 'gta5'
 
 author 'TasoAGC'
 description 'A FiveM integration of the SimpleNotification.js library'
-version '1.0.0'
+version '1.3.0'
 
 client_scripts {
     'config.lua',
