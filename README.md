@@ -1,9 +1,11 @@
-
+[![Discord](https://img.shields.io/discord/738540179895091281.svg?label=Support&logo=discord)](https://discord.gg/ewvbgb5)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://opensource.org/licenses/gpl-3.0.html)
+[![Release](https://img.shields.io/github/v/release/tasooneasia/t-notify)](https://github.com/TasoOneAsia/t-notify/releases/)
 # T-Notify
 
 A FiveM implementation of the lightweight [SimpleNotification.js](https://github.com/Glagan/SimpleNotification) library created by [Glagan](https://github.com/Glagan/)
 
-Interested in updates to this release or you need support? Join my [Discord](https://discord.gg/88PfF9r)!
+Interested in updates to this release or do you need support? Join my [Discord](https://discord.gg/88PfF9r)!
 
 ## Features
 
@@ -17,7 +19,7 @@ Interested in updates to this release or you need support? Join my [Discord](htt
 
 * User defined custom styling
 
-* Highly configurable
+* Persistent Notifications
 
 * Configurable animation settings
 
@@ -50,7 +52,7 @@ Add the following to your server.cfg before any resources that have `t-notify` a
 
 ## Full Documentation
 
-Extensive documentation can be found here [here.](https://docs.tasoagc.dev)
+Extensive documentation can be found [here.](https://docs.tasoagc.dev)
 
 
 

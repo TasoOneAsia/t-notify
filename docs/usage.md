@@ -60,6 +60,8 @@ Uncaught TypeError: SimpleNotification[noti.style] is not a function
 
 **Image** - *Send an image with an optional title.*
 
+**Persistent** - *Send a notification that is persistent*
+
 ## Triggering Notifications
 > In versions of T-Notify below v1.3.0, Client-Side exports were triggered a little bit differently. See the [depreciated](/depreciated) methods for more details.
 
@@ -90,7 +92,9 @@ Depending on the function, the object can have optional and required properties.
   * `style` {STRING} (Required) - One of the available styles as listed in the **[base styling](usage?id=base-styling)** section.
   * `message` {STRING} (Required) - Message to display in the alert.
   * `duration` {NUMBER} (Optional) - Duration to display notification in ms. *Defaults to 2500ms*.
-  * `sound` {BOOL} (Optional) - If true, the notification will also have an alert sound. *Defaults to false*.
+  * `sound` {BOOL or OBJECT} (Optional) - If true, the notification will also have an alert sound. Can also accept an object for custom sound on a per notification basis. *Defaults to false*.
+      * `name` {STRING} (Optional) - An audio name like what can be found in `config.lua`
+      * `reference` {STRING} (Optional) - An audio reference like what can be found in `config.lua`
   * `custom` {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that default. *Defaults to false.*
   * `position` {STRING} (Optional) - Position of the notification to display (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right) *Defaults to config*
 * **Custom**
@@ -99,7 +103,9 @@ Depending on the function, the object can have optional and required properties.
   * `message` {STRING} (Optional) - Message to display in the notification. *Defaults to nil*
   * `image` {STRING} (Optional) - Accepts an Image URL to embed into the notification. *Defaults to nil*
   * `duration` {NUMBER} (Optional) - Duration to display notification in ms. *Defaults to 2500ms*.
-  * `sound` {BOOL} (Optional) - If true, the notification will also have an alert sound. *Defaults to false*.
+  * `sound` {BOOL or OBJECT} (Optional) - If true, the notification will also have an alert sound. Can also accept a table for custom sound on a per notification basis. *Defaults to false*.
+      * `name` {STRING} (Optional) - An audio name like what can be found in `config.lua`
+      * `reference` {STRING} (Optional) - An audio reference like what can be found in `config.lua`
   * `custom` {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that wasn't present by default. *Defaults to false*.
   * `position` {STRING} (Optional) - Position of the notification to display (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right) *Defaults to config*
 * **Image**
@@ -107,9 +113,23 @@ Depending on the function, the object can have optional and required properties.
   * `title` {STRING} (Optional) - Title to display in the notification. *Defaults to nil*
   * `image` {STRING} (Required) - Accepts an Image URL to embed into the notification
   * `duration` {NUMBER} (Optional) - Duration to display notification in ms. *Defaults to 2500ms*.
-  * `sound` {BOOL} (Optional) - If true, the notification will also have an alert sound. *Defaults to false*.
+  * `sound` {BOOL or OBJECT} (Optional) - If true, the notification will also have an alert sound. Can also accept an object for custom sound on a per notification basis. *Defaults to false*.
+      * `name` {STRING} (Optional) - An audio name like what can be found in `config.lua`
+      * `reference` {STRING} (Optional) - An audio reference like what can be found in `config.lua`
   * `custom` {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that wasn't present by default. *Defaults to false*.
   * `position` {STRING} (Optional) - Position of the notification to display (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right) *Defaults to config*
+* **Persistent**
+  * `step` {STRING} (Required) - The specific step for the persistent notification call (start, end).
+  * `id` {STRING} (Required) - The unique id for the persistent notification being called. This must be a unique id to each persistent notification.
+  * `options` {OBJECT} (Optional) - Contains options for the notification. This object needs to be passed **when** a persistent notification is being called with the `'start'` step.
+    * `style` {STRING} (Required) - One of the available styles as listed in the **[base styling](usage?id=base-styling)** section.
+    * `title` {STRING} (Optional) - Title to display in the notification. *Defaults to nil*
+    * `image` {STRING} (Optional) - Accepts an Image URL to embed into the notification
+    * `sound` {BOOL or OBJECT} (Optional) - If true, the notification will also have an alert sound. Can also accept an object for custom sound on a per notification basis. *Defaults to false*.
+      * `name` {STRING} (Optional) - An audio name like what can be found in `config.lua`
+      * `reference` {STRING} (Optional) - An audio reference like what can be found in `config.lua` 
+    * `custom` {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that wasn't present by default. *Defaults to false*.
+    * `position` {STRING} (Optional) - Position of the notification to display (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right) *Defaults to config value*
 
 ### Examples
 
@@ -182,6 +202,51 @@ This code snippet produced the following notification:
 
 ![Image Example](https://tasoagc.dev/u/wmcisu.png)
 
+**Persistent**
+
+*Starting a Persistent Notification:*
+
+```lua
+-- Server-side
+TriggerClientEvent('t-notify:client:Persist', ServerID, {
+	id = 'uniquePersistId',
+	step = 'start',
+	options = {
+		style = 'info',
+		title = 'Notification with an Image',
+		image = 'https://tasoagc.dev/u/61Gg0W.png',
+		sound = true
+	}
+})
+
+-- Client-side
+exports['t-notify']:Persist({
+	id = 'uniquePersistId',
+	step = 'start',
+	options = {
+		style = 'info',
+		title = 'Notification with an Image',
+		image = 'https://tasoagc.dev/u/61Gg0W.png',
+		sound = true
+	}
+})
+```
+
+*Ending a Persistent Notification:*
+```lua
+-- Server-side
+TriggerClientEvent('t-notify:client:Persist', ServerID, {
+	id = 'uniquePersistId',
+	step = 'end'
+})
+
+-- Client-side
+exports['t-notify']:Persist({
+	id = 'uniquePersistId',
+	step = 'end'
+})
+```
+
 ## Markdown Formatting Tags
 
 >Notifications allows for *Markdown-like* tags to be used within the `message` property, allowing for easy text styling. Many of these tags can be nested to combine Markdown effects.
@@ -196,7 +261,7 @@ This code snippet produced the following notification:
 | Bold | ``**http://www.example.org/**`` |
 | Italic | ``*http://www.example.org/*`` |
 | Separator | ``\n---\n`` |
-| Float right | ``>*>Text<`` |
+| Float right | ``>>Text<`` |
 
 **Example Code**
 
