@@ -59,6 +59,8 @@ end)
     @param {bool} sound OPTIONAL - whether to play a sound when the notification is displayed. Default is false
 
     @param {bool} custom OPTIONAL - must be set to true if the notification style is a custom addition.
+
+    @param {bool} positon OPTIONAL - parameter that sets a different position than default. Look at readme for valid choices.
  ]]
 
 function SendTextAlert(style, msg, duration, sound, custom, position)
@@ -82,11 +84,13 @@ end
     @param {bool} sound OPTIONAL - whether to play a sound when the notification is displayed. Default is false
 
     @param {bool} custom OPTIONAL - must be set to true if the notification style is a custom addition.
+
+   @param {bool} positon OPTIONAL - parameter that sets a different position than default. Look at readme for valid choices.
  ]]
 
 function SendAny(style, title, message, image, duration, sound, custom, position)
     SendNotification(style, duration, title, message, image, sound, custom, position)
-    DebugPrint('Notification | Style: ' .. style .. ' | Title: ' .. tostring(title) .. ' | Message: ' .. tostring(message) .. '\n | Image URL: ' .. tostring(image) ..' | Duration: ' ..tostring(duration) .. ' | Sound: ' .. tostring(sound) .. ' | Custom: ' .. tostring(custom))
+    DebugPrint('Notification | Style: ' .. style .. ' | Title: ' .. tostring(title) .. ' | Message: ' .. tostring(message) .. '\n | Image URL: ' .. tostring(image) ..' | Duration: ' ..tostring(duration) .. ' | Sound: ' .. tostring(sound) .. ' | Custom: ' .. tostring(custom) .. ' | Position: ' .. tostring(position))
 end
 
 --[[
@@ -103,11 +107,13 @@ end
     @param {bool} sound OPTIONAL - whether to play a sound when the notification is displayed. Default is false
 
     @param {bool} custom OPTIONAL - must be set to true if the notification style is a custom addition.
+
+    @param {bool} positon OPTIONAL - parameter that sets a different position than default. Look at readme for valid choices.
 ]]
 
 function SendImage(style, title, image, duration, sound, custom, position)
     SendNotification(style, duration, title, nil, image, sound, custom, position)
-    DebugPrint('Notification | Style: ' .. style .. ' | Title: ' .. tostring(title) .. ' | Image: ' .. tostring(image) .. ' | Duration: ' ..duration .. ' | Sound: ' .. tostring(sound).. ' | Custom: ' .. tostring(custom))
+    DebugPrint('Notification | Style: ' .. style .. ' | Title: ' .. tostring(title) .. ' | Image: ' .. tostring(image) .. ' | Duration: ' ..duration .. ' | Sound: ' .. tostring(sound).. ' | Custom: ' .. tostring(custom) .. ' | Position: ' .. tostring(position))
 end
 
 --Event Handlers from Server
