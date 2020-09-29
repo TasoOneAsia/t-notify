@@ -63,7 +63,6 @@ function playNotification (noti) {
 }
 
 function playPersistentNoti (noti) {
-    console.log('Received persistent notification trigger')
 
     const id = noti.id.toString()
 
