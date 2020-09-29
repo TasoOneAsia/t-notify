@@ -17,10 +17,10 @@ function SendNotification(style, duration, title, message, image, sound, custom)
         print('T-Notify Error: Notification styling was equal to nil')
         return
     end
-    DebugPrintInfo(style, duration, title, message, image, sound, custom)
+    DebugPrintInfo(string.lower(style), duration, title, message, image, sound, custom)
     SendNUIMessage({
         type = 'noti',
-        style = style,
+        style = string.lower(style),
         time = duration,
         title = title,
         message = message,
