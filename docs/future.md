@@ -1,10 +1,14 @@
 
 ## Features for the Future
 
-This resource may develop to adopt the following features depending on interest:
+**Future Features**
 
- - Notification history
+This resource may develop to adopt the following features depending on interest:
  - Toggleable focus state
- - Persistent notification
+ - Notification history
  - Notification service-collection bucket
  - Custom data to be carried within a notification
+
+**Already Implemented**
+ - Persistent notifications (v1.3.0)
+ - Custom CSS Styling (v1.2.0)

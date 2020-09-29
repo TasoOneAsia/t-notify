@@ -3,7 +3,7 @@
 [![Release](https://img.shields.io/github/v/release/tasooneasia/t-notify)](https://github.com/TasoOneAsia/t-notify/releases/)
 # T-Notify
 
-A FiveM implementation of the lightweight [SimpleNotification.js](https://github.com/Glagan/SimpleNotification) library created by [Glagan](https://github.com/Glagan/)
+A FiveM implementation of the lightweight [SimpleNotification](https://github.com/Glagan/SimpleNotification) library created by [Glagan](https://github.com/Glagan/)
 
 Interested in updates to this release or do you need support? Join my [Discord](https://discord.gg/88PfF9r)!
 
