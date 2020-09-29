@@ -1,7 +1,7 @@
 --Debug Print Function
-function DebugPrintInfo(style, duration, title, message, image, sound, custom)
+function DebugPrintInfo(style, duration, title, message, image, sound, custom, position)
     if cfg.debugMode then
-        print('Notification | Style: ' .. style .. '\n | Title: ' .. tostring(title) .. '\n | Message: ' .. tostring(message) .. '\n | Image URL: ' .. tostring(image) ..'\n | Duration: ' ..tostring(duration) .. '\n | Sound: ' .. tostring(sound) .. '\n | Custom: ' .. tostring(custom))
+        print('Notification | Style: ' .. style .. '\n | Title: ' .. tostring(title) .. '\n | Message: ' .. tostring(message) .. '\n | Image URL: ' .. tostring(image) ..'\n | Duration: ' ..tostring(duration) .. '\n | Sound: ' .. tostring(sound) .. '\n | Custom: ' .. tostring(custom) .. '\n | Position: ' .. tostring(position))
     end
 end
 
@@ -12,12 +12,12 @@ function DebugPrint(msg)
 end
 
 --Triggers a notification in the NUI using supplied params
-function SendNotification(style, duration, title, message, image, sound, custom)
+function SendNotification(style, duration, title, message, image, sound, custom, position)
     if not style then
         print('T-Notify Error: Notification styling was equal to nil')
         return
     end
-    DebugPrintInfo(string.lower(style), duration, title, message, image, sound, custom)
+    DebugPrintInfo(string.lower(style), duration, title, message, image, sound, custom, position)
     SendNUIMessage({
         type = 'noti',
         style = string.lower(style),
@@ -25,7 +25,8 @@ function SendNotification(style, duration, title, message, image, sound, custom)
         title = title,
         message = message,
         image = image,
-        custom = custom
+        custom = custom,
+        position = position
     })
     if sound then
         PlaySoundFrontend(-1, cfg.sound.name, cfg.sound.reference, 1)
@@ -55,15 +56,15 @@ end)
 
 --OBJECT STYLED EXPORTS
 function Alert(data)
-    SendNotification(data.style, data.duration, nil, data.message, nil, data.sound, data.custom)
+    SendNotification(data.style, data.duration, nil, data.message, nil, data.sound, data.custom, data.position)
 end
 
 function Custom(data)
-    SendNotification(data.style, data.duration, data.title, data.message, data.image, data.sound, data.custom)
+    SendNotification(data.style, data.duration, data.title, data.message, data.image, data.sound, data.custom, data.position)
 end
 
 function Image(data)
-    SendNotification(data.style, data.duration, data.title, nil, data.image, data.sound, data.custom)
+    SendNotification(data.style, data.duration, data.title, nil, data.image, data.sound, data.custom, data.position)
 end
 
 --Event Handlers from Server (Objects)
@@ -75,7 +76,8 @@ AddEventHandler('t-notify:client:Alert', function(data)
         duration = data.duration,
         message = data.message,
         sound = data.sound,
-        custom = data.custom
+        custom = data.custom,
+        position = data.position
     })
 end)
 
@@ -88,7 +90,8 @@ AddEventHandler('t-notify:client:Custom', function(data)
         message = data.message,
         image = data.image,
         sound = data.sound,
-        custom = data.custom
+        custom = data.custom,
+        position = data.position
     })
 end)
 
@@ -100,6 +103,7 @@ AddEventHandler('t-notify:client:Image', function(data)
         title = data.title,
         image = data.image,
         sound = data.sound,
-        custom = data.custom
+        custom = data.custom,
+        position = data.position
     })
 end)

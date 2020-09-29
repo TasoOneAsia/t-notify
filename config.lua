@@ -7,9 +7,9 @@ cfg = {
 	},
 	animations = {
 		insertAnimation = 'insert-right', --Possible animation types: 'insert-left', 'insert-right', 'insert-top', 'insert-bottom', 'fadein', 'scalein' and 'rotatein'
-		insertDuration = 1000, --Duration of the insert animation
-		removeAnimation = 'fadeout', --Possible animation types: 'fadeout', 'scaleout', 'rotateout'
-		removeDuration = 600, --Duration of the remove animation
+		insertDuration = 1000, -- Duration of the insert animation
+		removeAnimation = 'fadeout', -- Possible animation types: 'fadeout', 'scaleout', 'rotateout'
+		removeDuration = 600, -- Duration of the remove animation
 	},
-	debugMode = true --Toggle developer prints
+	debugMode = true -- Toggle developer prints
 }

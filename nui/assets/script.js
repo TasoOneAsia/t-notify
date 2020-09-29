@@ -29,7 +29,7 @@ function playNotification (noti) {
     if (noti) {
         const options = {
             duration: noti.time,
-            position: position,
+            position: noti.position || position,
             maxNotifications: maxNotifications,
             insertAnimation: {
                 name: insertAnim,

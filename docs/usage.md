@@ -92,6 +92,7 @@ Depending on the function, the object can have optional and required properties.
   * `duration` {NUMBER} (Optional) - Duration to display notification in ms. *Defaults to 2500ms*.
   * `sound` {BOOL} (Optional) - If true, the notification will also have an alert sound. *Defaults to false*.
   * `custom` {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that default. *Defaults to false.*
+  * `position` {STRING} (Optional) - Position of the notification to display (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right) *Defaults to config*
 * **Custom**
   * `style` {STRING} (Required) - One of the available styles as listed in the **[base styling](usage?id=base-styling)** section.
   * `title` {STRING} (Optional) - Title to display in the notification. *Defaults to nil*
@@ -100,6 +101,7 @@ Depending on the function, the object can have optional and required properties.
   * `duration` {NUMBER} (Optional) - Duration to display notification in ms. *Defaults to 2500ms*.
   * `sound` {BOOL} (Optional) - If true, the notification will also have an alert sound. *Defaults to false*.
   * `custom` {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that wasn't present by default. *Defaults to false*.
+  * `position` {STRING} (Optional) - Position of the notification to display (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right) *Defaults to config*
 * **Image**
   * `style` {STRING} (Required) - One of the available styles as listed in the **[base styling](usage?id=base-styling)** section.
   * `title` {STRING} (Optional) - Title to display in the notification. *Defaults to nil*
@@ -107,6 +109,7 @@ Depending on the function, the object can have optional and required properties.
   * `duration` {NUMBER} (Optional) - Duration to display notification in ms. *Defaults to 2500ms*.
   * `sound` {BOOL} (Optional) - If true, the notification will also have an alert sound. *Defaults to false*.
   * `custom` {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that wasn't present by default. *Defaults to false*.
+  * `position` {STRING} (Optional) - Position of the notification to display (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right) *Defaults to config*
 
 ### Examples
 
