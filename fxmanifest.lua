@@ -12,6 +12,10 @@ client_scripts {
     'depreciated.lua'
 }
 
+server_script {
+    'update.lua'
+}
+
 ui_page('nui/main.html')
 
 files {
