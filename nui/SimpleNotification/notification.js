@@ -1,25 +1,142 @@
+/**
+ * @typedef {('top-left' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right')} Position
+ */
+
+/**
+ * @typedef {('success' | 'info' | 'error' | 'warning' | 'message')} Type
+ */
+
+/**
+ * @typedef InsertAnimationDefinition
+ * @type {object}
+ * @property {('default-insert'
+            | 'insert-left'
+            | 'insert-right'
+            | 'insert-top'
+            | 'insert-bottom'
+            | 'fadein'
+            | 'scalein'
+            | 'rotatein')} name
+ * @property {number} duration - in ms
+ */
+
+/**
+ * @typedef RemoveAnimationDefinition
+ * @type {object}
+ * @property {('fadeout' | 'scaleout' | 'rotateout')} name
+ * @property {number} duration - in ms
+ */
+
+/**
+ * @typedef EventCallback
+ * @type {function}
+ * @param {SimpleNotification} notification
+ * @returns {void}
+ */
+
+/**
+ * @typedef OnCloseCallback
+ * @type {function}
+ * @param {SimpleNotification} notification
+ * @param {boolean} [fromUser=false]
+ * @returns {void}
+ */
+
+/**
+ * @typedef Events
+ * @type {object}
+ * @property {EventCallback} [onCreate];
+ * @property {EventCallback} [onDisplay];
+ * @property {EventCallback} [onDeath];
+ * @property {OnCloseCallback} [onClose];
+ */
+
+/**
+ * @typedef Options
+ * @type {object}
+ * @property {Position} position
+ * @property {number} maxNotifications
+ * @property {boolean} removeAllOnDisplay
+ * @property {boolean} closeOnClick
+ * @property {boolean} closeButton
+ * @property {number} duration
+ * @property {boolean} sticky
+ * @property {Events} events
+ * @property {InsertAnimationDefinition} insertAnimation
+ * @property {RemoveAnimationDefinition} removeAnimation
+ */
+
+/**
+ * @typedef Button
+ * @type {object}
+ * @property {Type} [type]
+ * @property {string} [value]
+ * @property {EventCallback} [onClick]
+ */
+
+/**
+ * @typedef Content
+ * @type {object}
+ * @property {string} [image]
+ * @property {string} [text]
+ * @property {string} [title]
+ * @property {Button[]} [buttons]
+ */
+
+/**
+ * @typedef TagDescription
+ * @type {object}
+ * @property {string} type
+ * @property {string} class
+ * @property {string} open
+ * @property {string} close
+ * @property {{ textContent: string | boolean } & Object.<string, number>} attributes
+ * @property {string} textContent
+ */
+
 class SimpleNotification {
+    /**
+     * @param {Partial<Options>} [options]
+     */
     constructor(options = undefined) {
+        /** @type {DocumentFragment} */
         this.fragment = new DocumentFragment();
+        /** @type {Options} */
         this.options = options;
         if (this.options == undefined) {
             this.options = SimpleNotification.deepAssign({}, SimpleNotification._options);
         }
+        /** @type {Events} */
         this.events = this.options.events;
+        /** @type {HTMLElement | undefined} */
         this.node = undefined;
         // Content
+        /** @type {string | undefined} */
         this.title = undefined;
+        /** @type {HTMLElement | undefined} */
         this.closeButton = undefined;
+        /** @type {HTMLElement | undefined} */
         this.body = undefined;
+        /** @type {HTMLImageElement | undefined} */
         this.image = undefined;
+        /** @type {string | undefined} */
         this.text = undefined;
+        /** @type {HTMLElement | undefined} */
         this.buttons = undefined;
+        /** @type {HTMLElement | undefined} */
         this.progressBar = undefined;
         // Functions
+        /** @type {() => void} */
         this.addExtinguish = this.addExtinguishFct.bind(this);
+        /** @type {() => void} */
         this.removeExtinguish = this.removeExtinguishFct.bind(this);
     }
 
+    /**
+     * @param {object} target
+     * @param {object[]} objs
+     * @returns {object}
+     */
     static deepAssign(target, ...objs) {
         for (let i = 0, max = objs.length; i < max; i++) {
             for (var k in objs[i]) {
@@ -33,7 +150,7 @@ class SimpleNotification {
 
     /**
      * Set the default options of SimpleNotification
-     * @param {object} options Options object to override the defaults
+     * @param {Partial<Options>} options Options object to override the defaults
      */
     static options(options) {
         SimpleNotification._options = SimpleNotification.deepAssign({}, SimpleNotification._options, options);
@@ -49,14 +166,14 @@ class SimpleNotification {
         wrapper.className = `gn-wrapper gn-${position}`;
         document.body.appendChild(wrapper);
         SimpleNotification.wrappers[position] = wrapper;
-        wrapper.style.height = '60%'
     }
 
     /**
      * Search the first occurence of the char occurence in text that doesn't have a \ prefix
      * @param {string} text The text where to search the char in
      * @param {string} char The string to search in the text
-     * @param {integer} start The position to begin to search with
+     * @param {number} start The position to begin to search with
+     * @returns {number | undefined}
      */
     static firstUnbreakChar(text, char, start = 0) {
         if (start < 0) start = 0;
@@ -74,6 +191,10 @@ class SimpleNotification {
 
     /**
      * Search the first shortest occurence of token in the string array string after position start in the current string
+     * @param {string} string
+     * @param {string} token
+     * @param {number} start
+     * @returns {[number, number]}
      */
     static searchToken(string, token, start) {
         let found = [start[0], start[1]];
@@ -88,17 +209,16 @@ class SimpleNotification {
 
     /**
      * Break a string with a `tag` element at position start until end
+     * @param {string} string
+     * @param {TagDescription} tag
+     * @param {string} token
+     * @param {number} start
+     * @returns {[number, number]}
      */
     static breakString(string, tag, start, end) {
-        let tagLength = {
-            open: tag.open.length,
-            close: tag.close.length
-        };
+        let tagLength = { open: tag.open.length, close: tag.close.length };
         if (start[0] != end[0]) {
-            let inside = {
-                tag: tag,
-                str: [string[start[0]].substring(start[1])]
-            };
+            let inside = { tag: tag, str: [string[start[0]].substring(start[1])] };
             let c = 0;
             for (let i = start[0] + 1; i < end[0]; i++, c++) {
                 inside.str.push(string[i]);
@@ -113,10 +233,8 @@ class SimpleNotification {
         } else {
             string.splice(
                 start[0] + 1,
-                0, {
-                    tag: tag,
-                    str: [string[start[0]].substring(start[1], end[1])]
-                },
+                0,
+                { tag: tag, str: [string[start[0]].substring(start[1], end[1])] },
                 string[start[0]].substring(end[1] + tagLength.close)
             );
             string[start[0]] = string[start[0]].substring(0, start[1] - tagLength.open);
@@ -126,6 +244,8 @@ class SimpleNotification {
 
     /**
      * Recursive string array concatenation
+     * @param {string[]} arr
+     * @returns {string}
      */
     static joinString(arr) {
         let str = [];
@@ -143,6 +263,9 @@ class SimpleNotification {
 
     /**
      * Make the node body by build each of it's childrens
+     * @param {string} string
+     * @param {HTMLElement} node
+     * @returns {HTMLElement}
      */
     static buildNode(string, node) {
         for (let i = 0; i < string.length; i++) {
@@ -214,6 +337,7 @@ class SimpleNotification {
      * {open}{!|title|}{content}{close} | is the title/content separator
      * @param {string} text The text with tags
      * @param {object} node The node where the text will be added
+     * @returns {HTMLElement | undefined}
      */
     static textToNode(text, node) {
         if (text == undefined) return;
@@ -232,10 +356,7 @@ class SimpleNotification {
         }
         for (let i = 0, last = this.tokens.length; i < last; i++) {
             let tag = SimpleNotification.tags[this.tokens[i]];
-            let tagLength = {
-                open: tag.open.length,
-                close: tag.close.length
-            };
+            let tagLength = { open: tag.open.length, close: tag.close.length };
             let continueAt = [0, 0];
             let openPos = [0, 0];
             let closePos = [0, 0];
@@ -253,6 +374,7 @@ class SimpleNotification {
 
     /**
      * Create the notification node, set it's classes and call the onCreate event
+     * @param {string[]} classes
      */
     make(classes) {
         this.node = document.createElement('div');
@@ -338,6 +460,7 @@ class SimpleNotification {
      * Set the type of the notification
      * success, info, error, warning, message
      * It can be another CSS class but `type` will be prepended with `gn-`
+     * @param {Type} type
      */
     setType(type) {
         if (this.node) {
@@ -351,6 +474,7 @@ class SimpleNotification {
 
     /**
      * Set the title of the notification
+     * @param {string} title
      */
     setTitle(title) {
         if (this.title == undefined) {
@@ -401,6 +525,7 @@ class SimpleNotification {
 
     /**
      * Set the image src attribute
+     * @param {string} src
      */
     setImage(src) {
         if (this.image == undefined) {
@@ -419,6 +544,7 @@ class SimpleNotification {
 
     /**
      * Set the text content of the notification body
+     * @param {string} content
      */
     setText(content) {
         if (this.text == undefined) {
@@ -438,8 +564,10 @@ class SimpleNotification {
 
     /**
      * Add a single button after all already added buttons
+     * @param {Button} options
      */
-    addButton(type, value, onClick) {
+    addButton(options) {
+        if (!options.type || !options.value) return;
         if (this.buttons == undefined) {
             this.buttons = document.createElement('div');
             this.buttons.className = 'gn-buttons';
@@ -450,12 +578,12 @@ class SimpleNotification {
             }
         }
         let button = document.createElement('button');
-        SimpleNotification.textToNode(value, button);
-        button.className = `gn-button gn-${type}`;
-        if (onClick) {
+        SimpleNotification.textToNode(options.value, button);
+        button.className = `gn-button gn-${options.type}`;
+        if (options.onClick) {
             button.addEventListener('click', (event) => {
                 event.stopPropagation();
-                onClick(this);
+                options.onClick(this);
             });
         }
         this.buttons.appendChild(button);
@@ -510,6 +638,7 @@ class SimpleNotification {
 
     /**
      * Remove the notification from the screen without calling the onClose event
+     * @returns {boolean}
      */
     remove() {
         if (this.node != undefined) {
@@ -526,6 +655,7 @@ class SimpleNotification {
 
     /**
      * Remove the notification from the screen and call the onClose event
+     * @param {boolean} fromUser
      */
     close(fromUser = false) {
         if (this.remove() && this.events.onClose) {
@@ -582,8 +712,9 @@ class SimpleNotification {
      * content is an object with the keys title, text, image and buttons
      * Options: duration, fadeout, position
      * @param {array} classes Array of classes to add to the notification
-     * @param {object} content The content the notification
-     * @param {object} options The options of the notifications
+     * @param {Content} content The content the notification
+     * @param {Partial<Options>} options The options of the notifications
+     * @returns {SimpleNotification}
      */
     static create(classes, content, notificationOptions = {}) {
         let hasImage = 'image' in content && content.image,
@@ -594,8 +725,6 @@ class SimpleNotification {
         if (!hasImage && !hasTitle && !hasText && !hasButtons) return;
         // Merge options
         let options = SimpleNotification.deepAssign({}, SimpleNotification._options, notificationOptions);
-        // If there is nothing to close a notification we force the close button
-        options.closeButton = !options.closeOnClick && options.sticky ? true : options.closeButton;
         // Create the notification
         let notification = new SimpleNotification(options);
         notification.make(classes);
@@ -617,7 +746,7 @@ class SimpleNotification {
                 content.buttons = [content.buttons];
             }
             for (let i = 0, max = content.buttons.length; i < max; i++) {
-                notification.addButton(content.buttons[i].type, content.buttons[i].value, content.buttons[i].onClick);
+                notification.addButton(content.buttons[i]);
             }
         }
         // Add progress bar if not sticky
@@ -633,8 +762,9 @@ class SimpleNotification {
 
     /**
      * Create a notification with the 'success' style
-     * @param {object} content Content of the notification
-     * @param {object} options Options used for the notification
+     * @param {Content} content Content of the notification
+     * @param {Partial<Options>} options Options used for the notification
+     * @returns {SimpleNotification}
      */
     static success(content, options = {}) {
         return this.create(['gn-success'], content, options);
@@ -642,8 +772,9 @@ class SimpleNotification {
 
     /**
      * Create a notification with the 'info' style
-     * @param {object} content Content of the notification
-     * @param {object} options Options used for the notification
+     * @param {Content} content Content of the notification
+     * @param {Partial<Options>} options Options used for the notification
+     * @returns {SimpleNotification}
      */
     static info(content, options = {}) {
         return this.create(['gn-info'], content, options);
@@ -651,8 +782,9 @@ class SimpleNotification {
 
     /**
      * Create a notification with the 'error' style
-     * @param {object} content Content of the notification
-     * @param {object} options Options used for the notification
+     * @param {Content} content Content of the notification
+     * @param {Partial<Options>} options Options used for the notification
+     * @returns {SimpleNotification}
      */
     static error(content, options = {}) {
         return this.create(['gn-error'], content, options);
@@ -660,8 +792,9 @@ class SimpleNotification {
 
     /**
      * Create a notification with the 'warning' style
-     * @param {object} content Content of the notification
-     * @param {object} options Options used for the notification
+     * @param {Content} content Content of the notification
+     * @param {Partial<Options>} options Options used for the notification
+     * @returns {SimpleNotification}
      */
     static warning(content, options = {}) {
         return this.create(['gn-warning'], content, options);
@@ -669,8 +802,9 @@ class SimpleNotification {
 
     /**
      * Create a notification with the 'message' style
-     * @param {object} content Content of the notification
-     * @param {object} options Options used for the notification
+     * @param {Content} content Content of the notification
+     * @param {Partial<Options>} options Options used for the notification
+     * @returns {SimpleNotification}
      */
     static message(content, options = {}) {
         return this.create(['gn-message'], content, options);
@@ -678,9 +812,10 @@ class SimpleNotification {
 
     /**
      * Make a notification with custom classes
-     * @param {array} classes The classes of the notification
-     * @param {object} content Content of the notification
-     * @param {object} options Options used for the notification
+     * @param {string[]} classes The classes of the notification
+     * @param {Content} content Content of the notification
+     * @param {Partial<Options>} options Options used for the notification
+     * @returns {SimpleNotification}
      */
     static custom(classes, content, options = {}) {
         return this.create(classes, content, options);
@@ -689,15 +824,24 @@ class SimpleNotification {
     /**
      * Add a tag for the textToNode function
      * @param {string} name The name of the tag
-     * @param {object} object The values of the tag
+     * @param {TagDescription} object The values of the tag
      */
     static addTag(name, object) {
         this.tags[name] = object;
         this.refreshTokens = true;
     }
 }
+/**
+ * @type {Object.<string, HTMLElement>}
+ */
 SimpleNotification.wrappers = {};
+/**
+ * @type {SimpleNotification[]}
+ */
 SimpleNotification.displayed = [];
+/**
+ * @type {Options}
+ */
 SimpleNotification._options = {
     position: 'top-right',
     maxNotifications: 0,
@@ -721,6 +865,9 @@ SimpleNotification._options = {
         duration: 400,
     },
 };
+/**
+ * @type {Object.<string, TagDescription>}
+ */
 SimpleNotification.tags = {
     code: {
         type: 'code',
@@ -788,5 +935,11 @@ SimpleNotification.tags = {
         textContent: false,
         open: '\n',
         close: '',
+    },
+    floatRight: {
+        type: 'span',
+        class: 'gn-float-right',
+        open: '>>',
+        close: '<',
     },
 };

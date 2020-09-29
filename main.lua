@@ -1,8 +1,6 @@
-local debugMode = false --Change this to toggle debug/dev prints
-
 --Debug Print Function
 function DebugPrint(msg)
-    if debugMode then
+    if cfg.debugMode then
         print(msg)
     end
 end
@@ -14,15 +12,15 @@ function SendNotification(style, duration, title, message, image, sound, custom,
         return
     end
     SendNUIMessage({
-                       type = 'noti',
-                       style = style,
-                       time = duration,
-                       title = title,
-                       message = message,
-                       image = image,
-                       custom = custom,
-                       position = position
-                   })
+        type = 'noti',
+        style = style,
+        time = duration,
+        title = title,
+        message = message,
+        image = image,
+        custom = custom,
+        position = position
+    })
     if sound then
         PlaySoundFrontend(-1, sound.name or cfg.sound.name, sound.reference or cfg.sound.reference, 1)
     end
@@ -30,15 +28,17 @@ end
 
 --Initialize's Config after activated by Thread
 function InitConfig()
-    DebugPrint('Initializing T-Notify')
-    SendNUIMessage({
-                       type = 'init',
-                       position = cfg.position,
-                       insertAnim = cfg.animations.insertAnimation,
-                       insertDuration = cfg.animations.insertDuration,
-                       removeAnim = cfg.animations.removeAnimation,
-                       removeDuration = cfg.animations.removeDuration,
-                   })
+    local initObject = {
+        type = 'init',
+        position = cfg.position,
+        insertAnim = cfg.animations.insertAnimation,
+        insertDuration = cfg.animations.insertDuration,
+        removeAnim = cfg.animations.removeAnimation,
+        removeDuration = cfg.animations.removeDuration,
+        maxNotifications = cfg.maxNotifications
+    }
+    DebugPrint('Sending Init Config: \n' .. json.encode(initObject))
+    SendNUIMessage(initObject)
 end
 
 --Thread that triggers config initialization after UI Frame is created
@@ -63,7 +63,7 @@ end)
 
 function SendTextAlert(style, msg, duration, sound, custom, position)
     SendNotification(style, duration, nil, msg, nil, sound, custom, position)
-    DebugPrint('Notification | Style: ' .. style .. ' | Message: ' .. msg .. ' | Duration: ' .. duration or tostring(2500) .. ' | Sound: ' .. tostring(sound) .. ' | Custom: ' .. tostring(custom) .. ' | Position: ' .. tostring(position))
+    DebugPrint('Notification | Style: ' .. tostring(style) .. ' | Message: ' .. tostring(msg) .. ' | Duration: ' ..tostring(duration) .. ' | Sound: ' .. tostring(sound) .. ' | Custom: ' .. tostring(custom))
 end
 
 --[[
