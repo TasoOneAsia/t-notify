@@ -33,5 +33,6 @@ exports {
     'SendImage',
     'Alert',
     'Custom',
-    'Image'
+    'Image',
+    'Persist'
 }

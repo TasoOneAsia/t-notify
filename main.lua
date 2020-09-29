@@ -1,7 +1,7 @@
 --Debug Print Function
-function DebugPrintInfo(style, duration, title, message, image, sound, custom, position)
+function DebugPrintInfo(style, duration, title, message, image, sound, custom, position, persistent)
     if cfg.debugMode then
-        print('Notification | Style: ' .. style .. '\n | Title: ' .. tostring(title) .. '\n | Message: ' .. tostring(message) .. '\n | Image URL: ' .. tostring(image) ..'\n | Duration: ' ..tostring(duration) .. '\n | Sound: ' .. tostring(sound) .. '\n | Custom: ' .. tostring(custom) .. '\n | Position: ' .. tostring(position))
+        print('Notification | Style: ' .. style .. '\n | Title: ' .. tostring(title) .. '\n | Message: ' .. tostring(message) .. '\n | Image URL: ' .. tostring(image) ..'\n | Duration: ' ..tostring(duration) .. '\n | Sound: ' .. tostring(sound) .. '\n | Custom: ' .. tostring(custom) .. '\n | Position: ' .. tostring(position) .. '\n | Persistent: ' .. tostring(persistent))
     end
 end
 
@@ -33,6 +33,25 @@ function SendNotification(style, duration, title, message, image, sound, custom,
     end
 end
 
+--Triggers a notification using persistence
+function SendPersistentNotification(step, id, options)
+    if not step or not id then
+        print('Persistent notifications must have a valid step and id')
+        return
+    end
+    if options then 
+        DebugPrintInfo(options.style, options.duration, options.title, options.message, options.image, options.sound, options.custom, options.position, step .. ' ID: ' .. id)
+        if not options.style then
+            print('Style must have a value, it cannot be nil')
+        end
+    end
+    SendNUIMessage({
+        type = 'persistNoti',
+        step = step,
+        id = id,
+        options = options
+    })
+end
 --Initialize's Config after activated by Thread
 function InitConfig()
     local initObject = {
@@ -65,6 +84,10 @@ end
 
 function Image(data)
     SendNotification(data.style, data.duration, data.title, nil, data.image, data.sound, data.custom, data.position)
+end
+
+function Persist(data)
+    SendPersistentNotification(data.step, data.id, data.options)
 end
 
 --Event Handlers from Server (Objects)
@@ -106,4 +129,9 @@ AddEventHandler('t-notify:client:Image', function(data)
         custom = data.custom,
         position = data.position
     })
+end)
+
+RegisterNetEvent('t-notify:client:Persist')
+AddEventHandler('t-notify:client:Persist', function(data)
+    Persist({data})
 end)
