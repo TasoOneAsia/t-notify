@@ -15,5 +15,5 @@ Citizen.CreateThread(function()
 			print(resourceName.. '(v' .. responseText .. ") is up to date and has started")
 		end
 	end
-	PerformHttpRequest("https://raw.githubusercontent.com"..updatePath.."/UPD/version", checkVersion, "GET")
+	PerformHttpRequest("https://raw.githubusercontent.com"..updatePath.."/master/version", checkVersion, "GET")
 end)
