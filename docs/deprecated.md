@@ -1,5 +1,5 @@
 
-### Server and Client Triggers (Depreciated)
+### Server and Client Triggers (deprecated)
 
 >Under T-Notify v1.3.0, notifications were triggered using these methods. The current method uses an **Object** rather than regular parameters.
 

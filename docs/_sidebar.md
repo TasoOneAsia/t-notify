@@ -15,6 +15,6 @@
         - [Object Properties](usage?id=object-properties)
         - [Examples](usage?id=examples)
     - [Markdown Formatting Tags](usage?id=markdown-formatting-tags)
-- [**Depreciated**](depreciated.md)
+- [**Deprecated**](deprecated.md)
 - [**Future Features**](future.md)
 - [**License**](license-text.md)
