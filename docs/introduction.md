@@ -27,5 +27,5 @@
 Support and news regarding the progress of this resource can be found in various places, click on the links below:
 
 * [FiveM Forums](https://forum.cfx.re/t/release-standalone-t-notify-a-simple-and-highly-customizable-notification-system/1618779)
-* [Support Discord](https://discord.gg/88PfF9r)
+* [Support Discord](https://discord.gg/YWJY36EVsm)
 * [GitHub](https://github.com/tasooneasia/t-notify)

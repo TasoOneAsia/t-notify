@@ -1,14 +1,14 @@
 ## Installation & Download
 
-**Using Git**
+**From Releases**
+* Visit [releases](https://github.com/TasoOneAsia/t-notify/releases/)
+* Download and unzip the latest release
+* Rename the directory to ``t-notify``, if not already.
+* Place ``t-notify`` in your ``resources`` directory
 
-	cd resources
-	git clone https://github.com/TasoOneAsia/t-notify.git t-notify
-**Manually**
- * Visit [releases](https://github.com/TasoOneAsia/t-notify/releases/)
- * Download and unzip the latest release
- * Rename the directory to ``t-notify``
- * Place ``t-notify`` in your ``resources`` directory
+**Using Git**
+cd resources
+git clone https://github.com/TasoOneAsia/t-notify.git t-notify
 
 **Start**
 

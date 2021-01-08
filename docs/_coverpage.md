@@ -6,7 +6,7 @@ library created by [Glagan](https://github.com/Glagan/)
 
 By TasoAGC
 
-[Quick Start](starting)
+[Quick Start](starting.md)
 [Repository](https://github.com/TasoOneAsia/t-notify)
 
 <!-- ![](_media/bg.png) -->
