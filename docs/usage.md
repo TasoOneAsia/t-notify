@@ -63,7 +63,7 @@ Uncaught TypeError: SimpleNotification[noti.style] is not a function
 **Persistent** - *Send a notification that is persistent*
 
 ## Triggering Notifications
-> In versions of T-Notify below v1.3.0, Client-Side exports were triggered a little bit differently. See the [depreciated](/depreciated) methods for more details.
+> In versions of T-Notify below v1.3.0, Client-Side exports were triggered a little bit differently. See the [deprecated](/deprecated) methods for more details.
 
 You can trigger notifications from both the Client-Side or the Server-Side. The object passed on either side has the exact same properties but an `export` is used on the Client-Side and a `TriggerClientEvent` is used on the Server-Side.
 

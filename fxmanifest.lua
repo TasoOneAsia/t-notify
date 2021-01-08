@@ -9,7 +9,7 @@ version '1.3.0'
 client_scripts {
     'config.lua',
     'main.lua',
-    'depreciated.lua'
+    'deprecated.lua'
 }
 
 server_script {
