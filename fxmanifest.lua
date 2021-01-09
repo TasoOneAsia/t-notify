@@ -2,9 +2,10 @@ fx_version 'cerulean'
 
 game 'gta5'
 
-author 'TasoAGC'
+author 'Taso'
 description 'A FiveM integration of the SimpleNotification.js library'
 version '1.3.0'
+repository 'https://github.com/TasoOneAsia/t-notify'
 
 client_scripts {
     'config.lua',
@@ -16,7 +17,7 @@ server_script {
     'update.lua'
 }
 
-ui_page('nui/main.html')
+ui_page 'nui/main.html'
 
 files {
     'nui/main.html',
