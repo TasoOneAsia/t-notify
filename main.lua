@@ -1,3 +1,5 @@
+local nuiReady
+
 --Debug Print Function
 function DebugPrintInfo(style, duration, title, message, image, sound, custom, position, persistent)
     if cfg.debugMode then
@@ -13,6 +15,9 @@ end
 
 --Triggers a notification in the NUI using supplied params
 function SendNotification(style, duration, title, message, image, sound, custom, position)
+    if not nuiReady then
+        return print('NUI Frame not yet ready, you cannot send notifications')
+    end
     if not style then
         print('T-Notify Error: Notification styling was equal to nil')
         return
@@ -69,9 +74,10 @@ function InitConfig()
     SendNUIMessage(initObject)
 end
 
---Thread that triggers config initialization after UI Frame is created
-Citizen.CreateThread(function()
-    Wait(50)
+RegisterNUICallback('nuiReady', function()
+    DebugPrint('NUI frame ready')
+    nuiReady = true
+    -- Send Config File after NUI frame ready
     InitConfig()
 end)
 
