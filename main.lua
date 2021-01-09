@@ -141,5 +141,5 @@ end)
 
 RegisterNetEvent('t-notify:client:Persist')
 AddEventHandler('t-notify:client:Persist', function(data)
-    Persist({data})
+    Persist(data)
 end)
