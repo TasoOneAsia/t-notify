@@ -19,8 +19,7 @@ function SendNotification(style, duration, title, message, image, sound, custom,
         return print('NUI Frame not yet ready, you cannot send notifications')
     end
     if not style then
-        print('T-Notify Error: Notification styling was equal to nil')
-        return
+        return print('Notification styling was equal to nil')
     end
     DebugPrintInfo(string.lower(style), duration, title, message, image, sound, custom, position)
     SendNUIMessage({
@@ -42,16 +41,21 @@ end
 
 --Triggers a notification using persistence
 function SendPersistentNotification(step, id, options)
-    if not step or not id then
-        print('Persistent notifications must have a valid step and id')
-        return
+    if debugMode then
+        print('PersistLog | ' ..'\nStep | ' .. step .. '\nID | ' .. id)
     end
+
+    if not step or not id then
+        return print('Persistent notifications must have a valid step and id')
+    end
+
     if options then 
         DebugPrintInfo(options.style, options.duration, options.title, options.message, options.image, options.sound, options.custom, options.position, step .. ' ID: ' .. id)
         if not options.style then
-            print('Style must have a value, it cannot be nil')
+            return print('Style must have a value, it cannot be nil')
         end
     end
+
     SendNUIMessage({
         type = 'persistNoti',
         step = step,
