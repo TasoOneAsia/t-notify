@@ -7,6 +7,7 @@
 * `error`
 * `warning`
 * `success`
+* `message`
 
 T-Notify also allows for the addition of custom user-specified classes in the custom.css file that can be used in conjunction with the default styles. 
 

@@ -20,7 +20,8 @@
 ![Info styling](https://tasoagc.dev/u/trvQOP.png)
 ![Error styling](https://tasoagc.dev/u/dVReJl.png)
 ![Warning styling](https://tasoagc.dev/u/9Oh1es.png)
-![Successstyling](https://tasoagc.dev/u/aAweMy.png)
+![Success styling](https://tasoagc.dev/u/aAweMy.png)
+![Message styling](https://i.tasoagc.dev/YdJo)
 
 # Support and News
 
