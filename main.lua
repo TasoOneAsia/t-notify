@@ -33,7 +33,7 @@ function SendNotification(style, duration, title, message, image, sound, custom,
         position = position
     })
     if type(sound) == 'table' then
-        PlaySoundFrontEnd(-1, sound.name, sound.reference, 1)
+        PlaySoundFrontend(-1, sound.name, sound.reference, 1)
     elseif sound == true then
         PlaySoundFrontend(-1, cfg.sound.name, cfg.sound.reference, 1)
     end
