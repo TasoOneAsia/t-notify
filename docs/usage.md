@@ -32,16 +32,17 @@ T-Notify also allows for the addition of custom user-specified classes in the cu
 In order to use a custom style when invoking a notification, the property ``custom`` ***MUST*** also be set to true. We'll use the example styling for this snippet:
 
 ```lua
-TriggerClientEvent('t-notify:client:Custom', ServerID, {
-	style = 'example',
-	duration = 6000,
-	title = 'Markdown Formatting Example',
-	message = '``Code``\n **Bolded Text** \n *Italics Yo* \n # Header 1\n ## Header 2\n',
-	sound = true,
-	custom = true
+TriggerClientEvent('t-notify:client:Custom', source, {
+    style = 'example',
+    duration = 6000,
+    title = 'Markdown Formatting Example',
+    message = '``Code``\n **Bolded Text** \n *Italics Yo* \n # Header 1\n ## Header 2\n',
+    sound = true,
+    custom = true
+})
 ```
 
-*This snippet produces the following notification:*
+*This snippet produces the following notification and is triggered server side:*
 
 ![Example Styled Notification](https://tasoagc.dev/u/0tiWNE.png)
 
