@@ -876,6 +876,12 @@ SimpleNotification.tags = {
         close: '``',
         textContent: '$content',
     },
+    floatRight: {
+        type: 'span',
+        class: 'gn-float-right',
+        open: '>>',
+        close: '<',
+    },
     header2: {
         type: 'h2',
         class: 'gn-header',
@@ -936,10 +942,58 @@ SimpleNotification.tags = {
         open: '\n',
         close: '',
     },
-    floatRight: {
+    red: {
         type: 'span',
-        class: 'gn-float-right',
-        open: '>>',
-        close: '<',
+        class: 'gn-red',
+        open: '^1',
+        close: ' '
     },
+    green: {
+        type: 'span',
+        class: 'gn-green',
+        open: '^2',
+        close: ' '
+    },
+    yellow: {
+        type: 'span',
+        class: 'gn-yellow',
+        open: '^3',
+        close: ' '
+    },
+    blue: {
+        type: 'span',
+        class: 'gn-blue',
+        open: '^4',
+        close: ' '
+    },
+    cyan: {
+        type: 'span',
+        class: 'gn-cyan',
+        open: '^5',
+        close: ' '
+    },
+    purple: {
+        type: 'span',
+        class: 'gn-purple',
+        open: '^6',
+        close: ' '
+    },
+    white: {
+        type: 'span',
+        class: 'gn-white',
+        open: '^7',
+        close: ' '
+    },
+    orange: {
+        type: 'span',
+        class: 'gn-orange',
+        open: '^8',
+        close: ' '
+    },
+    gray: {
+        type: 'span',
+        class: 'gn-gray',
+        open: '^9',
+        close: ' '
+    }
 };

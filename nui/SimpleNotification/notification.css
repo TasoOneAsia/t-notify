@@ -341,6 +341,42 @@
     font-style: italic;
 }
 
+.gn-red {
+    color: red;
+}
+
+.gn-green {
+    color: green;
+}
+
+.gn-yellow {
+    color: yellow;
+}
+
+.gn-blue {
+    color: blue
+}
+
+.gn-cyan {
+    color: cyan;
+}
+
+.gn-purple {
+    color: purple;
+}
+
+.gn-orange {
+    color: orange;
+}
+
+.gn-grey {
+    color: gray;
+}
+
+.gn-white {
+    color: white
+}
+
 .gn-code {
     font-family: SFMono-Regular, Menlo, 'Lucida Console', Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
     padding: 0.1rem 0.2rem;
