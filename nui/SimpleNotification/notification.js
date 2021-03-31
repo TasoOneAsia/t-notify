@@ -946,54 +946,54 @@ SimpleNotification.tags = {
         type: 'span',
         class: 'gn-red',
         open: '^1',
-        close: ' '
+        close: '^1'
     },
     green: {
         type: 'span',
         class: 'gn-green',
         open: '^2',
-        close: ' '
+        close: '^2'
     },
     yellow: {
         type: 'span',
         class: 'gn-yellow',
         open: '^3',
-        close: ' '
+        close: '^3'
     },
     blue: {
         type: 'span',
         class: 'gn-blue',
         open: '^4',
-        close: ' '
+        close: '^4'
     },
     cyan: {
         type: 'span',
         class: 'gn-cyan',
         open: '^5',
-        close: ' '
+        close: '^5'
     },
     purple: {
         type: 'span',
         class: 'gn-purple',
         open: '^6',
-        close: ' '
+        close: '^6'
     },
     white: {
         type: 'span',
         class: 'gn-white',
         open: '^7',
-        close: ' '
+        close: '^7'
     },
     orange: {
         type: 'span',
         class: 'gn-orange',
         open: '^8',
-        close: ' '
+        close: '^8'
     },
     gray: {
         type: 'span',
         class: 'gn-gray',
         open: '^9',
-        close: ' '
+        close: '^9'
     }
 };
