@@ -1,6 +1,6 @@
 CreateThread(function()
 	local updatePath = '/TasoOneAsia/t-notify'
-	local resourceName = "^2"..GetCurrentResourceName().."]^0"
+	local resourceName = "^2["..GetCurrentResourceName().."]^0"
 
 	function checkVersion(err,responseText, headers)
 		local curVersion = LoadResourceFile(GetCurrentResourceName(), "version")
