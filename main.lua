@@ -96,6 +96,11 @@ local function SendPersistentNotification(step, id, options)
     if options then
         DebugPrintInfo(options.style, options.duration, options.title, options.message, options.image, options.sound, options.custom, options.position, step .. ' ID: ' .. id)
         areTypesValid = verifyTypes(options, true)
+        if type(options.sound) == 'table' then
+            PlaySoundFrontend(-1, options.sound.name, options.sound.reference, 1)
+        elseif options.sound == true then
+            PlaySoundFrontend(-1, cfg.sound.name, cfg.sound.reference, 1)
+        end
     end
 
     if areTypesValid then
@@ -105,11 +110,6 @@ local function SendPersistentNotification(step, id, options)
             id = id,
             options = options
         })
-        if type(options.sound) == 'table' then
-            PlaySoundFrontend(-1, options.sound.name, options.sound.reference, 1)
-        elseif options.sound == true then
-            PlaySoundFrontend(-1, cfg.sound.name, cfg.sound.reference, 1)
-        end
     end
 end
 --Initialize's Config after activated by Thread
