@@ -1,70 +1,119 @@
 local nuiReady
 
---Debug Print Function
-function DebugPrintInfo(style, duration, title, message, image, sound, custom, position, persistent)
+-- Debug Print Notification
+local function DebugPrintInfo(style, duration, title, message, image, sound, custom, position, persistent)
     if cfg.debugMode then
-        print('Notification | Style: ' .. style .. '\n | Title: ' .. tostring(title) .. '\n | Message: ' .. tostring(message) .. '\n | Image URL: ' .. tostring(image) ..'\n | Duration: ' ..tostring(duration) .. '\n | Sound: ' .. tostring(sound) .. '\n | Custom: ' .. tostring(custom) .. '\n | Position: ' .. tostring(position) .. '\n | Persistent: ' .. tostring(persistent))
+        print('Notification | Style: ' .. tostring(style) .. '\n | Title: ' .. tostring(title) .. '\n | Message: ' .. tostring(message) .. '\n | Image URL: ' .. tostring(image) ..'\n | Duration: ' ..tostring(duration) .. '\n | Sound: ' .. tostring(sound) .. '\n | Custom: ' .. tostring(custom) .. '\n | Position: ' .. tostring(position) .. '\n | Persistent: ' .. tostring(persistent))
     end
 end
 
-function DebugPrint(msg)
+-- General Debug Print
+local function DebugPrint(msg)
     if cfg.debugMode then
         print(msg)
     end
 end
 
---Triggers a notification in the NUI using supplied params
-function SendNotification(style, duration, title, message, image, sound, custom, position)
+local function printError(msg)
+    local errMsg = ('^1[T-Notify Error] %s'):format(msg)
+    print(errMsg)
+end
+
+local function verifyTypes(notiTable, isPersistent)
+    -- Might add more type validation here idk
     if not nuiReady then
-        return print('NUI Frame not yet ready, you cannot send notifications')
+        printError('NUI Frame is not ready yet')
+        return false
     end
-    if not style then
-        return print('Notification styling was equal to nil')
+
+    if not notiTable.style or type(notiTable.style) ~= 'string' then
+        printError('Style cannot be nil or must be a string for notifications')
+        return false
     end
-    DebugPrintInfo(string.lower(style), duration, title, message, image, sound, custom, position)
-    SendNUIMessage({
+
+    if not isPersistent and (notiTable.duration and type(notiTable.duration) ~= 'number') then
+        printError('Duration has to be a number for notifications')
+        return false
+    end
+
+    if notiTable.sound and (type(notiTable.sound) ~= 'boolean' and type(notiTable.sound) ~= 'table') then
+        printError('Sound property must be either a boolean or table for notifications')
+        return false
+    end
+
+    if notiTable.position and type(notiTable.position) ~= 'string' then
+        printError('Position property must be a string for this notifications')
+        return false
+    end
+
+    if notiTable.image and type(notiTable.image) ~= 'string' then
+        printError('The image property must be a string for this notifications')
+    end
+
+    return true
+end
+
+--Triggers a notification in the NUI using supplied params
+local function SendNotification(style, duration, title, message, image, sound, custom, position)
+    DebugPrintInfo(style, duration, title, message, image, sound, custom, position)
+
+    local notiObject = {
         type = 'noti',
-        style = string.lower(style),
-        time = duration,
+        style = style,
+        duration = duration,
         title = title,
         message = message,
         image = image,
         custom = custom,
-        position = position
-    })
-    if type(sound) == 'table' then
-        PlaySoundFrontend(-1, sound.name, sound.reference, 1)
-    elseif sound == true then
-        PlaySoundFrontend(-1, cfg.sound.name, cfg.sound.reference, 1)
+        position = position,
+        sound = sound,
+    }
+
+    local areTypesValid = verifyTypes(notiObject)
+
+    if areTypesValid then
+        SendNUIMessage(notiObject)
+        if type(sound) == 'table' then
+            PlaySoundFrontend(-1, sound.name, sound.reference, 1)
+        elseif sound == true then
+            PlaySoundFrontend(-1, cfg.sound.name, cfg.sound.reference, 1)
+        end
     end
 end
 
 --Triggers a notification using persistence
-function SendPersistentNotification(step, id, options)
+local function SendPersistentNotification(step, id, options)
     if debugMode then
         print('PersistLog | ' ..'\nStep | ' .. step .. '\nID | ' .. id)
     end
 
     if not step or not id then
-        return print('Persistent notifications must have a valid step and id')
+        return printError('Persistent notifications must have a valid step and id')
     end
 
-    if options then 
+    local areTypesValid = true
+
+    if options then
         DebugPrintInfo(options.style, options.duration, options.title, options.message, options.image, options.sound, options.custom, options.position, step .. ' ID: ' .. id)
-        if not options.style then
-            return print('Style must have a value, it cannot be nil')
+        areTypesValid = verifyTypes(options, true)
+    end
+
+    if areTypesValid then
+        SendNUIMessage({
+            type = 'persistNoti',
+            step = step,
+            id = id,
+            options = options
+        })
+        if type(options.sound) == 'table' then
+            PlaySoundFrontend(-1, options.sound.name, options.sound.reference, 1)
+        elseif options.sound == true then
+            PlaySoundFrontend(-1, cfg.sound.name, cfg.sound.reference, 1)
         end
     end
-
-    SendNUIMessage({
-        type = 'persistNoti',
-        step = step,
-        id = id,
-        options = options
-    })
 end
 --Initialize's Config after activated by Thread
-function InitConfig()
+local function InitConfig()
     local initObject = {
         type = 'init',
         position = cfg.position,
@@ -78,11 +127,12 @@ function InitConfig()
     SendNUIMessage(initObject)
 end
 
-RegisterNUICallback('nuiReady', function()
+RegisterNUICallback('nuiReady', function(data, cb)
     DebugPrint('NUI frame ready')
     nuiReady = true
     -- Send Config File after NUI frame ready
     InitConfig()
+    cb()
 end)
 
 --OBJECT STYLED EXPORTS
