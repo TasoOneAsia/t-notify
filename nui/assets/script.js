@@ -19,7 +19,7 @@ const persistentNotis = new Map();
  * @property {string} image - Image URL
  * @property {boolean} custom - Custom style
  * @property {string} position - Position
- * @property {number} time - Time in ms
+ * @property {number} duration - Time in ms
  */
 
 window.addEventListener("message", (event) => {
@@ -72,7 +72,7 @@ function initFunction(data) {
 
 const createOptions = (noti) => ({
   // Unfortunately cannot use optional chaining as I think NUI is ES6
-  duration: noti.time || undefined,
+  duration: noti.duration || undefined,
   position: noti.position || position,
   maxNotifications: maxNotifications,
   insertAnimation: {
@@ -96,9 +96,9 @@ function playNotification(noti) {
     const options = createOptions(noti);
 
     const content = {
-      title: noti.title,
+      title: noti.title && noti.title.toString(),
       image: noti.image,
-      text: noti.message,
+      text: noti.message && noti.message.toString(),
     };
 
     if (noti.custom) {
@@ -107,7 +107,7 @@ function playNotification(noti) {
       return;
     }
 
-    SimpleNotification[noti.style](content, options);
+    SimpleNotification[noti.style.toLowerCase()](content, options);
   }
 }
 
@@ -150,7 +150,7 @@ const startPersistentNoti = (id, noti) => {
 
   persistentNotis.set(
     id,
-    SimpleNotification[noti.style](content, persistOptions)
+    SimpleNotification[noti.style.toLowerCase()](content, persistOptions)
   );
 };
 
