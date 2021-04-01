@@ -1,116 +1,203 @@
-let insertAnim
-let insertDuration
-let removeAnim
-let removeDuration
-let position
-let maxNotifications
+// Global default variables
+let insertAnim;
+let insertDuration;
+let removeAnim;
+let removeDuration;
+let position;
+let maxNotifications;
 
-let persistentNotis = {}
+// This is where we store persistent noti's
+const persistentNotis = new Map();
 
-$(document).ready(() => {
-  window.addEventListener('message', function (event) {
-    if (event.data.type === 'init') {
-      initFunction(event.data)
-    } else if (event.data.type === 'persistNoti') {
-      playPersistentNoti(event.data)
-    } else {
-      playNotification(event.data)
-    }
-  })
-  $.post("https://t-notify/nuiReady")
-})
+/**
+ * @typedef NotiObject
+ * @type {object}
+ * @property {string} type - Type of notification
+ * @property {string} style - Style of notification
+ * @property {string} message - Message
+ * @property {string} title - Title of message
+ * @property {string} image - Image URL
+ * @property {boolean} custom - Custom style
+ * @property {string} position - Position
+ * @property {number} time - Time in ms
+ */
 
-function initFunction(data) {
-  position = data.position
-  insertAnim = data.insertAnim
-  insertDuration = data.insertDuration
-  removeAnim = data.removeAnim
-  removeDuration = data.removeDuration
-  maxNotifications = data.maxNotifications
-}
-
-function createOptions (noti) {
-  return {
-    duration: noti.time,
-    position: noti.position || position,
-    maxNotifications: maxNotifications,
-    insertAnimation: {
-      name: insertAnim,
-      duration: insertDuration
-    },
-    removeAnimation: {
-      name: removeAnim,
-      duration: removeDuration
-    }
+window.addEventListener("message", (event) => {
+  switch (event.data.type) {
+    case "init":
+      initFunction(event.data);
+      break;
+    case "persistNoti":
+      playPersistentNoti(event.data);
+      break;
+    default:
+      playNotification(event.data);
   }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  fetch("https://t-notify/nuiReady", {
+    method: "POST",
+  }).catch((e) => console.error("Unable to send NUI ready message", e));
+});
+
+/**
+ * @typedef InitData
+ * @type {object}
+ * @property {string} position - Position for notification
+ * @property {string} insertAnim - Which insert animation to use
+ * @property {number} insertDuration - Insert duration to use
+ * @property {string} removeAnim - Which remove animation to use
+ * @property {number} removeDuration - Remove duration to use
+ * @property {number} maxNotifications - Max number of notifications to use
+ */
+
+/**
+ * Initialize default global variables
+ * @param data {InitData}
+ */
+function initFunction(data) {
+  position = data.position;
+  insertAnim = data.insertAnim;
+  insertDuration = data.insertDuration;
+  removeAnim = data.removeAnim;
+  removeDuration = data.removeDuration;
+  maxNotifications = data.maxNotifications;
 }
+
+/**
+ * Initialize default global variables
+ * @param noti {NotiObject}
+ */
+
+const createOptions = (noti) => ({
+  // Unfortunately cannot use optional chaining as I think NUI is ES6
+  duration: noti.time || undefined,
+  position: noti.position || position,
+  maxNotifications: maxNotifications,
+  insertAnimation: {
+    name: insertAnim,
+    duration: insertDuration,
+  },
+  removeAnimation: {
+    name: removeAnim,
+    duration: removeDuration,
+  },
+});
 
 //Notification Function
-function playNotification (noti) {
+/**
+ * Play a regular notification
+ * @param noti {NotiObject} - Notification
+ */
+function playNotification(noti) {
+  // Sanity check
   if (noti) {
-    const options = createOptions(noti)
+    const options = createOptions(noti);
+
     const content = {
       title: noti.title,
       image: noti.image,
-      text: noti.message
+      text: noti.message,
+    };
+
+    if (noti.custom) {
+      const customClass = "gn-" + noti.style;
+      SimpleNotification.custom([customClass], content, options);
+      return;
     }
-    if (!noti.custom) {
-      SimpleNotification[noti.style](content, options);
-    } else {
-      const customClass = 'gn-' + noti.style
-      SimpleNotification.custom(
-        [customClass],
-        content,
-        options
-      )
-    }
+
+    SimpleNotification[noti.style](content, options);
   }
 }
 
-function playPersistentNoti (noti) {
-  const id = noti.id.toString()
+/**
+ *
+ * @param id {string} - Notification ID
+ * @param noti {NotiObject}- Notification Object
+ * @returns {void}
+ */
+const startPersistentNoti = (id, noti) => {
+  if (persistentNotis.has(id))
+    return console.log(
+      `Persistent Notification with that ID already exists (${id})`
+    );
 
-  if (noti.step !== 'start' && noti.step !== 'end') return console.log('Invalid step for persistent notification must be `start` or `end`')
+  // Base options
+  const options = createOptions(noti);
 
-  if (noti.step === 'start') {
-    if (persistentNotis[id]) return console.log(`Persistent Notification with that ID already exists (${noti.id})`)
-    const options = {
-      position: noti.options.position || position,
-      maxNotifications: maxNotifications,
-      insertAnimation: {
-        name: insertAnim,
-        duration: insertDuration
-      },
-      removeAnimation: {
-        name: removeAnim,
-        duration: removeDuration
-      },
-      sticky: true
-    };
-    const content = {
-      title: noti.options.title,
-      image: noti.options.image,
-      text: noti.options.message
-    }
+  // Add sticky property
+  const persistOptions = { ...options, sticky: true };
 
-    if (!noti.options.custom) {
-      persistentNotis[id] = SimpleNotification[noti.options.style](content, options)
-    } else {
-      const customClass = 'gn-' + noti.options.style
-      persistentNotis[id] = SimpleNotification.custom(
-        [customClass],
-        content,
-        options
-      )
-    }
+  // Create content object
+  const content = {
+    title: noti.title,
+    image: noti.image,
+    text: noti.message,
+  };
+
+  // Handle custom styling
+  if (noti.custom) {
+    // Auto prepend gn class
+    const customClass = "gn-" + noti.style;
+
+    persistentNotis.set(
+      id,
+      SimpleNotification.custom([customClass], content, persistOptions)
+    );
+    return;
   }
 
-  if (noti.step === 'end') {
-    if (persistentNotis[id]) {
-      persistentNotis[id].closeAnimated()
-      delete persistentNotis[id]
-    } else {
-      console.log('Persistent Notification ID not found in cache. First start a persistent notification before ending.')
-    }
+  persistentNotis.set(
+    id,
+    SimpleNotification[noti.style](content, persistOptions)
+  );
+};
+
+/**
+ * End a persistent notification
+ * @param id {string} - Persistent Notification ID
+ * @returns {void}
+ */
+const endPersistentNoti = (id) => {
+  if (!persistentNotis.has(id)) {
+    console.error(
+      "Persistent Notification ID not found in cache. First start a persistent notification before ending."
+    );
+    return;
+  }
+  const noti = persistentNotis.get(id);
+  noti.closeAnimated();
+  persistentNotis.delete(id);
+};
+
+/**
+ * @typedef PersistentNoti
+ * @type {object}
+ * @property {string} type - Type of notification
+ * @property {NotiObject} options - Type of notification
+ * @property {string} step - Step for persistent noti
+ * @property {string | number} id - Unique ID for persistent noti
+ */
+
+/**
+ * Play a persistent notification
+ * @param noti {PersistentNoti} - The persistent notification object
+ */
+function playPersistentNoti(noti) {
+  const id = noti.id.toString();
+
+  switch (noti.step) {
+    case "start":
+      startPersistentNoti(id, noti.options);
+      break;
+    case "end":
+      endPersistentNoti(id);
+      break;
+
+    default:
+      console.error(
+        "Invalid step for persistent notification must be `start` or `end`"
+      );
   }
 }
