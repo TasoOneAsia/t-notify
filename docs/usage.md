@@ -283,6 +283,36 @@ This code snippet produced the following notification:
 
 ![Markdown Example](https://tasoagc.dev/u/RyYTAX.png)
 
-## Color Properties
+## Color Formatting
 
->
+>With v1.4.0, there was a new addition to t-notify. With this new update, you are now capable of using colors you notification. You can begin using them by adding ~~ before and after your displayed message.
+
+| Code | Colors |
+|---|---|
+| r | Red |
+| g | Green |
+| y | Yellow |
+| b | Blue | 
+| c | Cyan | 
+| p | Purple |
+| w | White |
+| o | Orange |
+| gy | Gray |
+
+**Example Code**
+
+Here's an example on how to use colored text in a notification called from the **client**
+
+``` lua
+exports['t-notify']:Custom({
+    style  =  'message',
+    duration  =  11000,
+    title  =  'Colors Example',
+    message  =  '~r~Red~r~ \n ~g~Green~g~ \n ~y~Yellow~y~ \n ~b~Blue~b~ \n ~c~Cyan~c~ \n ~p~Purple~p~ \n ~w~White~w~ \n ~o~Orange~o~ \n ~gy~Grey~gy~ \n',
+    sound  =  true
+})
+```
+
+This code snippet produced the following notification:
+
+![Colors Example](https://camo.githubusercontent.com/f03940f6150420145ef63d5b82a6eaa0ec7ed65f0407c126088cb6f207be0b09/68747470733a2f2f692e7461736f6167632e6465762f42786b77)
