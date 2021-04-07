@@ -15,7 +15,7 @@
         - [Object Properties](usage?id=object-properties)
         - [Examples](usage?id=examples)
     - [Markdown Formatting Tags](usage?id=markdown-formatting-tags)
-    - [Color Properties](usage?id=color-properties)
+    - [Color Formatting](usage?id=color-formatting)
 - [**Deprecated**](deprecated.md)
 - [**Future Features**](future.md)
 - [**License**](license-text.md)
