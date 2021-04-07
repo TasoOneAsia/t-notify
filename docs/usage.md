@@ -282,3 +282,7 @@ TriggerClientEvent('t-notify:client:Custom', ServerID, {
 This code snippet produced the following notification:
 
 ![Markdown Example](https://tasoagc.dev/u/RyYTAX.png)
+
+## Color Properties
+
+>
