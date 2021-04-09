@@ -48,6 +48,7 @@ local function verifyTypes(notiTable, isPersistent)
 
     if notiTable.image and type(notiTable.image) ~= 'string' then
         printError('The image property must be a string for this notifications')
+        return false
     end
 
     return true
