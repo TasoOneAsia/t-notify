@@ -234,21 +234,6 @@ exports['t-notify']:Persist({
 })
 ```
 
-*Ending a Persistent Notification:*
-```lua
--- Server-side
-TriggerClientEvent('t-notify:client:Persist', ServerID, {
-	id = 'uniquePersistId',
-	step = 'end'
-})
-
--- Client-side
-exports['t-notify']:Persist({
-	id = 'uniquePersistId',
-	step = 'end'
-})
-```
-
 *Updating a Persistent Notification:*
 
 ```lua
@@ -274,6 +259,21 @@ exports['t-notify']:Persist({
 		image = 'https://tasoagc.dev/u/61Gg0W.png',
         message = 'This is a message'
 	}
+})
+```
+
+*Ending a Persistent Notification:*
+```lua
+-- Server-side
+TriggerClientEvent('t-notify:client:Persist', ServerID, {
+	id = 'uniquePersistId',
+	step = 'end'
+})
+
+-- Client-side
+exports['t-notify']:Persist({
+	id = 'uniquePersistId',
+	step = 'end'
 })
 ```
 
