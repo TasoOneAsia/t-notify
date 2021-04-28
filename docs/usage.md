@@ -97,7 +97,7 @@ Depending on the function, the object can have optional and required properties.
   * `sound` {BOOL or OBJECT} (Optional) - If true, the notification will also have an alert sound. Can also accept an object for custom sound on a per notification basis. *Defaults to false*.
       * `name` {STRING} (Optional) - An audio name like what can be found in `config.lua`
       * `reference` {STRING} (Optional) - An audio reference like what can be found in `config.lua`
-  * `custom` {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that default. *Defaults to false.*
+  * `custom` {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style. *Defaults to false.*
   * `position` {STRING} (Optional) - Position of the notification to display (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right) *Defaults to config*
 * **Custom**
   * `style` {STRING} (Required) - One of the available styles as listed in the **[base styling](usage?id=base-styling)** section.
