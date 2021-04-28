@@ -121,7 +121,7 @@ Depending on the function, the object can have optional and required properties.
   * `custom` {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that wasn't present by default. *Defaults to false*.
   * `position` {STRING} (Optional) - Position of the notification to display (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right) *Defaults to config*
 * **Persistent**
-  * `step` {STRING} (Required) - The specific step for the persistent notification call (start, end).
+  * `step` {STRING} (Required) - The specific step for the persistent notification call (start, update, end).
   * `id` {STRING} (Required) - The unique id for the persistent notification being called. This must be a unique id to each persistent notification.
   * `options` {OBJECT} (Optional) - Contains options for the notification. This object needs to be passed **when** a persistent notification is being called with the `'start'` step.
     * `style` {STRING} (Required) - One of the available styles as listed in the **[base styling](usage?id=base-styling)** section.
@@ -246,6 +246,34 @@ TriggerClientEvent('t-notify:client:Persist', ServerID, {
 exports['t-notify']:Persist({
 	id = 'uniquePersistId',
 	step = 'end'
+})
+```
+
+*Updating a Persistent Notification:*
+
+```lua
+-- Server-side
+TriggerClientEvent('t-notify:client:Persist', ServerID, {
+	id = 'uniquePersistId',
+	step = 'update',
+	options = {
+		style = 'info',
+		title = 'Notification with an Image',
+		image = 'https://tasoagc.dev/u/61Gg0W.png',
+        message = 'This is a message'
+	}
+})
+
+-- Client-side
+exports['t-notify']:Persist({
+	id = 'uniquePersistId',
+	step = 'update',
+	options = {
+		style = 'info',
+		title = 'Notification with an Image',
+		image = 'https://tasoagc.dev/u/61Gg0W.png',
+        message = 'This is a message'
+	}
 })
 ```
 
