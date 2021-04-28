@@ -245,7 +245,7 @@ TriggerClientEvent('t-notify:client:Persist', ServerID, {
 		style = 'info',
 		title = 'Notification with an Image',
 		image = 'https://tasoagc.dev/u/61Gg0W.png',
-        message = 'This is a message'
+		message = 'This is a message'
 	}
 })
 
@@ -257,7 +257,7 @@ exports['t-notify']:Persist({
 		style = 'info',
 		title = 'Notification with an Image',
 		image = 'https://tasoagc.dev/u/61Gg0W.png',
-        message = 'This is a message'
+		message = 'This is a message'
 	}
 })
 ```
