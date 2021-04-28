@@ -180,7 +180,7 @@ const endPersistentNoti = (id) => {
 const updatePersistentNoti = (id, noti) => {
   if (!persistentNotis.has(id)) {
     console.error(
-      "Persistent Notification ID not found in cache. First start a persistent notification before ending."
+      "Persistent Notification ID not found in cache. First start a persistent notification before updating."
     );
     return;
   }
