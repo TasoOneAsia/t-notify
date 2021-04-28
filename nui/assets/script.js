@@ -172,6 +172,34 @@ const endPersistentNoti = (id) => {
 };
 
 /**
+ * Update a persistent notification
+ * @param id {string} - Persistent Notification ID
+ * @param noti {NotiObject}- Notification Object
+ * @returns {void}
+ */
+const updatePersistentNoti = (id, noti) => {
+  if (!persistentNotis.has(id)) {
+    console.error(
+      "Persistent Notification ID not found in cache. First start a persistent notification before updating."
+    );
+    return;
+  }
+
+  const persistentNoti = persistentNotis.get(id);
+  if (noti.image) {
+    persistentNoti.setImage(noti.image)
+  }
+
+  if (noti.message) {
+    persistentNoti.setText(noti.message)
+  }
+
+  if (noti.title) {
+    persistentNoti.setTitle(noti.title)
+  }
+};
+
+/**
  * @typedef PersistentNoti
  * @type {object}
  * @property {string} type - Type of notification
@@ -191,13 +219,16 @@ function playPersistentNoti(noti) {
     case "start":
       startPersistentNoti(id, noti.options);
       break;
+    case "update":
+      updatePersistentNoti(id, noti.options)
+      break;
     case "end":
       endPersistentNoti(id);
       break;
 
     default:
       console.error(
-        "Invalid step for persistent notification must be `start` or `end`"
+        "Invalid step for persistent notification must be `start`, `end`, or `update`"
       );
   }
 }
