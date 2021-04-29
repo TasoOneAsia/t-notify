@@ -3,10 +3,10 @@ name: "Create Stable Release"
 
 on:
   push:
-    tags:
-      - "v*"
     branches:
-      - "UPD"
+      - master
+    tags:
+      - v*
 jobs:
   create_stable_release:
     name: "Create a Stable Release"
