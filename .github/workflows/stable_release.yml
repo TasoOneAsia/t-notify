@@ -8,21 +8,23 @@ on:
     branches:
       - "UPD"
 jobs:
-  create_tagged_release:
+  create_stable_release:
+    name: "Create a Stable Release"
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout source code
         uses: actions/checkout@v2.3.4
         with:
           fetch-depth: 0
+      - name: Set env
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: Install zip for creating archive
         run: |
           sudo apt-get update
           sudo apt-get install zip
       - name: Create Archive,
         run: |
-          zip -r t-notify.zip . -x ".git/*" ".github/*" "docs/*" ".gitignore"
+          zip -r t-notify.zip-${{ env.RELEASE_VERSION }} . -x ".git/*" ".github/*" "docs/*" ".gitignore"
       - name: Create Changelog
         uses: Bullrich/generate-release-changelog@master
         id: create_changelog
@@ -32,7 +34,8 @@ jobs:
         id: create_release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "t-notify.zip"
+          name: T-Notify ${{ env.RELEASE_VERSION }}
+          artifacts: t-notify.zip-${{ env.RELEASE_VERSION }}
           body: |
             ${{ steps.create_changelog.outputs.changelog }}
           token: ${{ secrets.GITHUB_TOKEN }}
