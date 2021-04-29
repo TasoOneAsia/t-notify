@@ -1,0 +1,38 @@
+---
+name: "Create Stable Release"
+
+on:
+  push:
+    tags:
+      - "v*"
+    branches:
+      - "UPD"
+jobs:
+  create_tagged_release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+      - name: Install zip for creating archive
+        run: |
+          sudo apt-get update
+          sudo apt-get install zip
+      - name: Create Archive,
+        run: |
+          zip -r t-notify.zip . -x ".git/*" ".github/*" "docs/*" ".gitignore"
+      - name: Create Changelog
+        uses: Bullrich/generate-release-changelog@master
+        id: create_changelog
+        env:
+          REPO: ${{ github.repository }}
+      - name: Create Release
+        id: create_release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "t-notify.zip"
+          body: |
+            ${{ steps.create_changelog.outputs.changelog }}
+          token: ${{ secrets.GITHUB_TOKEN }}
