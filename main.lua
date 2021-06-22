@@ -51,12 +51,17 @@ local function verifyTypes(notiTable, isPersistent)
         return false
     end
 
+    if notiTable.icon and type(notiTable.icon) ~= 'string' then
+        printError('The icon property must be a string for this notifications')
+        return false
+    end
+
     return true
 end
 
 --Triggers a notification in the NUI using supplied params
-local function SendNotification(style, duration, title, message, image, sound, custom, position)
-    DebugPrintInfo(style, duration, title, message, image, sound, custom, position)
+local function SendNotification(style, duration, title, message, image, sound, custom, position, icon)
+    DebugPrintInfo(style, duration, title, message, image, sound, custom, position, icon)
 
     local notiObject = {
         type = 'noti',
@@ -68,6 +73,7 @@ local function SendNotification(style, duration, title, message, image, sound, c
         custom = custom,
         position = position,
         sound = sound,
+        icon = icon,
     }
 
     local areTypesValid = verifyTypes(notiObject)
@@ -141,6 +147,10 @@ function Alert(data)
     SendNotification(data.style, data.duration, nil, data.message, nil, data.sound, data.custom, data.position)
 end
 
+function Icon(data)
+    SendNotification(data.style, data.duration, nil, data.message, nil, data.sound, data.custom, data.position, data.icon)
+end
+
 function Custom(data)
     SendNotification(data.style, data.duration, data.title, data.message, data.image, data.sound, data.custom, data.position)
 end
@@ -164,6 +174,19 @@ AddEventHandler('t-notify:client:Alert', function(data)
         sound = data.sound,
         custom = data.custom,
         position = data.position
+    })
+end)
+
+RegisterNetEvent('t-notify:client:Icon')
+AddEventHandler('t-notify:client:Icon', function(data)
+    Alert({
+        style = data.style,
+        duration = data.duration,
+        message = data.message,
+        sound = data.sound,
+        custom = data.custom,
+        position = data.position,
+        icon = data.icon
     })
 end)
 
