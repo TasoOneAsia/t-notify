@@ -179,7 +179,7 @@ end)
 
 RegisterNetEvent('t-notify:client:Icon')
 AddEventHandler('t-notify:client:Icon', function(data)
-    Alert({
+    Icon({
         style = data.style,
         duration = data.duration,
         message = data.message,
