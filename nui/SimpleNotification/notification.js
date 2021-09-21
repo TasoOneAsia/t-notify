@@ -397,6 +397,12 @@ class SimpleNotification {
                 case 'bottom-center':
                     this.options.insertAnimation.name = 'insert-bottom';
                     break;
+                case 'middle-left':
+                    this.options.insertAnimation.name = 'insert-left';
+                    break;
+                case 'middle-right':
+                    this.options.insertAnimation.name = 'insert-right';
+                    break;
             }
         }
         if (this.options.insertAnimation.name == this.options.removeAnimation.name) {
