@@ -160,6 +160,18 @@
     justify-content: flex-end;
 }
 
+.gn-middle-left {
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.gn-middle-right {
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+}
+
 .gn-notification {
     flex-shrink: 0;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
