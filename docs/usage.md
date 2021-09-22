@@ -98,7 +98,7 @@ Depending on the function, the object can have optional and required properties.
       * `name` {STRING} (Optional) - An audio name like what can be found in `config.lua`
       * `reference` {STRING} (Optional) - An audio reference like what can be found in `config.lua`
   * `custom` {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style. *Defaults to false.*
-  * `position` {STRING} (Optional) - Position of the notification to display (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right) *Defaults to config*
+  * `position` {STRING} (Optional) - Position of the notification to display (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right, middle-left, middle-right) *Defaults to config*
 * **Custom**
   * `style` {STRING} (Required) - One of the available styles as listed in the **[base styling](usage?id=base-styling)** section.
   * `title` {STRING} (Optional) - Title to display in the notification. *Defaults to nil*
@@ -109,7 +109,7 @@ Depending on the function, the object can have optional and required properties.
       * `name` {STRING} (Optional) - An audio name like what can be found in `config.lua`
       * `reference` {STRING} (Optional) - An audio reference like what can be found in `config.lua`
   * `custom` {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that wasn't present by default. *Defaults to false*.
-  * `position` {STRING} (Optional) - Position of the notification to display (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right) *Defaults to config*
+  * `position` {STRING} (Optional) - Position of the notification to display (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right, middle-left, middle-right) *Defaults to config*
 * **Image**
   * `style` {STRING} (Required) - One of the available styles as listed in the **[base styling](usage?id=base-styling)** section.
   * `title` {STRING} (Optional) - Title to display in the notification. *Defaults to nil*
@@ -119,7 +119,7 @@ Depending on the function, the object can have optional and required properties.
       * `name` {STRING} (Optional) - An audio name like what can be found in `config.lua`
       * `reference` {STRING} (Optional) - An audio reference like what can be found in `config.lua`
   * `custom` {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that wasn't present by default. *Defaults to false*.
-  * `position` {STRING} (Optional) - Position of the notification to display (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right) *Defaults to config*
+  * `position` {STRING} (Optional) - Position of the notification to display (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right, middle-left, middle-right) *Defaults to config*
 * **Persistent**
   * `step` {STRING} (Required) - The specific step for the persistent notification call (start, update, end).
   * `id` {STRING} (Required) - The unique id for the persistent notification being called. This must be a unique id to each persistent notification.
@@ -131,7 +131,7 @@ Depending on the function, the object can have optional and required properties.
       * `name` {STRING} (Optional) - An audio name like what can be found in `config.lua`
       * `reference` {STRING} (Optional) - An audio reference like what can be found in `config.lua` 
     * `custom` {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that wasn't present by default. *Defaults to false*.
-    * `position` {STRING} (Optional) - Position of the notification to display (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right) *Defaults to config value*
+    * `position` {STRING} (Optional) - Position of the notification to display (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right, middle-left, middle-right) *Defaults to config value*
 
 ### Examples
 
