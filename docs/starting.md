@@ -36,7 +36,7 @@ T-Notify includes a small config that allows for various changes to how the reso
 		debugMode = true --Toggle developer prints
 	}
 
-* **Position** - Will change the positioning of the notifications (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right)
+* **Position** - Will change the positioning of the notifications (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right, middle-left, middle-right)
 * **maxNotifications** - The max number of notifications to show on-screen at once.
 * **Sound** - Allows for the change of the notification alert sound. Reference [this](https://wiki.gtanet.work/index.php?title=FrontEndSoundlist) for options.
 	* *name* - Sound Name
