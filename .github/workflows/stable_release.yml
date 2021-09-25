@@ -22,7 +22,7 @@ jobs:
       - name: Create Zip Release
         run: |
           mkdir -p ./temp/t-notify
-          cp -r ./{nui,config.lua,deprecated.lua,fxmanifest.lua,LICENSE,README.md,update.lua,version} ./temp/t-notify
+          cp -r ./{nui,config.lua,deprecated.lua,fxmanifest.lua,main.lua,LICENSE,README.md,update.lua,version} ./temp/t-notify
           cd ./temp && zip -r t-notify-${{ steps.get_version_tag.outputs.VERSION_TAG }}.zip ./t-notify
 
       - name: Create and Upload Release
