@@ -80,7 +80,7 @@ exports['t-notify']:Alert({
 ```
 **Server**
 ```lua
-TriggerClientEvent('t-notify:client:Custom', player, {
+TriggerClientEvent('t-notify:client:Custom', source, {
 	style = 'info',
 	title = 'Notification Example',
 	message = 'Here is the message',
