@@ -424,10 +424,10 @@ class SimpleNotification {
             } else if (event.animationName == this.options.insertAnimation.name) {
                 this.node.classList.remove('gn-insert');
                 // Reset notification duration when hovering
-                if (!this.options.sticky) {
-                    this.node.addEventListener('mouseenter', this.removeExtinguish);
-                    this.node.addEventListener('mouseleave', this.addExtinguish);
-                }
+                // if (!this.options.sticky) {
+                //     this.node.addEventListener('mouseenter', this.removeExtinguish);
+                //     this.node.addEventListener('mouseleave', this.addExtinguish);
+                // }
                 if (this.progressBar) {
                     // Set the time before removing the notification
                     this.progressBar.style.animationDuration = `${this.options.duration}ms`;
@@ -678,9 +678,9 @@ class SimpleNotification {
         this.node.style.animationName = this.options.removeAnimation.name;
         this.node.style.animationDuration = `${this.options.removeAnimation.duration}ms`;
         // Pause and reset fadeout on hover
-        this.node.addEventListener('mouseenter', (event) => {
-            event.target.classList.remove('gn-remove');
-        });
+        // this.node.addEventListener('mouseenter', (event) => {
+        //     event.target.classList.remove('gn-remove');
+        // });
         this.node.addEventListener('mouseleave', (event) => {
             event.target.classList.add('gn-remove');
         });
