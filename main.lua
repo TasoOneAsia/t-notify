@@ -1,3 +1,4 @@
+local getterActive, getterResult = false, false
 local nuiReady
 
 -- Debug Print Notification
@@ -112,6 +113,14 @@ local function SendPersistentNotification(step, id, options)
             options = options
         })
     end
+
+    if step == 'get' then
+        getterActive = true
+        while getterActive do
+            Wait(5)
+        end
+    end
+    return getterResult
 end
 --Initialize's Config after activated by Thread
 local function InitConfig()
@@ -128,12 +137,18 @@ local function InitConfig()
     SendNUIMessage(initObject)
 end
 
-RegisterNUICallback('nuiReady', function(data, cb)
+RegisterNUICallback('nuiReady', function(_, cb)
     DebugPrint('NUI frame ready')
     nuiReady = true
     -- Send Config File after NUI frame ready
     InitConfig()
-    cb()
+    cb({})
+end)
+
+RegisterNUICallback('persistentGetter', function(data, cb)
+    getterResult = data.exists or false
+    getterActive = false
+    cb({})
 end)
 
 --OBJECT STYLED EXPORTS
@@ -150,7 +165,10 @@ function Image(data)
 end
 
 function Persist(data)
-    SendPersistentNotification(data.step, data.id, data.options)
+    local persist = SendPersistentNotification(data.step, data.id, data.options)
+    if data.step == 'get' then
+        return persist
+    end
 end
 
 --Event Handlers from Server (Objects)
