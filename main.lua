@@ -119,8 +119,8 @@ local function SendPersistentNotification(step, id, options)
         while getterActive do
             Wait(5)
         end
+        return getterResult
     end
-    return getterResult
 end
 --Initialize's Config after activated by Thread
 local function InitConfig()
