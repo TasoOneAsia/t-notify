@@ -9,14 +9,14 @@
 * `success`
 * `message`
 
-T-Notify also allows for the addition of custom user-specified classes in the custom.css file that can be used in conjunction with the default styles. 
+T-Notify also allows for the addition of custom user-specified classes in the custom.css file that can be used in conjunction with the default styles.
 
 >By default, there is an example custom notification style included in `/nui/custom.css` that can be used as a reference to build upon. Below you can find a small guide referencing that class.
 
 ## Custom Classes Guide
 
 	/* This snippet is taken from custom.css, in the 'nui' directory */
-	
+
 	/* Always attempt to keep user edited CSS to this file only, unless you know what you are doing  */
 
 	.gn-example {
@@ -25,7 +25,7 @@ T-Notify also allows for the addition of custom user-specified classes in the cu
     	text-shadow: 0 1px 1px white;
 	}
 
->This example above shows a custom style that can be invoked whenever a notification is sent. Custom styles **must** have their CSS class **always** prefixed by `gn-` otherwise they will not work correctly. 
+>This example above shows a custom style that can be invoked whenever a notification is sent. Custom styles **must** have their CSS class **always** prefixed by `gn-` otherwise they will not work correctly.
 
 ### Invoking a Custom Style
 
@@ -74,7 +74,7 @@ Both of them require you pass an **Object**, here are some examples:
 **Client**
 ```lua
 exports['t-notify']:Alert({
-	style = 'error', 
+	style = 'error',
 	message = 'Example alert from the client side'
 })
 ```
@@ -129,7 +129,7 @@ Depending on the function, the object can have optional and required properties.
     * `image` {STRING} (Optional) - Accepts an Image URL to embed into the notification
     * `sound` {BOOL or OBJECT} (Optional) - If true, the notification will also have an alert sound. Can also accept an object for custom sound on a per notification basis. *Defaults to false*.
       * `name` {STRING} (Optional) - An audio name like what can be found in `config.lua`
-      * `reference` {STRING} (Optional) - An audio reference like what can be found in `config.lua` 
+      * `reference` {STRING} (Optional) - An audio reference like what can be found in `config.lua`
     * `custom` {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that wasn't present by default. *Defaults to false*.
     * `position` {STRING} (Optional) - Position of the notification to display (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right, middle-left, middle-right) *Defaults to config value*
 
@@ -277,6 +277,13 @@ exports['t-notify']:Persist({
 })
 ```
 
+*Getting a Persistent Notification:*
+```lua
+-- Client-side
+-- Returns a boolean depending on whether the notification exists or not.
+local exists = exports['t-notify']:IsPersistentShowing('dead')
+```
+
 ## Markdown Formatting Tags
 
 >Notifications allows for *Markdown-like* tags to be used within the `message` property, allowing for easy text styling. Many of these tags can be nested to combine Markdown effects.
@@ -320,8 +327,8 @@ This code snippet produced the following notification:
 | r | Red |
 | g | Green |
 | y | Yellow |
-| b | Blue | 
-| c | Cyan | 
+| b | Blue |
+| c | Cyan |
 | p | Purple |
 | w | White |
 | o | Orange |
