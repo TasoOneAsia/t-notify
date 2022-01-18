@@ -225,13 +225,6 @@ function playPersistentNoti(noti) {
     case "end":
       endPersistentNoti(id);
       break;
-    case "get":
-      fetch("https://t-notify/persistentGetter", {
-        method: "POST",
-        body: JSON.stringify({exists: persistentNotis.has(id)}),
-      }).catch((e) => console.error(`Unable to get PersistentNoti with id: ${id}.`, e));
-      break;
-
     default:
       console.error(
         "Invalid step for persistent notification must be `start`, `end`, or `update`"

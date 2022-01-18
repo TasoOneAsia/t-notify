@@ -35,5 +35,6 @@ exports {
     'Alert',
     'Custom',
     'Image',
-    'Persist'
+    'Persist',
+    'IsPersistentShowing'
 }

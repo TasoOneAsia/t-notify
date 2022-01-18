@@ -1,4 +1,4 @@
-local getterActive, getterResult = false, false
+local PersistentNotiMap = {}
 local nuiReady
 
 -- Debug Print Notification
@@ -105,6 +105,12 @@ local function SendPersistentNotification(step, id, options)
         end
     end
 
+    if step == 'start' then
+        PersistentNotiMap[id] = true
+    elseif step == 'end' then
+        PersistentNotiMap[id] = false
+    end
+
     if areTypesValid then
         SendNUIMessage({
             type = 'persistNoti',
@@ -112,14 +118,6 @@ local function SendPersistentNotification(step, id, options)
             id = id,
             options = options
         })
-    end
-
-    if step == 'get' then
-        getterActive = true
-        while getterActive do
-            Wait(5)
-        end
-        return getterResult
     end
 end
 --Initialize's Config after activated by Thread
@@ -145,12 +143,6 @@ RegisterNUICallback('nuiReady', function(_, cb)
     cb({})
 end)
 
-RegisterNUICallback('persistentGetter', function(data, cb)
-    getterResult = data.exists or false
-    getterActive = false
-    cb({})
-end)
-
 --OBJECT STYLED EXPORTS
 function Alert(data)
     SendNotification(data.style, data.duration, nil, data.message, nil, data.sound, data.custom, data.position)
@@ -165,10 +157,11 @@ function Image(data)
 end
 
 function Persist(data)
-    local persist = SendPersistentNotification(data.step, data.id, data.options)
-    if data.step == 'get' then
-        return persist
-    end
+    SendPersistentNotification(data.step, data.id, data.options)
+end
+
+function IsPersistentShowing(id)
+    return PersistentNotiMap[id] or false
 end
 
 --Event Handlers from Server (Objects)
