@@ -1,3 +1,4 @@
+local PersistentNotiMap = {}
 local nuiReady
 
 -- Debug Print Notification
@@ -104,6 +105,12 @@ local function SendPersistentNotification(step, id, options)
         end
     end
 
+    if step == 'start' then
+        PersistentNotiMap[id] = true
+    elseif step == 'end' then
+        PersistentNotiMap[id] = false
+    end
+
     if areTypesValid then
         SendNUIMessage({
             type = 'persistNoti',
@@ -128,12 +135,12 @@ local function InitConfig()
     SendNUIMessage(initObject)
 end
 
-RegisterNUICallback('nuiReady', function(data, cb)
+RegisterNUICallback('nuiReady', function(_, cb)
     DebugPrint('NUI frame ready')
     nuiReady = true
     -- Send Config File after NUI frame ready
     InitConfig()
-    cb()
+    cb({})
 end)
 
 --OBJECT STYLED EXPORTS
@@ -151,6 +158,10 @@ end
 
 function Persist(data)
     SendPersistentNotification(data.step, data.id, data.options)
+end
+
+function IsPersistentShowing(id)
+    return PersistentNotiMap[id] or false
 end
 
 --Event Handlers from Server (Objects)

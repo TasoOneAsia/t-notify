@@ -225,7 +225,6 @@ function playPersistentNoti(noti) {
     case "end":
       endPersistentNoti(id);
       break;
-
     default:
       console.error(
         "Invalid step for persistent notification must be `start`, `end`, or `update`"
