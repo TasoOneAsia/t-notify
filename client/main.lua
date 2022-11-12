@@ -2,9 +2,9 @@ local PersistentNotiMap = {}
 local nuiReady
 
 -- Debug Print Notification
-local function DebugPrintInfo(style, duration, title, message, image, sound, custom, position, persistent)
+local function DebugPrintInfo(data, persistent)
   if cfg.debugMode then
-    print('Notification | Style: ' .. tostring(style) .. '\n | Title: ' .. tostring(title) .. '\n | Message: ' .. tostring(message) .. '\n | Image URL: ' .. tostring(image) ..'\n | Duration: ' ..tostring(duration) .. '\n | Sound: ' .. tostring(sound) .. '\n | Custom: ' .. tostring(custom) .. '\n | Position: ' .. tostring(position) .. '\n | Persistent: ' .. tostring(persistent))
+    print('Notification | Style: ' .. tostring(data.style) .. '\n | Title: ' .. tostring(data.title) .. '\n | Message: ' .. tostring(data.message) .. '\n | Image URL: ' .. tostring(data.image) ..'\n | Duration: ' ..tostring(data.duration) .. '\n | Sound: ' .. tostring(data.sound) .. '\n | Custom: ' .. tostring(data.custom) .. '\n | Position: ' .. tostring(data.position) .. '\n | Persistent: ' .. tostring(persistent))
   end
 end
 
@@ -61,26 +61,13 @@ local function verifyTypes(notiTable, isPersistent)
 end
 
 --Triggers a notification in the NUI using supplied params
-local function SendNotification(style, duration, title, message, image, sound, custom, position, icon)
-  DebugPrintInfo(style, duration, title, message, image, sound, custom, position, icon)
+local function SendNotification(data)
+  DebugPrintInfo(data)
 
-  local notiObject = {
-    type = 'noti',
-    style = style,
-    duration = duration,
-    title = title,
-    message = message,
-    image = image,
-    custom = custom,
-    position = position,
-    sound = sound,
-    icon = icon
-  }
-
-  local areTypesValid = verifyTypes(notiObject)
+  local areTypesValid = verifyTypes(data)
 
   if areTypesValid then
-    SendNUIMessage(notiObject)
+    SendNUIMessage(data)
     if type(sound) == 'table' then
       PlaySoundFrontend(-1, sound.name, sound.reference, 1)
     elseif sound == true then
@@ -102,7 +89,7 @@ local function SendPersistentNotification(step, id, options)
   local areTypesValid = true
 
   if options then
-    DebugPrintInfo(options.style, options.duration, options.title, options.message, options.image, options.sound, options.custom, options.position, step .. ' ID: ' .. id)
+    DebugPrintInfo(options, step .. ' ID: ' .. id)
     areTypesValid = verifyTypes(options, true)
     if type(options.sound) == 'table' then
       PlaySoundFrontend(-1, options.sound.name, options.sound.reference, 1)
@@ -151,25 +138,69 @@ end)
 
 --OBJECT STYLED EXPORTS
 function Alert(data)
-  SendNotification(data.style, data.duration, nil, data.message, nil, data.sound, data.custom, data.position)
+  SendNotification({
+    type = 'noti',
+    style = data.style,
+    duration = data.duration,
+    title = nil,
+    message = data.message,
+    image = nil,
+    sound = data.sound,
+    custom = data.custom,
+    position = data.position,
+    icon = data.icon
+  })
 end
 
 exports('Alert', Alert)
 
 function Custom(data)
-  SendNotification(data.style, data.duration, data.title, data.message, data.image, data.sound, data.custom, data.position)
+  SendNotification({
+    type = 'noti',
+    style = data.style,
+    duration = data.duration,
+    title = data.title,
+    message = data.message,
+    image = data.image,
+    sound = data.sound,
+    custom = data.custom,
+    position = data.position,
+    icon = data.icon
+  })
 end
 
 exports('Custom', Custom)
 
 function Image(data)
-  SendNotification(data.style, data.duration, data.title, nil, data.image, data.sound, data.custom, data.position)
+  SendNotification({
+    type = 'noti',
+    style = data.style,
+    duration = data.duration,
+    title = data.title,
+    message = nil,
+    image = data.image,
+    sound = data.sound,
+    custom = data.custom,
+    position = data.position,
+    icon = nil
+  })
 end
 
 exports('Image', Image)
 
 function Icon(data)
-  SendNotification(data.style, data.duration, nil, data.message, nil, data.sound, data.custom, data.position, data.icon)
+  SendNotification({
+    type = 'noti',
+    style = data.style,
+    duration = data.duration,
+    title = data.title,
+    message = data.message,
+    image = nil,
+    sound = data.sound,
+    custom = data.custom,
+    position = data.position,
+    icon = data.icon
+  })
 end
 
 exports('Icon', Icon)
