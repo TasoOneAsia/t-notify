@@ -567,7 +567,12 @@ class SimpleNotification {
                 this.body.appendChild(this.ic);
             }
         }
-        this.ic.className = icon;
+
+        this.ic.classList.add('gn-icon');
+        const classes = icon.split(' ');
+        classes.forEach((className) => {
+            this.ic.classList.add(className);
+        });
     }
 
     /**
