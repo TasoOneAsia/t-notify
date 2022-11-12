@@ -10,5 +10,6 @@ This resource may develop to adopt the following features depending on interest:
  - Custom data to be carried within a notification
 
 **Already Implemented**
+ - FontAwesome notifications (v1.4.0)
  - Persistent notifications (v1.3.0)
  - Custom CSS Styling (v1.2.0)

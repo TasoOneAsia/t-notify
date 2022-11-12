@@ -64,6 +64,8 @@ Uncaught TypeError: SimpleNotification[noti.style] is not a function
 
 **Persistent** - *Send a notification that is persistent*
 
+**Icon** - *Send a notification with a font-awesome supported icon*
+
 ## Triggering Notifications
 > In versions of T-Notify below v1.3.0, Client-Side exports were triggered a little bit differently. See the [deprecated](/deprecated) methods for more details.
 
@@ -132,7 +134,17 @@ Depending on the function, the object can have optional and required properties.
       * `reference` {STRING} (Optional) - An audio reference like what can be found in `config.lua`
     * `custom` {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that wasn't present by default. *Defaults to false*.
     * `position` {STRING} (Optional) - Position of the notification to display (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right, middle-left, middle-right) *Defaults to config value*
-
+* **Icon**
+  * `style` {STRING} (Required) - One of the available styles as listed in the
+    **[base styling](usage?id=base-styling)** section.
+  * `icon` {STRING} (Required) - Icon of the notification to display ([FontAwesome](https://fontawesome.com/v6.0/icons) supported icon).
+  * `duration` {NUMBER} (Optional) - Duration to display notification in ms. *Defaults to 2500ms*.
+  * `message` {STRING} (Optional) - Message to display in the notification.*Defaults to nil*
+  * `sound` {BOOL or OBJECT} (Optional) - If true, the notification will also have an alert sound. Can also accept an object for custom sound on a per notification basis. *Defaults to false*.
+    * `name` {STRING} (Optional) - An audio name like what can be found in `config.lua`
+    * `reference` {STRING} (Optional) - An audio reference like what can be found in `config.lua`
+  * `custom` {BOOL} (Optional) - This ***must*** be set to true in order to utilize a custom style that wasn't present by default. *Defaults to false*.
+  * `position` {STRING} (Optional) - Position of the notification to display (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right) *Defaults to config*
 ### Examples
 
 Here are some example triggers for each of main functions.
@@ -283,6 +295,30 @@ exports['t-notify']:Persist({
 -- Returns a boolean depending on whether the notification exists or not.
 local exists = exports['t-notify']:IsPersistentShowing('dead')
 ```
+
+**Icon**
+```lua
+-- Server-side
+TriggerClientEvent('t-notify:client:Icon', ServerID, {
+	style = 'info',
+	duration = 11500,
+	message = 'Notification with an Icon',
+	icon = 'fas fa-sign-out-alt', 
+	sound = true
+})
+-- Client-side
+exports['t-notify']:Icon({
+	style = 'info',
+	duration = 11500,
+	message = 'Notification with an Icon',
+	icon = 'fas fa-sign-out-alt', 
+	sound = true
+})
+```
+
+This code snippet produced the following notification:
+
+![Image Example](https://tasoagc.dev/u/wmcisu.png)
 
 ## Markdown Formatting Tags
 

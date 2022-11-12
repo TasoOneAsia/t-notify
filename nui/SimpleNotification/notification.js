@@ -78,6 +78,7 @@
  * @typedef Content
  * @type {object}
  * @property {string} [image]
+ * @property {string} [icon]
  * @property {string} [text]
  * @property {string} [title]
  * @property {Button[]} [buttons]
@@ -119,6 +120,8 @@ class SimpleNotification {
         this.body = undefined;
         /** @type {HTMLImageElement | undefined} */
         this.image = undefined;
+        /** @type {HTMLElement | undefined} */
+        this.icon = undefined;
         /** @type {string | undefined} */
         this.text = undefined;
         /** @type {HTMLElement | undefined} */
@@ -549,6 +552,25 @@ class SimpleNotification {
     }
 
     /**
+     * Set the icon attribute
+     * @param {string} icon
+     */
+    setIcon(icon) {
+        if (this.ic == undefined) {
+            this.ic = document.createElement('i');
+            if (this.text) {
+                this.body.insertBefore(this.ic, this.text);
+            } else {
+                if (!this.body) {
+                    this.addBody();
+                }
+                this.body.appendChild(this.ic);
+            }
+        }
+        this.ic.className = icon;
+    }
+
+    /**
      * Set the text content of the notification body
      * @param {string} content
      */
@@ -743,6 +765,9 @@ class SimpleNotification {
         }
         if (hasImage) {
             notification.setImage(content.image);
+        }
+        if (hasIcon) {
+            notification.setIcon(content.icon);
         }
         if (hasText) {
             notification.setText(content.text);

@@ -1,5 +1,5 @@
 cfg = {
-    position = 'top-right', --Changes the position of the notifications
+	position = 'top-right', --Changes the position of the notifications
 	maxNotifications = 0, --Max notifications to show on screen (0 indicates no limit)
     sound = { --Change the alert sound
         name = '5_SEC_WARNING',
