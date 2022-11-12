@@ -219,57 +219,25 @@ exports('IsPersistentShowing', IsPersistentShowing)
 
 --Event Handlers from Server (Objects)
 RegisterNetEvent('t-notify:client:Alert', function(data)
-  Alert({
-    style = data.style,
-    duration = data.duration,
-    message = data.message,
-    sound = data.sound,
-    custom = data.custom,
-    position = data.position
-  })
+  Alert(data)
 end)
 
 RegisterNetEvent('t-notify:client:Custom', function(data)
-  Custom({
-    style = data.style,
-    duration = data.duration,
-    title = data.title,
-    message = data.message,
-    image = data.image,
-    sound = data.sound,
-    custom = data.custom,
-    position = data.position
-  })
+  Custom(data)
 end)
 
 RegisterNetEvent('t-notify:client:Image', function(data)
-  Image({
-    style = data.style,
-    duration = data.duration,
-    title = data.title,
-    image = data.image,
-    sound = data.sound,
-    custom = data.custom,
-    position = data.position
-  })
+  Image(data)
 end)
 
 RegisterNetEvent('t-notify:client:Icon', function(data)
-  Icon({
-    style = data.style,
-    duration = data.duration,
-    message = data.message,
-    sound = data.sound,
-    custom = data.custom,
-    position = data.position,
-    icon = data.icon
-  })
+  Icon(data)
 end)
 
 RegisterNetEvent('t-notify:client:Persist', function(data)
   Persist({
     step = data.step,
     id = data.id,
-    options = data.options or nil
+    options = data.options
   })
 end)
