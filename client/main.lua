@@ -187,9 +187,7 @@ end
 exports('IsPersistentShowing', IsPersistentShowing)
 
 --Event Handlers from Server (Objects)
-
-RegisterNetEvent('t-notify:client:Alert')
-AddEventHandler('t-notify:client:Alert', function(data)
+RegisterNetEvent('t-notify:client:Alert', function(data)
   Alert({
     style = data.style,
     duration = data.duration,
@@ -200,8 +198,7 @@ AddEventHandler('t-notify:client:Alert', function(data)
   })
 end)
 
-RegisterNetEvent('t-notify:client:Custom')
-AddEventHandler('t-notify:client:Custom', function(data)
+RegisterNetEvent('t-notify:client:Custom', function(data)
   Custom({
     style = data.style,
     duration = data.duration,
@@ -214,8 +211,7 @@ AddEventHandler('t-notify:client:Custom', function(data)
   })
 end)
 
-RegisterNetEvent('t-notify:client:Image')
-AddEventHandler('t-notify:client:Image', function(data)
+RegisterNetEvent('t-notify:client:Image', function(data)
   Image({
     style = data.style,
     duration = data.duration,
@@ -227,8 +223,7 @@ AddEventHandler('t-notify:client:Image', function(data)
   })
 end)
 
-RegisterNetEvent('t-notify:client:Icon')
-AddEventHandler('t-notify:client:Icon', function(data)
+RegisterNetEvent('t-notify:client:Icon', function(data)
   Icon({
     style = data.style,
     duration = data.duration,
@@ -240,7 +235,10 @@ AddEventHandler('t-notify:client:Icon', function(data)
   })
 end)
 
-RegisterNetEvent('t-notify:client:Persist')
-AddEventHandler('t-notify:client:Persist', function(data)
-  Persist(data)
+RegisterNetEvent('t-notify:client:Persist', function(data)
+  Persist({
+    step = data.step,
+    id = data.id,
+    options = data.options or nil
+  })
 end)
