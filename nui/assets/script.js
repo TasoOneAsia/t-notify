@@ -21,6 +21,7 @@ const RESOURCE_NAME = window.invokeNative ? window.GetParentResourceName() : 't-
  * @property {string} message - Message
  * @property {string} title - Title of message
  * @property {string} image - Image URL
+ * @property {string} icon - FontAwesome Icon Class
  * @property {boolean} custom - Custom style
  * @property {string} position - Position
  * @property {number} duration - Time in ms
@@ -103,6 +104,7 @@ export function playNotification(noti) {
     const content = {
       title: noti.title && noti.title.toString(),
       image: noti.image,
+      icon: noti.icon,
       text: noti.message && noti.message.toString(),
     };
 
@@ -138,6 +140,7 @@ const startPersistentNoti = (id, noti) => {
   const content = {
     title: noti.title,
     image: noti.image,
+    icon: noti.icon,
     text: noti.message,
   };
 
@@ -193,6 +196,10 @@ const updatePersistentNoti = (id, noti) => {
   const persistentNoti = persistentNotis.get(id);
   if (noti.image) {
     persistentNoti.setImage(noti.image)
+  }
+
+  if (noti.icon) {
+    persistentNoti.setIcon(noti.icon)
   }
 
   if (noti.message) {

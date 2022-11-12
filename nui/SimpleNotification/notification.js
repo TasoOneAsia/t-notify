@@ -78,6 +78,7 @@
  * @typedef Content
  * @type {object}
  * @property {string} [image]
+ * @property {string} [icon]
  * @property {string} [text]
  * @property {string} [title]
  * @property {Button[]} [buttons]
@@ -119,6 +120,8 @@ class SimpleNotification {
         this.body = undefined;
         /** @type {HTMLImageElement | undefined} */
         this.image = undefined;
+        /** @type {HTMLElement | undefined} */
+        this.icon = undefined;
         /** @type {string | undefined} */
         this.text = undefined;
         /** @type {HTMLElement | undefined} */
@@ -434,10 +437,10 @@ class SimpleNotification {
                     this.progressBar.classList.add('gn-extinguish');
                 }
             } else if (event.animationName == 'shorten' && this.progressBar) {
-                if (!this.options.sticky) {
-                    this.node.removeEventListener('mouseenter', this.removeExtinguish);
-                    this.node.removeEventListener('mouseleave', this.addExtinguish);
-                }
+                // if (!this.options.sticky) {
+                //     this.node.removeEventListener('mouseenter', this.removeExtinguish);
+                //     this.node.removeEventListener('mouseleave', this.addExtinguish);
+                // }
                 this.progressBar.classList.add('gn-retire');
                 if (this.events.onDeath) {
                     this.events.onDeath(this);
@@ -546,6 +549,25 @@ class SimpleNotification {
             }
         }
         this.image.src = src;
+    }
+
+    /**
+     * Set the icon attribute
+     * @param {string} icon
+     */
+    setIcon(icon) {
+        if (this.ic == undefined) {
+            this.ic = document.createElement('i');
+            if (this.text) {
+                this.body.insertBefore(this.ic, this.text);
+            } else {
+                if (!this.body) {
+                    this.addBody();
+                }
+                this.body.appendChild(this.ic);
+            }
+        }
+        this.ic.className = icon;
     }
 
     /**
@@ -681,9 +703,9 @@ class SimpleNotification {
         // this.node.addEventListener('mouseenter', (event) => {
         //     event.target.classList.remove('gn-remove');
         // });
-        this.node.addEventListener('mouseleave', (event) => {
-            event.target.classList.add('gn-remove');
-        });
+        // this.node.addEventListener('mouseleave', (event) => {
+        //     event.target.classList.add('gn-remove');
+        // });
     }
 
     /**
@@ -743,6 +765,9 @@ class SimpleNotification {
         }
         if (hasImage) {
             notification.setImage(content.image);
+        }
+        if (hasIcon) {
+            notification.setIcon(content.icon);
         }
         if (hasText) {
             notification.setText(content.text);
