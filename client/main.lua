@@ -27,32 +27,32 @@ local function verifyTypes(notiTable, isPersistent)
     return false
   end
 
-  if not notiTable.style or type(notiTable.style) ~= 'string' then
+  if type(notiTable?.style) ~= 'string' then
     printError('Style cannot be nil or must be a string for notifications')
     return false
   end
 
-  if not isPersistent and (notiTable.duration and type(notiTable.duration) ~= 'number') then
+  if not isPersistent and type(notiTable?.duration) ~= 'number' then
     printError('Duration has to be a number for notifications')
     return false
   end
 
-  if notiTable.sound and (type(notiTable.sound) ~= 'boolean' and type(notiTable.sound) ~= 'table') then
+  if type(notiTable?.sound) ~= 'boolean' and type(notiTable?.sound) ~= 'table' then
     printError('Sound property must be either a boolean or table for notifications')
     return false
   end
 
-  if notiTable.position and type(notiTable.position) ~= 'string' then
+  if type(notiTable?.position) ~= 'string' then
     printError('Position property must be a string for this notifications')
     return false
   end
 
-  if notiTable.image and type(notiTable.image) ~= 'string' then
+  if type(notiTable?.image) ~= 'string' then
     printError('The image property must be a string for this notifications')
     return false
   end
 
-  if notiTable.icon and type(notiTable.icon) ~= 'string' then
+  if type(notiTable?.icon) ~= 'string' then
     printError('The icon property must be a string for this notifications')
     return false
   end

@@ -2,6 +2,9 @@ fx_version 'cerulean'
 
 game 'gta5'
 
+lua54 'yes'
+use_fxv2_oal 'yes'
+
 author 'Taso'
 description 'A FiveM integration of the SimpleNotification.js library'
 version '2.0.0'
