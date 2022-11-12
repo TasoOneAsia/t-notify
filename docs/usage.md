@@ -139,6 +139,7 @@ Depending on the function, the object can have optional and required properties.
     **[base styling](usage?id=base-styling)** section.
   * `icon` {STRING} (Required) - Icon of the notification to display ([FontAwesome](https://fontawesome.com/v6.0/icons) supported icon).
   * `duration` {NUMBER} (Optional) - Duration to display notification in ms. *Defaults to 2500ms*.
+  * `title` {STRING} (Optional) - Title to display in the notification. *Defaults to nil*
   * `message` {STRING} (Optional) - Message to display in the notification.*Defaults to nil*
   * `sound` {BOOL or OBJECT} (Optional) - If true, the notification will also have an alert sound. Can also accept an object for custom sound on a per notification basis. *Defaults to false*.
     * `name` {STRING} (Optional) - An audio name like what can be found in `config.lua`
@@ -310,6 +311,7 @@ TriggerClientEvent('t-notify:client:Icon', ServerID, {
 exports['t-notify']:Icon({
 	style = 'info',
 	duration = 11500,
+    title = 'Notification with an Icon and Title',
 	message = 'Notification with an Icon',
 	icon = 'fas fa-sign-out-alt fa-2xl',
 	sound = true
