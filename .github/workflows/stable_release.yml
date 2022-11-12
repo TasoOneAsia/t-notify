@@ -2,7 +2,7 @@ name: Release Publisher
 on:
   push:
     tags:
-      - OMIT
+      - "*"
 
 jobs:
   create_stable_release:
