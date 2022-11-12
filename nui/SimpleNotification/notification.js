@@ -746,6 +746,7 @@ class SimpleNotification {
      */
     static create(classes, content, notificationOptions = {}) {
         let hasImage = 'image' in content && content.image,
+            hasIcon = 'icon' in content && content.icon,
             hasText = 'text' in content && content.text,
             hasTitle = 'title' in content && content.title,
             hasButtons = 'buttons' in content;
