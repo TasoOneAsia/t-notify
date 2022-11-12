@@ -1,4 +1,7 @@
 // Global default variables
+import {isBrowserEnv} from "./utils.js";
+import {registerWindowDebug} from "./test.js";
+
 let insertAnim;
 let insertDuration;
 let removeAnim;
@@ -8,6 +11,7 @@ let maxNotifications;
 
 // This is where we store persistent noti's
 const persistentNotis = new Map();
+const RESOURCE_NAME = window.invokeNative ? window.GetParentResourceName() : 't-notify'
 
 /**
  * @typedef NotiObject
@@ -26,18 +30,17 @@ const persistentNotis = new Map();
 window.addEventListener("message", (event) => {
   switch (event.data.type) {
     case "init":
-      initFunction(event.data);
-      break;
+      return initFunction(event.data);
     case "persistNoti":
-      playPersistentNoti(event.data);
-      break;
-    default:
-      playNotification(event.data);
+      return playPersistentNoti(event.data);
+    case "noti":
+      return playNotification(event.data)
   }
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  fetch("https://t-notify/nuiReady", {
+window.addEventListener("load", () => {
+  if (isBrowserEnv()) return;
+  fetch(`https://${RESOURCE_NAME}/nuiReady`, {
     method: "POST",
   }).catch((e) => console.error("Unable to send NUI ready message", e));
 });
@@ -84,6 +87,8 @@ const createOptions = (noti) => ({
     name: removeAnim,
     duration: removeDuration,
   },
+  closeOnClick: false,
+  closeButton: false
 });
 
 //Notification Function
@@ -91,7 +96,7 @@ const createOptions = (noti) => ({
  * Play a regular notification
  * @param noti {NotiObject} - Notification
  */
-function playNotification(noti) {
+export function playNotification(noti) {
   // Sanity check
   if (noti) {
     const options = createOptions(noti);
@@ -237,4 +242,9 @@ function playPersistentNoti(noti) {
         "Invalid step for persistent notification must be `start`, `end`, or `update`"
       );
   }
+}
+
+// Lets register our debug methods for browser
+if (isBrowserEnv()) {
+  registerWindowDebug()
 }
