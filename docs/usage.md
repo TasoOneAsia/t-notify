@@ -67,7 +67,7 @@ Uncaught TypeError: SimpleNotification[noti.style] is not a function
 **Icon** - *Send a notification with a font-awesome supported icon*
 
 ## Triggering Notifications
-> In versions of T-Notify below v1.3.0, Client-Side exports were triggered a little bit differently. See the [deprecated](/deprecated) methods for more details.
+> In versions of T-Notify below v1.3.0, Client-Side exports were triggered a little differently. See the [deprecated](/deprecated) methods for more details.
 
 You can trigger notifications from both the Client-Side or the Server-Side. The object passed on either side has the exact same properties but an `export` is used on the Client-Side and a `TriggerClientEvent` is used on the Server-Side.
 
@@ -311,9 +311,11 @@ exports['t-notify']:Icon({
 	style = 'info',
 	duration = 11500,
 	message = 'Notification with an Icon',
-	icon = 'fas fa-sign-out-alt', 
+	icon = 'fas fa-sign-out-alt fa-2xl',
 	sound = true
 })
+
+-- Use the following for custom sizing: https://fontawesome.com/docs/web/style/size
 ```
 
 This code snippet produced the following notification:
