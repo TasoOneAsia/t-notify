@@ -560,15 +560,16 @@ class SimpleNotification {
             this.ic = document.createElement('i');
             if (this.text) {
                 this.body.insertBefore(this.ic, this.text);
+                this.ic.classList.add('gn-text-icon');
             } else {
                 if (!this.body) {
                     this.addBody();
                 }
-                this.body.appendChild(this.ic);
+                this.title.insertBefore(this.ic, this.title.firstChild);
+                this.ic.classList.add('gn-title-icon');
             }
         }
 
-        this.ic.classList.add('gn-icon');
         const classes = icon.split(' ');
         classes.forEach((className) => {
             this.ic.classList.add(className);
@@ -772,11 +773,11 @@ class SimpleNotification {
         if (hasImage) {
             notification.setImage(content.image);
         }
-        if (hasIcon) {
-            notification.setIcon(content.icon);
-        }
         if (hasText) {
             notification.setText(content.text);
+        }
+        if (hasIcon) {
+            notification.setIcon(content.icon);
         }
         if (hasButtons) {
             if (!Array.isArray(content.buttons)) {
