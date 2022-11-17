@@ -10,7 +10,6 @@ CreateThread(function()
     local currVersion = GetResourceMetadata(localName, "version", 0)
     local latestVersion = json.decode(respText).tag_name
 
-    print(currVersion, latestVersion)
     if currVersion > latestVersion then
       print(("You may be using a pre-release of %s. Your version: ^1%s^0, GitHub version: ^2%s"):format(resourceName, currVersion, latestVersion))
     elseif currVersion < latestVersion then
