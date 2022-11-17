@@ -4,7 +4,7 @@ local nuiReady
 -- Debug Print Notification
 local function DebugPrintInfo(data, persistent)
   if cfg.debugMode then
-    print('Notification | Style: ' .. tostring(data.style) .. '\n | Title: ' .. tostring(data.title) .. '\n | Message: ' .. tostring(data.message) .. '\n | Image URL: ' .. tostring(data.image) ..'\n | Duration: ' ..tostring(data.duration) .. '\n | Sound: ' .. tostring(data.sound) .. '\n | Custom: ' .. tostring(data.custom) .. '\n | Position: ' .. tostring(data.position) .. '\n | Persistent: ' .. tostring(persistent))
+    print('Notification | Style: ' .. tostring(data.style) .. '\n | Title: ' .. tostring(data.title) .. '\n | Message: ' .. tostring(data.message) .. '\n | Image URL: ' .. tostring(data.image) .. '\n | Icon: ' .. tostring(data.icon) ..'\n | Duration: ' .. tostring(data.duration) .. '\n | Sound: ' .. tostring(data.sound) .. '\n | Custom: ' .. tostring(data.custom) .. '\n | Position: ' .. tostring(data.position) .. '\n | Persistent: ' .. tostring(persistent))
   end
 end
 
