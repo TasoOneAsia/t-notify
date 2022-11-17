@@ -5,6 +5,7 @@ CreateThread(function()
   local function checkVersionHandler(respCode, respText)
     if respCode ~= 200 then
       print(("%s - Error in checking for update, error code %s"):format(resourceName, respCode))
+      return
     end
 
     local currVersion = GetResourceMetadata(localName, "version", 0)
