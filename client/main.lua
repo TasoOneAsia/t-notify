@@ -1,3 +1,13 @@
+-- Type, Required, UsePersistent
+-- All type validation needed
+local NOTI_TYPES <const> = {
+  ["style"] = { "string", false },
+  ["duration"] = { "number", nil, true },
+  ["sound"] = { "boolean" },
+  ["position"] = { "table" },
+  ["image"] = { "string" },
+  ["icon"] = { "string" }
+}
 local PersistentNotiMap = {}
 local nuiReady
 
@@ -21,40 +31,20 @@ local function printError(msg)
 end
 
 local function verifyTypes(notiTable, isPersistent)
-  -- Might add more type validation here idk
-  if not nuiReady then
-    printError('NUI Frame is not ready yet')
-    return false
-  end
-
-  if type(notiTable?.style) ~= 'string' then
-    printError('Style cannot be nil or must be a string for notifications')
-    return false
-  end
-
-  if not isPersistent and type(notiTable?.duration) ~= 'number' then
-    printError('Duration has to be a number for notifications')
-    return false
-  end
-
-  if type(notiTable?.sound) ~= 'boolean' and type(notiTable?.sound) ~= 'table' then
-    printError('Sound property must be either a boolean or table for notifications')
-    return false
-  end
-
-  if type(notiTable?.position) ~= 'string' then
-    printError('Position property must be a string for this notifications')
-    return false
-  end
-
-  if type(notiTable?.image) ~= 'string' then
-    printError('The image property must be a string for this notifications')
-    return false
-  end
-
-  if type(notiTable?.icon) ~= 'string' then
-    printError('The icon property must be a string for this notifications')
-    return false
+  local usePersistent
+  for k, v in pairs(NOTI_TYPES) do
+    usePersistent = v[3] and isPersistent or false
+    if not usePersistent and notiTable[k] and v[2] == nil then
+      if notiTable[k] and type(notiTable[k]) ~= v[1] then
+        printError(('Invalid type for %s, expected %s, got %s'):format(k, v[1], type(notiTable[k])))
+        return false
+      end
+    elseif notiTable[k] and v[2] == false then
+      if not notiTable[k] or type(notiTable[k]) ~= v[1] then
+        printError(('Type for %s is nil or is not a %s'):format(k, v[1]))
+        return false
+      end
+    end
   end
 
   return true
