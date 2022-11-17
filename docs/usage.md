@@ -322,7 +322,9 @@ exports['t-notify']:Icon({
 
 This code snippet produced the following notification:
 
-![Image Example](https://tasoagc.dev/u/wmcisu.png)
+![Image Example](https://imgur.com/qDdqjLy.png)
+
+![Image Example](https://imgur.com/Y1qZL7o.png)
 
 ## Markdown Formatting Tags
 
