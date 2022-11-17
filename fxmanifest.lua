@@ -23,7 +23,6 @@ files {
     'nui/main.html',
     'nui/SimpleNotification/notification.css',
     'nui/SimpleNotification/notification.js',
-    'nui/assets/script.js',
-    'nui/assets/styles.css',
+    'nui/assets/*.js',
     'nui/custom.css'
 }
