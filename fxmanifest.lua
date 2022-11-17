@@ -24,5 +24,6 @@ files {
     'nui/SimpleNotification/notification.css',
     'nui/SimpleNotification/notification.js',
     'nui/assets/*.js',
+    'nui/assets/styles.css',
     'nui/custom.css'
 }
