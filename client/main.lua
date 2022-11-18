@@ -1,12 +1,13 @@
--- Type, Required, UsePersistent
--- All type validation needed
+-- Type: the required type(s) for the argument
+-- Required: is the argument required
+-- Persistent: ignore argument if the notification is persistent
 local NOTI_TYPES <const> = {
-  ["style"] = { "string", false },
-  ["duration"] = { "number", nil, true },
-  ["sound"] = { "boolean" },
-  ["position"] = { "table" },
-  ["image"] = { "string" },
-  ["icon"] = { "string" }
+  style = { type = "string", required = true, persistent = false },
+  duration = { type = "number", required = false, persistent = true },
+  sound = { type = { "boolean", "table" }, required = false, persistent = false },
+  position = { type = "table", required = false, persistent = false },
+  image = { type = "string", required = false, persistent = false },
+  icon = { type = "string", required = false, persistent = false }
 }
 local PersistentNotiMap = {}
 local nuiReady
@@ -30,23 +31,35 @@ local function printError(msg)
   print(errMsg)
 end
 
+local function checkTypes(argVal, types)
+  for i = 1, #types do
+    if type(argVal) == types[i] then
+      return true
+    end
+  end
+
+  return false
+end
+
 local function verifyTypes(notiTable, isPersistent)
-  local usePersistent
-  for k, v in pairs(NOTI_TYPES) do
-    usePersistent = v[3] and isPersistent or false
-    if not usePersistent and notiTable[k] and v[2] == nil then
-      if notiTable[k] and type(notiTable[k]) ~= v[1] then
-        printError(('Invalid type for %s, expected %s, got %s'):format(k, v[1], type(notiTable[k])))
+  local usePersistent, notiVal, hasTypes
+  for typeKey, v in pairs(NOTI_TYPES) do
+    usePersistent = v.persistent and isPersistent or false
+    notiVal = notiTable[typeKey]
+    hasTypes = type(v.type) == 'table' and checkTypes(notiVal, v.type) or type(notiVal) == v.type
+
+    if v.required then
+      if not notiVal or not hasTypes then
+        printError(('Invalid %s type for %s notification. Expected %s, got %s.'):format(typeKey, isPersistent and 'persistent' or 'non-persistent', type(v.type == 'table') and table.concat(v.type, ' or ') or v.type, type(notiVal)))
         return false
       end
-    elseif notiTable[k] and v[2] == false then
-      if not notiTable[k] or type(notiTable[k]) ~= v[1] then
-        printError(('Type for %s is nil or is not a %s'):format(k, v[1]))
+    else
+      if not isPersistent and notiVal and not hasTypes then
+        printError(('Invalid %s type for %s notification. Expected %s, got %s.'):format(typeKey, isPersistent and 'persistent' or 'non-persistent', type(v.type == 'table') and table.concat(v.type, ' or ') or v.type, type(notiVal)))
         return false
       end
     end
   end
-
   return true
 end
 
