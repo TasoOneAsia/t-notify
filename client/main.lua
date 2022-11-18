@@ -208,21 +208,13 @@ end
 exports('IsPersistentShowing', IsPersistentShowing)
 
 --Event Handlers from Server (Objects)
-RegisterNetEvent('t-notify:client:Alert', function(data)
-  Alert(data)
-end)
+RegisterNetEvent('t-notify:client:Alert', Alert)
 
-RegisterNetEvent('t-notify:client:Custom', function(data)
-  Custom(data)
-end)
+RegisterNetEvent('t-notify:client:Custom', Custom)
 
-RegisterNetEvent('t-notify:client:Image', function(data)
-  Image(data)
-end)
+RegisterNetEvent('t-notify:client:Image', Image)
 
-RegisterNetEvent('t-notify:client:Icon', function(data)
-  Icon(data)
-end)
+RegisterNetEvent('t-notify:client:Icon', Icon)
 
 RegisterNetEvent('t-notify:client:Persist', function(data)
   Persist({
