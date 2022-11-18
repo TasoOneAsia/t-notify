@@ -320,7 +320,7 @@ exports['t-notify']:Icon({
 -- Use the following for custom sizing: https://fontawesome.com/docs/web/style/size
 ```
 
-This code snippet produced the following notification:
+These code snippets produced the following notifications:
 
 ![Image Example](https://imgur.com/qDdqjLy.png)
 
