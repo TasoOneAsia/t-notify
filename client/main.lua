@@ -91,7 +91,7 @@ local function SendPersistentNotification(step, id, options)
   if step == 'start' then
     PersistentNotiMap[id] = true
   elseif step == 'end' then
-    PersistentNotiMap[id] = false
+    PersistentNotiMap[id] = nil
   end
 
   if areTypesValid then
@@ -216,10 +216,4 @@ RegisterNetEvent('t-notify:client:Image', Image)
 
 RegisterNetEvent('t-notify:client:Icon', Icon)
 
-RegisterNetEvent('t-notify:client:Persist', function(data)
-  Persist({
-    step = data.step,
-    id = data.id,
-    options = data.options
-  })
-end)
+RegisterNetEvent('t-notify:client:Persist', Persist)
