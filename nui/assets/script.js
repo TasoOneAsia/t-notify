@@ -11,7 +11,7 @@ let maxNotifications;
 
 // This is where we store persistent noti's
 const persistentNotis = new Map();
-const RESOURCE_NAME = window.invokeNative ? window.GetParentResourceName() : 't-notify'
+const RESOURCE_NAME = !isBrowserEnv() ? window.GetParentResourceName() : 't-notify'
 
 /**
  * @typedef NotiObject
