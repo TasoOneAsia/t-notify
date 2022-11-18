@@ -28,7 +28,8 @@ CreateThread(function()
 
         print("^1############################### ^0")
     else
-      print(resourceName.. '(v' .. latestVersion .. ") is up to date and has started")
+      local startTxtTmpl = "%s (v%s) is up to date and has started"
+      print(startTxtTmpl:format(resourceName, latestVersion))
     end
   end
 
