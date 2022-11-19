@@ -451,3 +451,11 @@
 .gn-float-right {
     float: right;
 }
+
+.gn-text-icon {
+    margin-left: 0.5rem;
+}
+
+.gn-title-icon {
+    margin-right: 0.5rem;
+}

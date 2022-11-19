@@ -78,6 +78,7 @@
  * @typedef Content
  * @type {object}
  * @property {string} [image]
+ * @property {string} [icon]
  * @property {string} [text]
  * @property {string} [title]
  * @property {Button[]} [buttons]
@@ -119,6 +120,8 @@ class SimpleNotification {
         this.body = undefined;
         /** @type {HTMLImageElement | undefined} */
         this.image = undefined;
+        /** @type {HTMLElement | undefined} */
+        this.icon = undefined;
         /** @type {string | undefined} */
         this.text = undefined;
         /** @type {HTMLElement | undefined} */
@@ -424,20 +427,20 @@ class SimpleNotification {
             } else if (event.animationName == this.options.insertAnimation.name) {
                 this.node.classList.remove('gn-insert');
                 // Reset notification duration when hovering
-                if (!this.options.sticky) {
-                    this.node.addEventListener('mouseenter', this.removeExtinguish);
-                    this.node.addEventListener('mouseleave', this.addExtinguish);
-                }
+                // if (!this.options.sticky) {
+                //     this.node.addEventListener('mouseenter', this.removeExtinguish);
+                //     this.node.addEventListener('mouseleave', this.addExtinguish);
+                // }
                 if (this.progressBar) {
                     // Set the time before removing the notification
                     this.progressBar.style.animationDuration = `${this.options.duration}ms`;
                     this.progressBar.classList.add('gn-extinguish');
                 }
             } else if (event.animationName == 'shorten' && this.progressBar) {
-                if (!this.options.sticky) {
-                    this.node.removeEventListener('mouseenter', this.removeExtinguish);
-                    this.node.removeEventListener('mouseleave', this.addExtinguish);
-                }
+                // if (!this.options.sticky) {
+                //     this.node.removeEventListener('mouseenter', this.removeExtinguish);
+                //     this.node.removeEventListener('mouseleave', this.addExtinguish);
+                // }
                 this.progressBar.classList.add('gn-retire');
                 if (this.events.onDeath) {
                     this.events.onDeath(this);
@@ -546,6 +549,31 @@ class SimpleNotification {
             }
         }
         this.image.src = src;
+    }
+
+    /**
+     * Set the icon attribute
+     * @param {string} icon
+     */
+    setIcon(icon) {
+        if (this.ic == undefined) {
+            this.ic = document.createElement('i');
+            if (this.text) {
+                this.body.insertBefore(this.ic, this.text);
+                this.ic.classList.add('gn-text-icon');
+            } else {
+                if (!this.body) {
+                    this.addBody();
+                }
+                this.title.insertBefore(this.ic, this.title.firstChild);
+                this.ic.classList.add('gn-title-icon');
+            }
+        }
+
+        const classes = icon.split(' ');
+        classes.forEach((className) => {
+            this.ic.classList.add(className);
+        });
     }
 
     /**
@@ -678,12 +706,12 @@ class SimpleNotification {
         this.node.style.animationName = this.options.removeAnimation.name;
         this.node.style.animationDuration = `${this.options.removeAnimation.duration}ms`;
         // Pause and reset fadeout on hover
-        this.node.addEventListener('mouseenter', (event) => {
-            event.target.classList.remove('gn-remove');
-        });
-        this.node.addEventListener('mouseleave', (event) => {
-            event.target.classList.add('gn-remove');
-        });
+        // this.node.addEventListener('mouseenter', (event) => {
+        //     event.target.classList.remove('gn-remove');
+        // });
+        // this.node.addEventListener('mouseleave', (event) => {
+        //     event.target.classList.add('gn-remove');
+        // });
     }
 
     /**
@@ -724,6 +752,7 @@ class SimpleNotification {
      */
     static create(classes, content, notificationOptions = {}) {
         let hasImage = 'image' in content && content.image,
+            hasIcon = 'icon' in content && content.icon,
             hasText = 'text' in content && content.text,
             hasTitle = 'title' in content && content.title,
             hasButtons = 'buttons' in content;
@@ -746,6 +775,9 @@ class SimpleNotification {
         }
         if (hasText) {
             notification.setText(content.text);
+        }
+        if (hasIcon) {
+            notification.setIcon(content.icon);
         }
         if (hasButtons) {
             if (!Array.isArray(content.buttons)) {
