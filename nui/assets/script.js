@@ -1,4 +1,5 @@
 // Global default variables
+import NotificationHistory from "./notificationHistory.js";
 import {isBrowserEnv} from "./utils.js";
 import {registerWindowDebug} from "./test.js";
 
@@ -247,4 +248,6 @@ function playPersistentNoti(noti) {
 // Lets register our debug methods for browser
 if (isBrowserEnv()) {
   registerWindowDebug()
+} else {
+  document.querySelector(".history-wrapper").remove();
 }
