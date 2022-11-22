@@ -78,9 +78,7 @@ h1 {
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: start;
     width: 22rem;
-    height: 36rem;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     background-color: #0077bb;
     border-radius: 3px;
@@ -113,13 +111,15 @@ h1 {
     width: 100%;
     height: 100%;
     row-gap: 0.6rem;
-    margin-top: 0.5rem;
+    margin: 0.6rem 0;
 }
 
 .history-empty {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 6rem;
     font-weight: bold;
     font-size: 1.5rem;
 }

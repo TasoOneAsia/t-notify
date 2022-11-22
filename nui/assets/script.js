@@ -2,6 +2,7 @@
 import NotificationHistory from "./notificationHistory.js";
 import {isBrowserEnv} from "./utils.js";
 import {registerWindowDebug} from "./test.js";
+import notificationHistory from "./notificationHistory.js";
 
 let insertAnim;
 let insertDuration;
@@ -12,6 +13,7 @@ let maxNotifications;
 
 // This is where we store persistent noti's
 const persistentNotis = new Map();
+const notiHistory = new NotificationHistory();
 const RESOURCE_NAME = !isBrowserEnv() ? window.GetParentResourceName() : 't-notify'
 
 /**
@@ -40,6 +42,8 @@ window.addEventListener("message", (event) => {
 });
 
 window.addEventListener("load", () => {
+  notiHistory.init();
+  notiHistory.debug();
   if (isBrowserEnv()) return;
   fetch(`https://${RESOURCE_NAME}/nuiReady`, {
     method: "POST",
