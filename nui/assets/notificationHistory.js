@@ -1,8 +1,8 @@
 class NotificationHistory {
+  history = [];
   count = 0;
   currentPage = 0;
   maxNotis = 4;
-  history = [];
   paginationEl = null;
   position = null;
   containerEl = null;
@@ -41,7 +41,7 @@ class NotificationHistory {
   }
 
   addNotification(noti) {
-    const { title, message, type } = noti;
+    const { title, message, style } = noti;
     const container = document.createElement('div');
     const footer = document.createElement('div');
     const titleEl = document.createElement('h2');
@@ -51,7 +51,7 @@ class NotificationHistory {
 
     this.count++;
     container.id = `notification-${this.count}`;
-    container.classList.add(`gn-${type}`);
+    container.classList.add(`gn-${style || 'info'}`);
     titleEl.textContent = title;
     messageEl.textContent = message;
     deleteBtn.textContent = 'Delete';
