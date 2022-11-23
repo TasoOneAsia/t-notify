@@ -19,6 +19,7 @@ export const registerWindowDebug = () => {
     removeAnim: "fadeout",
     removeDuration: 600,
     maxNotifications: 0,
+    useHistory: false,
   };
 
   mockNuiMessage({

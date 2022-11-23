@@ -11,10 +11,11 @@ class NotificationHistory {
     this.position = position;
     this.paginationEl = document.getElementById('history-pagination');
     this.containerEl = document.getElementById('notification-history');
+    this.init();
   }
 
   init() {
-    this.paginationEl.textContent = '1/1';
+    this.paginationEl.textContent = '1 / 1';
     const leftBtn = document.getElementById('history-left');
     const rightBtn = document.getElementById('history-right');
 
@@ -52,8 +53,8 @@ class NotificationHistory {
     this.count++;
     container.id = `notification-${this.count}`;
     container.classList.add(`gn-${style || 'info'}`);
-    titleEl.textContent = title;
-    messageEl.textContent = message;
+    titleEl.textContent = title.length > 32 ? `${title.substring(0, 32)}...` : title;
+    messageEl.textContent = message.length > 82 ? `${message.substring(0, 82)} ...` : message;
     deleteBtn.textContent = 'Delete';
 
     container.classList.add('history-notification');

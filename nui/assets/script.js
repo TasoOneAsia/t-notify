@@ -10,10 +10,10 @@ let removeAnim;
 let removeDuration;
 let position;
 let maxNotifications;
+let notiHistory = null;
 
 // This is where we store persistent noti's
 const persistentNotis = new Map();
-const notiHistory = new NotificationHistory();
 const RESOURCE_NAME = !isBrowserEnv() ? window.GetParentResourceName() : 't-notify'
 
 /**
@@ -42,7 +42,6 @@ window.addEventListener("message", (event) => {
 });
 
 window.addEventListener("load", () => {
-  notiHistory.init();
   if (isBrowserEnv()) return;
   fetch(`https://${RESOURCE_NAME}/nuiReady`, {
     method: "POST",
@@ -58,6 +57,7 @@ window.addEventListener("load", () => {
  * @property {string} removeAnim - Which remove animation to use
  * @property {number} removeDuration - Remove duration to use
  * @property {number} maxNotifications - Max number of notifications to use
+ * @property {boolean} useHistory - Whether to use notification history
  */
 
 /**
@@ -71,6 +71,7 @@ function initFunction(data) {
   removeAnim = data.removeAnim;
   removeDuration = data.removeDuration;
   maxNotifications = data.maxNotifications;
+  data.useHistory ? (notiHistory = new NotificationHistory()) : document.querySelector('.history-wrapper').remove();
 }
 
 /**
@@ -94,6 +95,14 @@ const createOptions = (noti) => ({
   closeOnClick: false,
   closeButton: false
 });
+
+/**
+ * Save a notification to history
+ * @param noti {NotiObject}- Notification Object
+ */
+const saveToHistory = (noti) => {
+  if (notiHistory) notiHistory.addNotification(noti);
+}
 
 //Notification Function
 /**
@@ -120,7 +129,7 @@ export function playNotification(noti) {
 
 
     SimpleNotification[noti.style.toLowerCase()](content, options);
-    notiHistory.addNotification(noti);
+    saveToHistory(noti);
   }
 }
 
@@ -159,7 +168,7 @@ const startPersistentNoti = (id, noti) => {
       id,
       SimpleNotification.custom([customClass], content, persistOptions)
     );
-    notiHistory.addNotification(noti);
+    saveToHistory(noti);
     return;
   }
 
@@ -167,7 +176,7 @@ const startPersistentNoti = (id, noti) => {
     id,
     SimpleNotification[noti.style.toLowerCase()](content, persistOptions)
   );
-  notiHistory.addNotification(noti);
+  saveToHistory(noti);
 };
 
 /**
