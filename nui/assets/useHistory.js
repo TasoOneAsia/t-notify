@@ -1,4 +1,4 @@
-class NotificationHistory {
+class UseHistory {
   history = [];
   count = 0;
   currentPage = 0;
@@ -166,4 +166,4 @@ class NotificationHistory {
   }
 }
 
-export default NotificationHistory;
+export default UseHistory;

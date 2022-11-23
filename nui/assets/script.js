@@ -1,8 +1,8 @@
 // Global default variables
-import NotificationHistory from "./notificationHistory.js";
+import UseHistory from "./useHistory.js";
 import {isBrowserEnv} from "./utils.js";
 import {registerWindowDebug} from "./test.js";
-import notificationHistory from "./notificationHistory.js";
+import notificationHistory from "./useHistory.js";
 
 let insertAnim;
 let insertDuration;
@@ -71,7 +71,7 @@ function initFunction(data) {
   removeAnim = data.removeAnim;
   removeDuration = data.removeDuration;
   maxNotifications = data.maxNotifications;
-  data.useHistory ? (notiHistory = new NotificationHistory()) : document.querySelector('.history-wrapper').remove();
+  data.useHistory ? (notiHistory = new UseHistory()) : document.querySelector('.history-wrapper').remove();
 }
 
 /**
