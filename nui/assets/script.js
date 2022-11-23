@@ -58,6 +58,7 @@ window.addEventListener("load", () => {
  * @property {number} removeDuration - Remove duration to use
  * @property {number} maxNotifications - Max number of notifications to use
  * @property {boolean} useHistory - Whether to use notification history
+ * @property {string} historyPosition - Position for notification history
  */
 
 /**
@@ -73,15 +74,12 @@ function initFunction(data) {
   maxNotifications = data.maxNotifications;
 
   // Initialize notification history
-  data.useHistory ? (notiHistory = new UseHistory(data.position, {
-    insert: {
-      name: insertAnim,
-      duration: insertDuration
-    },
-    remove: {
-      name: removeAnim,
-      duration: removeDuration
-    }
+  data.useHistory ? (notiHistory = new UseHistory(data.historyPosition, {
+    name: insertAnim,
+    duration: insertDuration
+  }, {
+    name: removeAnim,
+    duration: removeDuration
   })) : document.querySelector('.history-wrapper').remove();
 }
 

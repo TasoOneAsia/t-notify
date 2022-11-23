@@ -20,6 +20,7 @@ export const registerWindowDebug = () => {
     removeDuration: 600,
     maxNotifications: 0,
     useHistory: true,
+    historyPosition: "middle-right",
   };
 
   mockNuiMessage({

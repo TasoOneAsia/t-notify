@@ -25,6 +25,9 @@ class UseHistory {
     this.count = 0;
     this.paginationEl = document.getElementById('history-pagination');
     this.containerEl = document.getElementById('notification-history');
+    this.position = position;
+    this.insert = {name: this.getAnimation(insert.name, true), duration: insert.duration};
+    this.remove = {name: this.getAnimation(remove.name, false), duration: remove.duration};
     this.init();
   }
 
@@ -37,6 +40,7 @@ class UseHistory {
     this.paginationEl.textContent = '1 / 1';
     const leftBtn = document.getElementById('history-left');
     const rightBtn = document.getElementById('history-right');
+    document.querySelector('.history-wrapper').classList.add(`gn-${this.position}`);
 
     leftBtn.addEventListener('click', () => {
       this.currentPage--;
@@ -174,6 +178,26 @@ class UseHistory {
     }
   }
 
+  getAnimation(name, insert) {
+    switch (name) {
+      case 'top-left':
+      case 'bottom-left':
+      case 'middle-left':
+        return 'insert-left';
+      case 'top-right':
+      case 'bottom-right':
+      case 'middle-right':
+        return 'insert-right';
+      case 'top-center':
+        return 'insert-top';
+      case 'bottom-center':
+        return 'insert-bottom';
+      case 'fadeout':
+        if (insert) return 'rotateout';
+        return 'rotateout';
+    }
+  }
+
   /**
    * Remove the info element from the DOM
    */
@@ -186,6 +210,9 @@ class UseHistory {
     }
   }
 
+  hideHistory() {
+
+  }
   /**
    * Creates an info element and adds it to the DOM
    */
@@ -196,6 +223,10 @@ class UseHistory {
       infoEl.classList.add('history-empty');
       this.containerEl.appendChild(infoEl);
     }
+  }
+
+  showHistory() {
+
   }
 
   /**
