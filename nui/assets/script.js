@@ -71,7 +71,18 @@ function initFunction(data) {
   removeAnim = data.removeAnim;
   removeDuration = data.removeDuration;
   maxNotifications = data.maxNotifications;
-  data.useHistory ? (notiHistory = new UseHistory()) : document.querySelector('.history-wrapper').remove();
+
+  // Initialize notification history
+  data.useHistory ? (notiHistory = new UseHistory(data.position, {
+    insert: {
+      name: insertAnim,
+      duration: insertDuration
+    },
+    remove: {
+      name: removeAnim,
+      duration: removeDuration
+    }
+  })) : document.querySelector('.history-wrapper').remove();
 }
 
 /**

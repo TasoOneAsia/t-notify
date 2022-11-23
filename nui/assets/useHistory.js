@@ -1,19 +1,38 @@
+/**
+ * @typedef {NotiObject} HistoryObject
+ * @property {string} id - Persistent Notification ID
+ * @property {HTMLDivElement} el - Notification Element
+ *
+ */
+
 class UseHistory {
   history = [];
-  count = 0;
-  currentPage = 0;
-  maxNotis = 4;
-  paginationEl = null;
-  position = null;
-  containerEl = null;
-  constructor(position) {
+
+  /**
+   * Setup notification history
+   * @param {string} position - The position of the history
+   * @param {Object} insert - The insert animation data
+   * @param {string} insert.name - The name of the animation
+   * @param {number} insert.duration - The duration of the animation
+   * @param {Object} remove - The remove animation data
+   * @param {string} remove.name - The name of the animation
+   * @param {number} remove.duration - The duration of the animation
+   */
+  constructor(position, insert, remove) {
     this.history = [];
-    this.position = position;
+    this.maxNotis = 4;
+    this.currentPage = 0;
+    this.count = 0;
     this.paginationEl = document.getElementById('history-pagination');
     this.containerEl = document.getElementById('notification-history');
     this.init();
   }
 
+  /**
+   * Initialize the history content
+   * by adding button listeners and
+   * adding proper pagination
+   */
   init() {
     this.paginationEl.textContent = '1 / 1';
     const leftBtn = document.getElementById('history-left');
@@ -41,6 +60,13 @@ class UseHistory {
     this.showInfo();
   }
 
+  /**
+   * Add a notification to the history
+   * @param {Object} noti - The notification object
+   * @param {string} noti.title - The notification title
+   * @param {string} noti.message - The notification message
+   * @param {string} noti.style - The notification style
+   */
   addNotification(noti) {
     const { title, message, style } = noti;
     const container = document.createElement('div');
@@ -49,6 +75,7 @@ class UseHistory {
     const messageEl = document.createElement('p');
     const time = document.createElement('span');
     const deleteBtn = document.createElement('button');
+    const date = new Date().toLocaleTimeString();
 
     this.count++;
     container.id = `notification-${this.count}`;
@@ -70,6 +97,7 @@ class UseHistory {
     this.history.push({
       id: container.id,
       el: container,
+      date: date,
       ...noti,
     });
     this.hideInfo();
@@ -80,6 +108,11 @@ class UseHistory {
     })
   }
 
+  /**
+   * Remove a notification from the history
+   * by its target delete button element
+   * @param {HTMLButtonElement} target
+   */
   removeNotification(target) {
     const parent = target.parentNode.parentNode;
     const idx = this.history.findIndex((noti) => noti.id === parent.id);
@@ -98,6 +131,11 @@ class UseHistory {
     }
   }
 
+  /**
+   * Update the pagination text
+   * based on the current page
+   * and the total number of pages
+   */
   updatePagination() {
     if (this.history.length > 0) {
       const maxPages = Math.ceil(this.history.length / this.maxNotis);
@@ -105,6 +143,10 @@ class UseHistory {
     }
   }
 
+  /**
+   * Handles the update of the history
+   * when a notification is deleted
+   */
   updatePage() {
     if (this.history.length > this.maxNotis) {
       const maxPages = Math.ceil(this.history.length / this.maxNotis);
@@ -115,6 +157,9 @@ class UseHistory {
     }
   }
 
+  /**
+   * Update the actual history content
+   */
   updateHistory() {
     if (this.history.length > 0) {
       this.containerEl.innerHTML = '';
@@ -129,6 +174,9 @@ class UseHistory {
     }
   }
 
+  /**
+   * Remove the info element from the DOM
+   */
   hideInfo() {
     if (this.history.length > 0) {
       const infoEl = document.querySelector('.history-empty');
@@ -138,6 +186,9 @@ class UseHistory {
     }
   }
 
+  /**
+   * Creates an info element and adds it to the DOM
+   */
   showInfo() {
     if (this.history.length === 0) {
       const infoEl = document.createElement('p');
@@ -147,20 +198,35 @@ class UseHistory {
     }
   }
 
+  /**
+   * Returns the current noti history
+   * @returns {Object[]}
+   */
   getHistory() {
-    return this.history;
+    // Return the history without the DOM elements
+    return this.history.map((noti) => {
+      const { el, ...rest } = noti;
+      return rest;
+    });
   }
 
+  /**
+   * Clears the noti history
+   */
   clearHistory() {
     this.history = [];
   }
 
-  debug() {
-    for (let i = 0; i < 4; i++) {
+  /**
+   * Creates notifications to test the history
+   * @param {number} count - The number of notifications to create
+   */
+  debug(count) {
+    for (let i = 0; i < count; i++) {
       this.addNotification({
         title: `Notification ${i}`,
         message: 'Notification message',
-        type: 'success',
+        style: 'success',
       });
     }
   }
