@@ -43,7 +43,6 @@ window.addEventListener("message", (event) => {
 
 window.addEventListener("load", () => {
   notiHistory.init();
-  notiHistory.debug();
   if (isBrowserEnv()) return;
   fetch(`https://${RESOURCE_NAME}/nuiReady`, {
     method: "POST",
@@ -119,7 +118,9 @@ export function playNotification(noti) {
       return;
     }
 
+
     SimpleNotification[noti.style.toLowerCase()](content, options);
+    notiHistory.addNotification(noti);
   }
 }
 
@@ -158,6 +159,7 @@ const startPersistentNoti = (id, noti) => {
       id,
       SimpleNotification.custom([customClass], content, persistOptions)
     );
+    notiHistory.addNotification(noti);
     return;
   }
 
@@ -165,6 +167,7 @@ const startPersistentNoti = (id, noti) => {
     id,
     SimpleNotification[noti.style.toLowerCase()](content, persistOptions)
   );
+  notiHistory.addNotification(noti);
 };
 
 /**
