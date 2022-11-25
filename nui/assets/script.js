@@ -73,15 +73,17 @@ function initFunction(data) {
   removeDuration = data.removeDuration;
   maxNotifications = data.maxNotifications;
 
-  console.log(data.removeAnim, data.removeDuration)
   // Initialize notification history
-  data.useHistory ? (notiHistory = new UseHistory(data.historyPosition, {
-    name: insertAnim,
-    duration: insertDuration
-  }, {
-    name: removeAnim,
-    duration: removeDuration
-  })) : document.querySelector('.history-wrapper').remove();
+  data.useHistory
+      ? (notiHistory = new UseHistory(data.historyPosition))
+      : document.querySelector('.history-wrapper').remove();
+
+  setTimeout(() => {
+    notiHistory.setHistoryVisibility(false);
+    setTimeout(() => {
+      notiHistory.setHistoryVisibility(true);
+    }, 1000);
+  }, 1000);
 }
 
 /**

@@ -5,7 +5,10 @@
  *
  */
 
-const searchTypes = [
+/**
+ * @type {string[]}
+ */
+const SEARCH_TYPES = [
     'title',
     'message',
     'style',
@@ -16,14 +19,8 @@ class UseHistory {
   /**
    * Setup notification history
    * @param {string} position - The position of the history
-   * @param {Object} insert - The insert animation data
-   * @param {string} insert.name - The name of the animation
-   * @param {number} insert.duration - The duration of the animation
-   * @param {Object} remove - The remove animation data
-   * @param {string} remove.name - The name of the animation
-   * @param {number} remove.duration - The duration of the animation
    */
-  constructor(position, insert, remove) {
+  constructor(position) {
     this.history = [];
     this.maxNotis = 4;
     this.currentPage = 0;
@@ -31,8 +28,6 @@ class UseHistory {
     this.paginationEl = document.getElementById('history-pagination');
     this.containerEl = document.getElementById('notification-history');
     this.position = position;
-    this.insert = {name: this.getAnimation(insert.name, true), duration: insert.duration};
-    this.remove = {name: this.getAnimation(remove.name, false), duration: remove.duration};
     this.init();
   }
 
@@ -202,7 +197,7 @@ class UseHistory {
 
     let tempHistory = [];
     let hasType = '';
-    for (const type of searchTypes) {
+    for (const type of SEARCH_TYPES) {
       if (searchVal.includes(`${type}:`)) {
         hasType = type;
         break;
@@ -220,26 +215,6 @@ class UseHistory {
     this.updateHistory(tempHistory);
   }
 
-  getAnimation(name, insert) {
-    switch (name) {
-      case 'top-left':
-      case 'bottom-left':
-      case 'middle-left':
-        return 'insert-left';
-      case 'top-right':
-      case 'bottom-right':
-      case 'middle-right':
-        return 'insert-right';
-      case 'top-center':
-        return 'insert-top';
-      case 'bottom-center':
-        return 'insert-bottom';
-      case 'fadeout':
-        if (insert) return 'rotateout';
-        return 'rotateout';
-    }
-  }
-
   /**
    * Remove the info element from the DOM
    */
@@ -252,9 +227,6 @@ class UseHistory {
     }
   }
 
-  hideHistory() {
-
-  }
   /**
    * Creates an info element and adds it to the DOM
    */
@@ -267,8 +239,38 @@ class UseHistory {
     }
   }
 
-  showHistory() {
+  /**
+   * Set the visibility of the history
+   * @param {boolean} show - true to show, false to hide
+   */
+  setHistoryVisibility(show) {
+    const historyEl = document.querySelector('.history-container');
+    const searchEl = document.querySelector('.history-search');
 
+    const useAnim = show ? ['gn-showing', 'gn-hidden'] : ['gn-hidden', 'gn-showing'];
+
+    if (show) {
+      historyEl.style.display = 'flex';
+      searchEl.style.display = 'flex';
+    }
+
+    if (historyEl.classList.contains(useAnim[1])) {
+      historyEl.classList.remove(useAnim[1]);
+      searchEl.classList.remove(useAnim[1]);
+    }
+
+    historyEl.classList.add(useAnim[0]);
+    searchEl.classList.add(useAnim[0]);
+
+    setTimeout(() => {
+      if (show) {
+        historyEl.classList.remove(useAnim[0]);
+        searchEl.classList.remove(useAnim[0]);
+      } else {
+        historyEl.style.display = 'none';
+        searchEl.style.display = 'none';
+      }
+    }, 500);
   }
 
   /**

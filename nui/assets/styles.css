@@ -261,3 +261,11 @@ h1 {
     transform: scale(1.1);
     fill: white;
 }
+
+.gn-hidden {
+    animation: fadeout 0.5s forwards ease-in-out;
+}
+
+.gn-showing {
+    animation: fadein 0.5s forwards ease-in-out;
+}
