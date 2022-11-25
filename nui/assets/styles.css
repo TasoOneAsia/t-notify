@@ -128,7 +128,7 @@ h1 {
     border-radius: 3px;
     box-shadow: 1px 1px 3px black;
     overflow: hidden;
-    margin: 1rem;
+    margin-right: 1rem;
 }
 
 .history-container>h1 {
@@ -193,7 +193,7 @@ h1 {
 
 .history-notification div:last-child {
     display: flex;
-    align-items: flex-end;
+    align-items: end;
     justify-content: space-between;
     width: 95%;
     padding: 0.5rem;
@@ -204,7 +204,6 @@ h1 {
     font-size: 0.9rem;
     color: white;
     padding: 0.5rem 0.5rem;
-    min-height: 1.5rem;
     max-height: 1.5rem;
 }
 

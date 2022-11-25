@@ -27,6 +27,8 @@ class UseHistory {
     this.count = 0;
     this.paginationEl = document.getElementById('history-pagination');
     this.containerEl = document.getElementById('notification-history');
+    this.historyEl = document.querySelector('.history-container');
+    this.searchEl = document.querySelector('.history-search');
     this.position = position;
     this.init();
   }
@@ -243,31 +245,28 @@ class UseHistory {
    * @param {boolean} show - true to show, false to hide
    */
   setHistoryVisibility(show) {
-    const historyEl = document.querySelector('.history-container');
-    const searchEl = document.querySelector('.history-search');
-
     const useAnim = show ? ['gn-showing', 'gn-hidden'] : ['gn-hidden', 'gn-showing'];
 
     if (show) {
-      historyEl.style.display = 'flex';
-      searchEl.style.display = 'flex';
+      this.historyEl.style.display = 'flex';
+      this.searchEl.style.display = 'flex';
     }
 
     if (historyEl.classList.contains(useAnim[1])) {
-      historyEl.classList.remove(useAnim[1]);
-      searchEl.classList.remove(useAnim[1]);
+      this.historyEl.classList.remove(useAnim[1]);
+      this.searchEl.classList.remove(useAnim[1]);
     }
 
-    historyEl.classList.add(useAnim[0]);
-    searchEl.classList.add(useAnim[0]);
+    this.historyEl.classList.add(useAnim[0]);
+    this.searchEl.classList.add(useAnim[0]);
 
     setTimeout(() => {
       if (show) {
-        historyEl.classList.remove(useAnim[0]);
-        searchEl.classList.remove(useAnim[0]);
+        this.historyEl.classList.remove(useAnim[0]);
+        this.searchEl.classList.remove(useAnim[0]);
       } else {
-        historyEl.style.display = 'none';
-        searchEl.style.display = 'none';
+        this.historyEl.style.display = 'none';
+        this.searchEl.style.display = 'none';
       }
     }, 500);
   }
