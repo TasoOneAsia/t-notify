@@ -128,6 +128,7 @@ local function InitConfig()
     removeDuration = cfg.animations.removeDuration,
     maxNotifications = cfg.maxNotifications,
     useHistory = cfg.useHistory,
+    historyPosition = cfg.historyPosition,
   }
   DebugPrint('Sending Init Config: \n' .. json.encode(initObject))
   SendNUIMessage(initObject)

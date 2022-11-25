@@ -2,7 +2,6 @@
 import UseHistory from "./useHistory.js";
 import {isBrowserEnv} from "./utils.js";
 import {registerWindowDebug} from "./test.js";
-import notificationHistory from "./useHistory.js";
 
 let insertAnim;
 let insertDuration;
@@ -10,7 +9,7 @@ let removeAnim;
 let removeDuration;
 let position;
 let maxNotifications;
-let notiHistory = null;
+let notiHistory;
 
 // This is where we store persistent noti's
 const persistentNotis = new Map();
@@ -38,6 +37,8 @@ window.addEventListener("message", (event) => {
       return playPersistentNoti(event.data);
     case "noti":
       return playNotification(event.data)
+    case "history":
+      return notiHistory.setHistoryVisibility(event.data.visible);
   }
 });
 
@@ -74,16 +75,12 @@ function initFunction(data) {
   maxNotifications = data.maxNotifications;
 
   // Initialize notification history
-  data.useHistory
-      ? (notiHistory = new UseHistory(data.historyPosition))
-      : document.querySelector('.history-wrapper').remove();
-
-  setTimeout(() => {
-    notiHistory.setHistoryVisibility(false);
-    setTimeout(() => {
-      notiHistory.setHistoryVisibility(true);
-    }, 1000);
-  }, 1000);
+  if (data.useHistory) {
+    notiHistory = new UseHistory(data.historyPosition);
+    window.addEventListener("keyup", keyHandler);
+  } else {
+    document.querySelector('.history-wrapper').remove();
+  }
 }
 
 /**
@@ -112,8 +109,18 @@ const createOptions = (noti) => ({
  * Save a notification to history
  * @param noti {NotiObject}- Notification Object
  */
-const saveToHistory = (noti) => {
+function saveToHistory (noti) {
   if (notiHistory) notiHistory.addNotification(noti);
+}
+
+function keyHandler(e) {
+  if (e.key === "Escape") {
+    fetch(`https://${RESOURCE_NAME}/historyClose`).then((resp) => {
+      if (resp) {
+        notiHistory.setHistoryVisibility(false);
+      }
+    }).catch((e) => console.error("Unable to close history", e));
+  }
 }
 
 //Notification Function
@@ -275,7 +282,6 @@ function playPersistentNoti(noti) {
 
 // Lets register our debug methods for browser
 if (isBrowserEnv()) {
-  registerWindowDebug()
-} else {
-  document.querySelector(".history-wrapper").remove();
+  registerWindowDebug();
+  notiHistory.setHistoryVisibility(true);
 }

@@ -59,7 +59,6 @@ class UseHistory {
       if (this.currentPage >= maxPages) {
         this.currentPage = 0;
       }
-      console.log(this.currentPage);
       this.updateHistory();
     });
 
@@ -96,8 +95,8 @@ class UseHistory {
     this.count++;
     container.id = `notification-${this.count}`;
     container.classList.add(`gn-${style || 'info'}`);
-    titleEl.textContent = title.length > 32 ? `${title.substring(0, 32)}...` : title;
-    messageEl.textContent = message.length > 82 ? `${message.substring(0, 82)} ...` : message;
+    titleEl.textContent = title && title.length > 32 ? `${title.substring(0, 32)}...` : title || 'No title was provided';
+    messageEl.textContent = message && message.length > 82 ? `${message.substring(0, 82)} ...` : message || 'No message was provided';
     deleteBtn.textContent = 'Delete';
 
     container.classList.add('history-notification');
@@ -206,10 +205,10 @@ class UseHistory {
 
     if (hasType !== '') {
       tempHistory = this.history.filter((noti) => {
-        return noti[hasType].toLowerCase().includes(searchVal.replace(`${hasType}:`, '').toLowerCase());
+        return noti[hasType] && noti[hasType].toLowerCase().includes(searchVal.replace(`${hasType}:`, '').toLowerCase());
       });
     } else {
-      tempHistory = this.history.filter((noti) => noti.title.includes(searchVal));
+      tempHistory = this.history.filter((noti) => noti.title && noti.title.includes(searchVal) || noti.message && noti.message.includes(searchVal));
     }
 
     this.updateHistory(tempHistory);

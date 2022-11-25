@@ -12,7 +12,8 @@ repository 'https://github.com/TasoOneAsia/t-notify'
 
 client_scripts {
     'config.lua',
-    'client/main.lua'
+    'client/main.lua',
+    'client/history.lua'
 }
 
 server_script 'server/update.lua'

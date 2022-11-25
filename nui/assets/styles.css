@@ -74,7 +74,7 @@ h1 {
 .history-search {
     position: relative;
     width: 22rem;
-    display: flex;
+    display: none;
     margin-right: 1rem;
 }
 
@@ -120,7 +120,7 @@ h1 {
 
 .history-container {
     position: relative;
-    display: flex;
+    display: none;
     flex-direction: column;
     width: 22rem;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
