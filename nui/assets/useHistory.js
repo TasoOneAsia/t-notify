@@ -5,9 +5,14 @@
  *
  */
 
-class UseHistory {
-  history = [];
+const searchTypes = [
+    'title',
+    'message',
+    'style',
+    'date'
+]
 
+class UseHistory {
   /**
    * Setup notification history
    * @param {string} position - The position of the history
@@ -40,6 +45,8 @@ class UseHistory {
     this.paginationEl.textContent = '1 / 1';
     const leftBtn = document.getElementById('history-left');
     const rightBtn = document.getElementById('history-right');
+    const searchBtn = document.getElementById('history-search');
+    const searchInput = document.getElementById('history-search-input');
     document.querySelector('.history-wrapper').classList.add(`gn-${this.position}`);
 
     leftBtn.addEventListener('click', () => {
@@ -59,6 +66,16 @@ class UseHistory {
       }
       console.log(this.currentPage);
       this.updateHistory();
+    });
+
+    searchBtn.addEventListener('click', () => {
+      this.searchHistory(searchInput.value);
+    });
+
+    searchInput.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') {
+        this.searchHistory(searchInput.value);
+      }
     });
 
     this.showInfo();
@@ -164,18 +181,43 @@ class UseHistory {
   /**
    * Update the actual history content
    */
-  updateHistory() {
-    if (this.history.length > 0) {
-      this.containerEl.innerHTML = '';
-      const start = this.currentPage * this.maxNotis;
-      const end = start + this.maxNotis;
-      const history = this.history.slice(start, end);
-      history.forEach((noti) => {
-        this.containerEl.appendChild(noti.el);
-      });
+  updateHistory(history = this.history) {
+    this.containerEl.innerHTML = '';
+    const start = this.currentPage * this.maxNotis;
+    const end = start + this.maxNotis;
+    const newHistory = history.slice(start, end);
+    newHistory.forEach((noti) => {
+      this.containerEl.appendChild(noti.el);
+    });
 
-      this.updatePagination();
+    this.updatePagination();
+    this.showInfo();
+  }
+
+  searchHistory(searchVal) {
+    if (searchVal === '') {
+      this.updateHistory();
+      return;
     }
+
+    let tempHistory = [];
+    let hasType = '';
+    for (const type of searchTypes) {
+      if (searchVal.includes(`${type}:`)) {
+        hasType = type;
+        break;
+      }
+    }
+
+    if (hasType !== '') {
+      tempHistory = this.history.filter((noti) => {
+        return noti[hasType].toLowerCase().includes(searchVal.replace(`${hasType}:`, '').toLowerCase());
+      });
+    } else {
+      tempHistory = this.history.filter((noti) => noti.title.includes(searchVal));
+    }
+
+    this.updateHistory(tempHistory);
   }
 
   getAnimation(name, insert) {
@@ -217,7 +259,7 @@ class UseHistory {
    * Creates an info element and adds it to the DOM
    */
   showInfo() {
-    if (this.history.length === 0) {
+    if (this.containerEl.children.length === 0) {
       const infoEl = document.createElement('p');
       infoEl.textContent = 'No notifications';
       infoEl.classList.add('history-empty');

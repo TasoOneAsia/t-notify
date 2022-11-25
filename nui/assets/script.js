@@ -73,6 +73,7 @@ function initFunction(data) {
   removeDuration = data.removeDuration;
   maxNotifications = data.maxNotifications;
 
+  console.log(data.removeAnim, data.removeDuration)
   // Initialize notification history
   data.useHistory ? (notiHistory = new UseHistory(data.historyPosition, {
     name: insertAnim,

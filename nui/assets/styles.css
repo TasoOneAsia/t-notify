@@ -72,6 +72,48 @@ h1 {
     overflow: hidden;
 }
 
+.history-search {
+    position: relative;
+    width: 22rem;
+    display: flex;
+    margin-right: 1rem;
+}
+
+.history-search input {
+    flex-grow: 1;
+    border: 0;
+    border-radius: 4px;
+    color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 1.0rem;
+    background-color: #0077bb;
+    text-shadow: 0 1px 1px black;
+    padding: 0.5rem 0.8rem;
+    outline: none;
+    margin-right: 0.5rem;
+    box-shadow: 1px 1px 3px black;
+    overflow: hidden;
+}
+
+.history-search input::placeholder {
+    color: #d3d3d3;
+    text-shadow: 0 1px 1px black;
+}
+
+.history-search button {
+    height: 2.5rem;
+    width: 2.5rem;
+    border: 0;
+    border-radius: 4px;
+    background-color: #0077bb;
+    color: white;
+    font-size: 1.0rem;
+    text-shadow: 0 1px 1px black;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 1px 1px 3px black;
+}
+
 .history-container {
     position: relative;
     display: flex;
