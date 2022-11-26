@@ -252,7 +252,7 @@ class UseHistory {
       this.searchEl.style.display = 'flex';
     }
 
-    if (historyEl.classList.contains(useAnim[1])) {
+    if (this.historyEl.classList.contains(useAnim[1])) {
       this.historyEl.classList.remove(useAnim[1]);
       this.searchEl.classList.remove(useAnim[1]);
     }

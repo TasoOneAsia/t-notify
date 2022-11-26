@@ -76,6 +76,7 @@ h1 {
     width: 22rem;
     display: none;
     margin-right: 1rem;
+    margin-bottom: 1rem;
 }
 
 .history-search input {
