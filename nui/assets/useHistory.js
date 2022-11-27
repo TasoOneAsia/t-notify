@@ -28,6 +28,8 @@ class UseHistory {
     if (!this.useHistory) {
       return;
     }
+    this.activeFilter = null;
+    this.filter = '';
     this.maxNotis = 4;
     this.currentPage = 0;
     this.paginationEl = document.getElementById('history-pagination');
@@ -52,30 +54,42 @@ class UseHistory {
     document.querySelector('.history-wrapper').classList.add(`gn-${this.position}`);
 
     leftBtn.addEventListener('click', () => {
+      const oldPage = this.currentPage;
       this.currentPage--;
-      const maxPages = Math.ceil(this.history.length / this.maxNotis);
+      const useLength = this.activeFilter?.length ?? this.history.length;
+      const maxPages = Math.ceil(useLength / this.maxNotis);
       if (this.currentPage < 0) {
         this.currentPage = maxPages - 1;
       }
-      this.updateHistory();
+
+      if (oldPage !== this.currentPage) {
+        this.updateHistory(this.activeFilter ?? this.history);
+      }
     });
 
     rightBtn.addEventListener('click', () => {
+      const oldPage = this.currentPage;
       this.currentPage++;
-      const maxPages = Math.ceil(this.history.length / this.maxNotis);
+      const useLength = this.activeFilter?.length ?? this.history.length;
+      const maxPages = Math.ceil(useLength / this.maxNotis);
       if (this.currentPage >= maxPages) {
         this.currentPage = 0;
       }
-      this.updateHistory();
+
+      if (oldPage !== this.currentPage) {
+        this.updateHistory(this.activeFilter ?? this.history);
+      }
     });
 
     searchBtn.addEventListener('click', () => {
       this.searchHistory(searchInput.value);
+      this.filter = searchInput.value;
     });
 
     searchInput.addEventListener('keyup', (e) => {
       if (e.key === 'Enter') {
         this.searchHistory(searchInput.value);
+        this.filter = searchInput.value;
       }
     });
 
@@ -126,8 +140,26 @@ class UseHistory {
     footer.appendChild(deleteBtn);
     container.append(titleEl, messageEl, footer);
 
-    if (this.history.length < this.maxNotis) {
-      this.containerEl.appendChild(container);
+    if (this.containerEl.children.length < this.maxNotis) {
+      if (this.activeFilter) {
+        // Append to container if the notification matches the filter
+        if (this.filter) {
+          if (this.filterNotification(this.filter, noti)) {
+            this.containerEl.appendChild(container);
+          }
+        }
+      } else {
+        this.containerEl.appendChild(container);
+      }
+    }
+
+    if (this.activeFilter) {
+      this.activeFilter.push({
+        id: container.id,
+        el: container,
+        date: date,
+        ...noti,
+      });
     }
 
     this.history.push({
@@ -136,8 +168,9 @@ class UseHistory {
       date: date,
       ...noti,
     });
+
     this.hideInfo();
-    this.updatePagination();
+    this.updatePagination(this.activeFilter ?? this.history);
 
     deleteBtn.addEventListener('click', (e) => {
       this.removeNotification(e.target);
@@ -155,20 +188,38 @@ class UseHistory {
     const parent = target.parentNode.parentNode;
     const idx = this.history.findIndex((noti) => noti.id === parent.id);
     this.history.splice(idx, 1);
+    this.activeFilter?.splice(idx, 1);
     this.containerEl.removeChild(parent);
     this.showInfo();
-    this.updatePagination();
+    this.updatePagination(this.activeFilter ?? this.history);
 
     // If the last notification is deleted on the current page, go to the previous page
-    const maxPages = Math.ceil(this.history.length / this.maxNotis);
-    if (this.history.length > 0 && this.history.length % this.maxNotis === 0 && this.currentPage >= maxPages) {
+    const useLength = this.activeFilter?.length ?? this.history.length;
+    const maxPages = Math.ceil(useLength / this.maxNotis);
+    if (useLength > 0 && useLength % this.maxNotis === 0 && this.currentPage >= maxPages) {
       this.currentPage--;
-      this.updateHistory();
+      this.updateHistory(this.activeFilter ?? this.history);
     } else {
-      this.updatePage();
+      this.updatePage(this.activeFilter ?? this.history);
     }
   }
 
+  /**
+   * Removes a notification by its id
+   * from the history only
+   * @param {string} id
+   */
+  removeNotificationById(id) {
+    const notiId = `notification-${id}`;
+    const idx = this.history.findIndex((noti) => noti.id === notiId);
+    this.history.splice(idx, 1);
+  }
+
+  /**
+   * Creates an icon element from a string
+   * @param {string} icon - Font Awesome icon name
+   * @returns {HTMLElement|null}
+   */
   createIcon(icon) {
     if (!icon) return null;
     const iconEl = document.createElement('i');
@@ -186,11 +237,11 @@ class UseHistory {
    * based on the current page
    * and the total number of pages
    */
-  updatePagination() {
+  updatePagination(history = this.history) {
     if (!this.useHistory) return;
 
-    if (this.history.length > 0) {
-      const maxPages = Math.ceil(this.history.length / this.maxNotis);
+    if (history.length > 0) {
+      const maxPages = Math.ceil(history.length / this.maxNotis);
       this.paginationEl.textContent = `${this.currentPage + 1} / ${maxPages}`;
     }
   }
@@ -199,15 +250,15 @@ class UseHistory {
    * Handles the update of the history
    * when a notification is deleted
    */
-  updatePage() {
+  updatePage(history = this.history) {
     if (!this.useHistory) return;
 
-    if (this.history.length > this.maxNotis) {
-      const maxPages = Math.ceil(this.history.length / this.maxNotis);
+    if (history.length > this.maxNotis) {
+      const maxPages = Math.ceil(history / this.maxNotis);
       if (this.currentPage >= maxPages) {
         this.currentPage = maxPages - 1;
       }
-      this.updateHistory();
+      this.updateHistory(history);
     }
   }
 
@@ -225,14 +276,20 @@ class UseHistory {
       this.containerEl.appendChild(noti.el);
     });
 
-    this.updatePagination();
+    this.updatePagination(history);
     this.showInfo();
   }
 
+  /**
+   * Filters through the history based on a filter
+   * and updates the history content
+   * @param {string} searchVal
+   */
   searchHistory(searchVal) {
     if (!this.useHistory) return;
 
     if (searchVal === '') {
+      this.activeFilter = null;
       this.updateHistory();
       return;
     }
@@ -254,6 +311,8 @@ class UseHistory {
       tempHistory = this.history.filter((noti) => noti.title && noti.title.includes(searchVal) || noti.message && noti.message.includes(searchVal));
     }
 
+    this.currentPage = 0;
+    this.activeFilter = tempHistory
     this.updateHistory(tempHistory);
   }
 
@@ -318,6 +377,24 @@ class UseHistory {
     }, 500);
   }
 
+  filterNotification(filter, noti) {
+    if (filter === '') return true;
+
+    let hasType = '';
+    for (const type of SEARCH_TYPES) {
+      if (filter.includes(`${type}:`)) {
+        hasType = type;
+        break;
+      }
+    }
+
+    if (hasType !== '') {
+      return noti[hasType] && noti[hasType].toLowerCase().includes(filter.replace(`${hasType}:`, '').toLowerCase());
+    } else {
+      return noti.title && noti.title.includes(filter) || noti.message && noti.message.includes(filter);
+    }
+  }
+
   /**
    * Returns the current noti history
    * @returns {Object[]}
@@ -328,17 +405,6 @@ class UseHistory {
       const { el, ...rest } = noti;
       return rest;
     });
-  }
-
-  /**
-   * Removes a notification by its id
-   * from the history only
-   * @param {string} id
-   */
-  removeNotificationById(id) {
-    const notiId = `notification-${id}`;
-    const idx = this.history.findIndex((noti) => noti.id === notiId);
-    this.history.splice(idx, 1);
   }
 
   /**
