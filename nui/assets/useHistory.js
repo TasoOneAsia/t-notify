@@ -377,6 +377,13 @@ class UseHistory {
     }, 500);
   }
 
+  /**
+   * Checks if the new notification has
+   * the properties to pass the filter
+   * @param {string} filter - The filter to check
+   * @param {object} noti - Notification object
+   * @returns {*|boolean|boolean}
+   */
   filterNotification(filter, noti) {
     if (filter === '') return true;
 
