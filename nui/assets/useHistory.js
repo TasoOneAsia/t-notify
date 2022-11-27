@@ -88,8 +88,10 @@ class UseHistory {
    * @param {string} noti.title - The notification title
    * @param {string} noti.message - The notification message
    * @param {string} noti.style - The notification style
+   * @param {string} noti.icon - The notification icon
    */
   addNotification(noti) {
+<<<<<<< HEAD
     this.count++;
     const dateText = new Date().toLocaleTimeString();
     if (!this.useHistory) {
@@ -102,22 +104,32 @@ class UseHistory {
     }
 
     const { title, message, style } = noti;
+=======
+    const { title, message, style, icon } = noti;
+>>>>>>> 0c7c322ba9659a37350ba5944b515391f29f1c10
     const container = document.createElement('div');
     const footer = document.createElement('div');
     const titleEl = document.createElement('h2');
     const messageEl = document.createElement('p');
+    const iconEl = this.createIcon(icon);
     const time = document.createElement('span');
     const deleteBtn = document.createElement('button');
     const date = new Date().toLocaleTimeString();
 
     container.id = `notification-${this.count}`;
     container.classList.add(`gn-${style || 'info'}`);
-    titleEl.textContent = title && title.length > 32 ? `${title.substring(0, 32)}...` : title || 'No title was provided';
+    titleEl.textContent = title && title.length > 30 ? `${title.substring(0, 32)}...` : title || 'No title was provided';
     messageEl.textContent = message && message.length > 82 ? `${message.substring(0, 82)} ...` : message || 'No message was provided';
     deleteBtn.textContent = 'Delete';
 
     container.classList.add('history-notification');
+<<<<<<< HEAD
     time.textContent = dateText;
+=======
+    time.textContent = new Date().toLocaleTimeString();
+
+    iconEl !== null && titleEl.prepend(iconEl);
+>>>>>>> 0c7c322ba9659a37350ba5944b515391f29f1c10
     footer.appendChild(time);
     footer.appendChild(deleteBtn);
     container.append(titleEl, messageEl, footer);
@@ -163,6 +175,18 @@ class UseHistory {
     } else {
       this.updatePage();
     }
+  }
+
+  createIcon(icon) {
+    if (!icon) return null;
+    const iconEl = document.createElement('i');
+    const classes = icon.split(' ');
+
+    if (classes.length > 1) {
+      iconEl.classList.add(...classes);
+    }
+    iconEl.classList.add('gn-title-icon');
+    return iconEl;
   }
 
   /**
