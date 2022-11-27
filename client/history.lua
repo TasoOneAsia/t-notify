@@ -12,7 +12,7 @@ if cfg.useHistory then
     SetNuiFocus(active, active)
   end
 
-  RegisterCommand('notihistory', function()
+  RegisterCommand(cfg.historyCommand, function()
     setHistoryActivity(not activeHistory)
   end)
 

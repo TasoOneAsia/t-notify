@@ -13,5 +13,6 @@ cfg = {
   },
   useHistory = false, --Use the history system
   historyPosition = 'middle-right', --Changes the position of the history
+  historyCommand = 'notihistory', --Command to open the history
   debugMode = false -- Toggle developer prints
 }
