@@ -27,9 +27,10 @@ if cfg.useHistory then
 end
 
 local function RemoveNotification(id)
-  if (type(id) == 'number') then
+  if type(id) == 'number' then
+    print('Removing notification with id: ' .. id)
     SendNUIMessage({
-      type = 'removeNotification',
+      type = 'removeHistoryNoti',
       id = id
     })
   end
