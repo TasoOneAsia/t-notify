@@ -28,7 +28,6 @@ end
 
 local function RemoveNotification(id)
   if type(id) == 'number' then
-    print('Removing notification with id: ' .. id)
     SendNUIMessage({
       type = 'removeHistoryNoti',
       id = id
