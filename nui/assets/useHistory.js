@@ -91,7 +91,6 @@ class UseHistory {
    * @param {string} noti.icon - The notification icon
    */
   addNotification(noti) {
-<<<<<<< HEAD
     this.count++;
     const dateText = new Date().toLocaleTimeString();
     if (!this.useHistory) {
@@ -103,10 +102,7 @@ class UseHistory {
       return;
     }
 
-    const { title, message, style } = noti;
-=======
     const { title, message, style, icon } = noti;
->>>>>>> 0c7c322ba9659a37350ba5944b515391f29f1c10
     const container = document.createElement('div');
     const footer = document.createElement('div');
     const titleEl = document.createElement('h2');
@@ -123,13 +119,9 @@ class UseHistory {
     deleteBtn.textContent = 'Delete';
 
     container.classList.add('history-notification');
-<<<<<<< HEAD
     time.textContent = dateText;
-=======
-    time.textContent = new Date().toLocaleTimeString();
 
     iconEl !== null && titleEl.prepend(iconEl);
->>>>>>> 0c7c322ba9659a37350ba5944b515391f29f1c10
     footer.appendChild(time);
     footer.appendChild(deleteBtn);
     container.append(titleEl, messageEl, footer);
@@ -245,7 +237,7 @@ class UseHistory {
       return;
     }
 
-    let tempHistory = [];
+    let tempHistory;
     let hasType = '';
     for (const type of SEARCH_TYPES) {
       if (searchVal.includes(`${type}:`)) {
@@ -354,20 +346,6 @@ class UseHistory {
    */
   clearHistory() {
     this.history = [];
-  }
-
-  /**
-   * Creates notifications to test the history
-   * @param {number} count - The number of notifications to create
-   */
-  debug(count) {
-    for (let i = 0; i < count; i++) {
-      this.addNotification({
-        title: `Notification ${i}`,
-        message: 'Notification message',
-        style: 'success',
-      });
-    }
   }
 }
 
