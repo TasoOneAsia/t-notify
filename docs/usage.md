@@ -393,3 +393,22 @@ exports['t-notify']:Custom({
 This code snippet produced the following notification:
 
 ![Colors Example](https://camo.githubusercontent.com/f03940f6150420145ef63d5b82a6eaa0ec7ed65f0407c126088cb6f207be0b09/68747470733a2f2f692e7461736f6167632e6465762f42786b77)
+
+
+## History Usage
+
+>With v2.1.0, there was a new addition to t-notify. With this new update, you are now capable of using t-notify's history or creating your own. You can find more information below.
+
+**Activating History**
+
+Go to your `config.lua` file and change `useHistory` to `true`. You can also change `historyPosition` to any position you want the history to be in. The default is `middle-right` which is the recommended position.
+
+**Creating Your Own History**
+
+With this new update, we also provide access to history. Check the following code snippet to see how to create your own history.
+
+```lua
+exports['t-notify']:GetHistory(function(history)
+  print(history)
+end)
+```

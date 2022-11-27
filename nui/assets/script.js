@@ -39,6 +39,15 @@ window.addEventListener("message", (event) => {
       return playNotification(event.data)
     case "history":
       return notiHistory.setHistoryVisibility(event.data.visible);
+    case "getHistory":
+      return fetch(`https://${RESOURCE_NAME}/getHistory`, {
+        method: "POST",
+        body: JSON.stringify(notiHistory.getHistory()),
+      });
+    case "clearHistory":
+      return notiHistory.clearHistory();
+    case "removeHistoryNoti":
+      return notiHistory.removeNotificationById(event.data.id);
   }
 });
 
@@ -79,6 +88,7 @@ function initFunction(data) {
     notiHistory = new UseHistory(data.historyPosition);
     window.addEventListener("keyup", keyHandler);
   } else {
+    notiHistory = new UseHistory(data.historyPosition, false);
     document.querySelector('.history-wrapper').remove();
   }
 }

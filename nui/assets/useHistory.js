@@ -19,12 +19,17 @@ class UseHistory {
   /**
    * Setup notification history
    * @param {string} position - The position of the history
+   * @param {boolean} useHistory - Use history UI
    */
-  constructor(position) {
+  constructor(position, useHistory = true) {
     this.history = [];
+    this.useHistory = useHistory;
+    this.count = 0;
+    if (!this.useHistory) {
+      return;
+    }
     this.maxNotis = 4;
     this.currentPage = 0;
-    this.count = 0;
     this.paginationEl = document.getElementById('history-pagination');
     this.containerEl = document.getElementById('notification-history');
     this.historyEl = document.querySelector('.history-container');
@@ -85,6 +90,17 @@ class UseHistory {
    * @param {string} noti.style - The notification style
    */
   addNotification(noti) {
+    this.count++;
+    const dateText = new Date().toLocaleTimeString();
+    if (!this.useHistory) {
+      this.history.push({
+        id: `notification-${this.count}`,
+        date: dateText,
+        ...noti,
+      });
+      return;
+    }
+
     const { title, message, style } = noti;
     const container = document.createElement('div');
     const footer = document.createElement('div');
@@ -94,7 +110,6 @@ class UseHistory {
     const deleteBtn = document.createElement('button');
     const date = new Date().toLocaleTimeString();
 
-    this.count++;
     container.id = `notification-${this.count}`;
     container.classList.add(`gn-${style || 'info'}`);
     titleEl.textContent = title && title.length > 32 ? `${title.substring(0, 32)}...` : title || 'No title was provided';
@@ -102,7 +117,7 @@ class UseHistory {
     deleteBtn.textContent = 'Delete';
 
     container.classList.add('history-notification');
-    time.textContent = new Date().toLocaleTimeString();
+    time.textContent = dateText;
     footer.appendChild(time);
     footer.appendChild(deleteBtn);
     container.append(titleEl, messageEl, footer);
@@ -131,6 +146,8 @@ class UseHistory {
    * @param {HTMLButtonElement} target
    */
   removeNotification(target) {
+    if (!this.useHistory) return;
+
     const parent = target.parentNode.parentNode;
     const idx = this.history.findIndex((noti) => noti.id === parent.id);
     this.history.splice(idx, 1);
@@ -154,6 +171,8 @@ class UseHistory {
    * and the total number of pages
    */
   updatePagination() {
+    if (!this.useHistory) return;
+
     if (this.history.length > 0) {
       const maxPages = Math.ceil(this.history.length / this.maxNotis);
       this.paginationEl.textContent = `${this.currentPage + 1} / ${maxPages}`;
@@ -165,6 +184,8 @@ class UseHistory {
    * when a notification is deleted
    */
   updatePage() {
+    if (!this.useHistory) return;
+
     if (this.history.length > this.maxNotis) {
       const maxPages = Math.ceil(this.history.length / this.maxNotis);
       if (this.currentPage >= maxPages) {
@@ -178,6 +199,8 @@ class UseHistory {
    * Update the actual history content
    */
   updateHistory(history = this.history) {
+    if (!this.useHistory) return;
+
     this.containerEl.innerHTML = '';
     const start = this.currentPage * this.maxNotis;
     const end = start + this.maxNotis;
@@ -191,6 +214,8 @@ class UseHistory {
   }
 
   searchHistory(searchVal) {
+    if (!this.useHistory) return;
+
     if (searchVal === '') {
       this.updateHistory();
       return;
@@ -220,6 +245,8 @@ class UseHistory {
    * Remove the info element from the DOM
    */
   hideInfo() {
+    if (!this.useHistory) return;
+
     if (this.history.length > 0) {
       const infoEl = document.querySelector('.history-empty');
       if (infoEl) {
@@ -232,6 +259,8 @@ class UseHistory {
    * Creates an info element and adds it to the DOM
    */
   showInfo() {
+    if (!this.useHistory) return;
+
     if (this.containerEl.children.length === 0) {
       const infoEl = document.createElement('p');
       infoEl.textContent = 'No notifications';
@@ -245,6 +274,8 @@ class UseHistory {
    * @param {boolean} show - true to show, false to hide
    */
   setHistoryVisibility(show) {
+    if (!this.useHistory) return;
+
     const useAnim = show ? ['gn-showing', 'gn-hidden'] : ['gn-hidden', 'gn-showing'];
 
     if (show) {
@@ -281,6 +312,17 @@ class UseHistory {
       const { el, ...rest } = noti;
       return rest;
     });
+  }
+
+  /**
+   * Removes a notification by its id
+   * from the history only
+   * @param {string} id
+   */
+  removeNotificationById(id) {
+    const notiId = `notification-${id}`;
+    const idx = this.history.findIndex((noti) => noti.id === notiId);
+    this.history.splice(idx, 1);
   }
 
   /**

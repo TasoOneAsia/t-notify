@@ -16,6 +16,7 @@
         - [Examples](usage?id=examples)
     - [Markdown Formatting Tags](usage?id=markdown-formatting-tags)
     - [Color Formatting](usage?id=color-formatting)
+    - [History Usage](usage?id=history-usage)
 - [**Deprecated**](deprecated.md)
 - [**Future Features**](future.md)
 - [**License**](license-text.md)
