@@ -129,7 +129,7 @@ class UseHistory {
     container.id = `notification-${this.count}`;
     container.classList.add(`gn-${style || 'info'}`);
     titleEl.textContent = title && title.length > 30 ? `${title.substring(0, 32)}...` : title || 'No title was provided';
-    messageEl.textContent = message && message.length > 82 ? `${message.substring(0, 82)} ...` : message || 'No message was provided';
+    message !== undefined ? this.getStringNode(message, messageEl) : messageEl.textContent = 'No message was provided';
     deleteBtn.textContent = 'Delete';
 
     container.classList.add('history-notification');
@@ -278,6 +278,62 @@ class UseHistory {
 
     this.updatePagination(history);
     this.showInfo();
+  }
+
+  getStringNode(str, node) {
+    const keys = Object.keys(SimpleNotification.tags);
+    str = str.length > 85 ? str.substring(0, 85) + '...' : str;
+    const finalNodes = [];
+    for (let i = 0; i < keys.length; i++) {
+      const { type, class: className, open, close } = SimpleNotification.tags[keys[i]];
+      // Loop through the string and find all the tags
+      let openIdx = 0;
+      let closeIdx = 0;
+      let pastIdx = 0;
+      let tempStr = str;
+      while (tempStr.includes(open) && tempStr.includes(close)) {
+        let tempText = '';
+        openIdx = tempStr.indexOf(open, pastIdx);
+        closeIdx = tempStr.indexOf(close, openIdx + 1);
+        if (openIdx === -1 || closeIdx === -1) break;
+        tempText = tempStr.substring(openIdx + open.length, closeIdx);
+
+        // Add the text before the tag
+        if (openIdx > 0) {
+          const newNode = document.createElement(type);
+          newNode.classList.add(className);
+          newNode.textContent = tempText;
+          finalNodes.push({
+            nodeEl: newNode,
+            openIdx: openIdx,
+            closeIdx: closeIdx + close.length - 1,
+          });
+        }
+        pastIdx = closeIdx + close.length;
+      }
+    }
+
+    if (finalNodes.length > 0) {
+      finalNodes.sort((a, b) => a.openIdx - b.openIdx);
+      let currentIdx = 0;
+      let currentStrIdx = 0;
+      let hasTextLeft = true;
+      while (hasTextLeft) {
+        const { nodeEl, openIdx, closeIdx } = finalNodes[currentIdx];
+        const beforeNodeText = document.createTextNode(str.substring(currentStrIdx, openIdx));
+        node.appendChild(beforeNodeText);
+        node.appendChild(nodeEl);
+        currentStrIdx = closeIdx + 1;
+        currentIdx++;
+        if (currentIdx >= finalNodes.length) {
+          hasTextLeft = false;
+          const afterNodeText = document.createTextNode(str.substring(currentStrIdx));
+          node.appendChild(afterNodeText);
+        }
+      }
+    } else {
+      node.textContent = str;
+    }
   }
 
   /**
