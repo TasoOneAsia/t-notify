@@ -301,21 +301,28 @@ class UseHistory {
 
         // Add the text before the tag
         if (openIdx > 0) {
-          const newNode = document.createElement(type === 'img' ? 'button' : type);
-          className && newNode.classList.add(className);
-          type === 'img' && newNode.classList.add('history-img-btn');
-          type === 'img' ? newNode.textContent = 'IMAGE' : newNode.textContent = tempText;
+          if (type !== 'a' && type !== 'h1' && type !== 'h1') {
+            const newNode = document.createElement(type === 'img' ? 'button' : type);
+            className && newNode.classList.add(className);
+            type === 'img' && newNode.classList.add('history-img-btn');
+            type === 'img' ? newNode.textContent = 'IMAGE' : newNode.textContent = tempText;
 
-          newNode.addEventListener('click', () => {
-            // Open the image in a new tab
-            window.open(tempText, '_blank');
-          });
+            newNode.addEventListener('click', () => window.open(tempText, '_blank'));
 
-          finalNodes.push({
-            nodeEl: newNode,
-            openIdx: openIdx,
-            closeIdx: closeIdx + close.length - 1,
-          });
+            finalNodes.push({
+              nodeEl: newNode,
+              openIdx: openIdx,
+              closeIdx: closeIdx + close.length - 1,
+            });
+          } else {
+            const newNode = document.createElement('span');
+            newNode.textContent = tempText;
+            finalNodes.push({
+              nodeEl: newNode,
+              openIdx: openIdx,
+              closeIdx: closeIdx + close.length - 1,
+            });
+          }
         }
         pastIdx = closeIdx + close.length;
       }
