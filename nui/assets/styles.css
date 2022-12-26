@@ -233,6 +233,16 @@ h1 {
     background-color: #f63a37;
 }
 
+.history-img-btn {
+    background: #5d5d5d !important;
+    font-size: 0.75rem !important;
+    padding: 0.1rem 0.3rem !important;
+}
+
+.history-img-btn:hover {
+    background: #7d7d7d !important;
+}
+
 .history-pages {
     position: relative;
     display: flex;

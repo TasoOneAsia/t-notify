@@ -282,10 +282,11 @@ class UseHistory {
 
   getStringNode(str, node) {
     const keys = Object.keys(SimpleNotification.tags);
-    str = str.length > 85 ? str.substring(0, 85) + '...' : str;
+    // str = str.length > 85 ? str.substring(0, 85) + '...' : str;
     const finalNodes = [];
     for (let i = 0; i < keys.length; i++) {
       const { type, class: className, open, close } = SimpleNotification.tags[keys[i]];
+
       // Loop through the string and find all the tags
       let openIdx = 0;
       let closeIdx = 0;
@@ -300,9 +301,16 @@ class UseHistory {
 
         // Add the text before the tag
         if (openIdx > 0) {
-          const newNode = document.createElement(type);
-          newNode.classList.add(className);
-          newNode.textContent = tempText;
+          const newNode = document.createElement(type === 'img' ? 'button' : type);
+          className && newNode.classList.add(className);
+          type === 'img' && newNode.classList.add('history-img-btn');
+          type === 'img' ? newNode.textContent = 'IMAGE' : newNode.textContent = tempText;
+
+          newNode.addEventListener('click', () => {
+            // Open the image in a new tab
+            window.open(tempText, '_blank');
+          });
+
           finalNodes.push({
             nodeEl: newNode,
             openIdx: openIdx,
