@@ -393,3 +393,85 @@ exports['t-notify']:Custom({
 This code snippet produced the following notification:
 
 ![Colors Example](https://camo.githubusercontent.com/f03940f6150420145ef63d5b82a6eaa0ec7ed65f0407c126088cb6f207be0b09/68747470733a2f2f692e7461736f6167632e6465762f42786b77)
+
+
+## History Usage
+
+>With v2.1.0, there was a new addition to t-notify. With this new update, you are now capable of using t-notify's history or creating your own. You can find more information below.
+
+**Activating History**
+
+Go to your `config.lua` file and change `useHistory` to `true`. You can also change `historyPosition` to any position you want the history to be in. The default is `middle-right` which is the recommended position.
+
+**Setting History Visibility**
+
+If the history is enabled, you can set the visibility of the history along with NUI focus with code snippet below.
+
+```lua
+local history = false
+RegisterCommand('history', function()
+    history = not history
+    exports['t-notify']:SetHistoryVisibility(history) -- Toggle history visibility
+end)
+```
+
+**Getting History Visibility**
+
+If the history is enabled, you can get the visibility of the history with the code snippet below.
+
+```lua
+exports['t-notify']:GetHistoryVisibility()
+```
+
+**Creating Your Own History**
+
+With this new update, we also provide access to history. Check the following code snippet to see how to get the history.
+
+```lua
+exports['t-notify']:GetHistory(function(history)
+  print(history) -- Prints notification object + id + date (as an hour)
+  SendNUIMessage({
+    action = 'history', -- Action to send to the NUI
+    history = history -- History object
+  })
+end)
+```
+
+**Clearing History**
+
+The following export allows you to clear the history of notifications.
+
+```lua
+exports['t-notify']:ClearHistory() -- Clears the history
+
+local newHistory = exports['t-notify']:GetHistory() -- Gets the new history
+print(json.encode(newHistory)) -- Returns []
+```
+
+**Remove a notification from history**
+
+The following export allows you to remove a notification by its id from the history. Only need to pass the number of the id as it is formatted into `notification-yourId`.
+
+```lua
+exports['t-notify']:RemoveFromHistory(1) -- Removes the notification from the history
+```
+
+## History Search System
+>Along with the history system, we also provide a search system with the history UI. Below you will find information on how to use it.
+
+**Filtering History**
+There are 2 ways of filtering the history. In either case, you will need to input some text in the search bar.
+- Pressing `Enter` will filter the history by the text you inputted when you have your cursor in the search bar.
+- Pressing the `Search` button will filter the history by the text you inputted.
+
+**Using types**
+We can use types to filter notifications. By using `type:Filter`, we can use a filter instead of searching for a notification. The following types are available:
+
+- `title` - Filter by title
+  - Example: `title:911` - Will filter all notifications with the title `911`
+- `message` - Filter by message
+  - Example: `message:Hello` - Will filter all notifications that have the word `hello` in their message.
+- `style` - Filter by style
+  - Example: `style:success` will filter all notifications with the style `success` 
+- `date` - Filter by date
+  - Example: `date:AM` will filter all notifications that were sent in the morning.

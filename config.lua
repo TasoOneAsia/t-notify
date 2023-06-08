@@ -11,5 +11,8 @@ cfg = {
     removeAnimation = 'fadeout', -- Possible animation types: 'fadeout', 'scaleout', 'rotateout'
     removeDuration = 600, -- Duration of the remove animation
   },
+  useHistory = false, --Use the history system
+  historyPosition = 'middle-right', --Changes the position of the history
+  historyCommand = 'notihistory', --Command to open the history
   debugMode = false -- Toggle developer prints
 }

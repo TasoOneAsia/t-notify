@@ -1,4 +1,5 @@
 // Global default variables
+import UseHistory from "./useHistory.js";
 import {isBrowserEnv} from "./utils.js";
 import {registerWindowDebug} from "./test.js";
 
@@ -8,6 +9,7 @@ let removeAnim;
 let removeDuration;
 let position;
 let maxNotifications;
+let notiHistory;
 
 // This is where we store persistent noti's
 const persistentNotis = new Map();
@@ -35,6 +37,17 @@ window.addEventListener("message", (event) => {
       return playPersistentNoti(event.data);
     case "noti":
       return playNotification(event.data)
+    case "history":
+      return notiHistory.setHistoryVisibility(event.data.visible);
+    case "getHistory":
+      return fetch(`https://${RESOURCE_NAME}/getHistory`, {
+        method: "POST",
+        body: JSON.stringify(notiHistory.getHistory()),
+      });
+    case "clearHistory":
+      return notiHistory.clearHistory();
+    case "removeHistoryNoti":
+      return notiHistory.removeNotificationById(event.data.id);
   }
 });
 
@@ -54,6 +67,8 @@ window.addEventListener("load", () => {
  * @property {string} removeAnim - Which remove animation to use
  * @property {number} removeDuration - Remove duration to use
  * @property {number} maxNotifications - Max number of notifications to use
+ * @property {boolean} useHistory - Whether to use notification history
+ * @property {string} historyPosition - Position for notification history
  */
 
 /**
@@ -67,6 +82,15 @@ function initFunction(data) {
   removeAnim = data.removeAnim;
   removeDuration = data.removeDuration;
   maxNotifications = data.maxNotifications;
+
+  // Initialize notification history
+  if (data.useHistory) {
+    notiHistory = new UseHistory(data.historyPosition);
+    window.addEventListener("keyup", keyHandler);
+  } else {
+    notiHistory = new UseHistory(data.historyPosition, false);
+    document.querySelector('.history-wrapper').remove();
+  }
 }
 
 /**
@@ -91,6 +115,24 @@ const createOptions = (noti) => ({
   closeButton: false
 });
 
+/**
+ * Save a notification to history
+ * @param noti {NotiObject}- Notification Object
+ */
+function saveToHistory (noti) {
+  if (notiHistory) notiHistory.addNotification(noti);
+}
+
+function keyHandler(e) {
+  if (e.key === "Escape") {
+    fetch(`https://${RESOURCE_NAME}/historyClose`).then((resp) => {
+      if (resp) {
+        notiHistory.setHistoryVisibility(false);
+      }
+    }).catch((e) => console.error("Unable to close history", e));
+  }
+}
+
 //Notification Function
 /**
  * Play a regular notification
@@ -114,7 +156,9 @@ export function playNotification(noti) {
       return;
     }
 
+
     SimpleNotification[noti.style.toLowerCase()](content, options);
+    saveToHistory(noti);
   }
 }
 
@@ -153,6 +197,7 @@ const startPersistentNoti = (id, noti) => {
       id,
       SimpleNotification.custom([customClass], content, persistOptions)
     );
+    saveToHistory(noti);
     return;
   }
 
@@ -160,6 +205,7 @@ const startPersistentNoti = (id, noti) => {
     id,
     SimpleNotification[noti.style.toLowerCase()](content, persistOptions)
   );
+  saveToHistory(noti);
 };
 
 /**
@@ -246,5 +292,6 @@ function playPersistentNoti(noti) {
 
 // Lets register our debug methods for browser
 if (isBrowserEnv()) {
-  registerWindowDebug()
+  registerWindowDebug();
+  notiHistory.setHistoryVisibility(true);
 }
