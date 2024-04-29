@@ -28,10 +28,10 @@ join the Project-Error [Discord](https://discord.gg/YWJY36EVsm)!
 
 ## Screenshots
 
-![Info styling](https://tasoagc.dev/u/trvQOP.png)
-![Error styling](https://tasoagc.dev/u/dVReJl.png)
-![Warning styling](https://tasoagc.dev/u/9Oh1es.png)
-![Successstyling](https://tasoagc.dev/u/aAweMy.png)
+![Info styling](https://forum.cfx.re/uploads/default/original/4X/3/d/6/3d64cd72444547661c99f8ee7ae5719260cda042.jpeg)
+![Error styling](https://forum.cfx.re/uploads/default/original/4X/c/7/e/c7e58d639a69772a80ed1e74843d242c143e5df1.png)
+![Warning styling](https://forum.cfx.re/uploads/default/original/4X/9/d/1/9d1d727fe490da11e9b603c4edb6f13cb109a09a.png)
+![Successstyling](https://forum.cfx.re/uploads/default/original/4X/8/f/d/8fd0389a9edb1fa6733cbcc5c91bca7c914c80d5.png)
 
 
 ## Installation & Download
