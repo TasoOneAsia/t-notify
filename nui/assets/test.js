@@ -19,6 +19,8 @@ export const registerWindowDebug = () => {
     removeAnim: "fadeout",
     removeDuration: 600,
     maxNotifications: 0,
+    useHistory: true,
+    historyPosition: "middle-right",
   };
 
   mockNuiMessage({
@@ -29,7 +31,7 @@ export const registerWindowDebug = () => {
   window.testNotify = testNotify;
 
   console.log(
-    "%cT-Notify Brower Debug",
+    "%cT-Notify Browser Debug",
     "color: red; font-size: 30px; -webkit-text-stroke: 1px black; font-weight: bold;"
   );
 

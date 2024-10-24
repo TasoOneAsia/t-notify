@@ -116,6 +116,7 @@ local function SendPersistentNotification(step, id, options)
     })
   end
 end
+
 --Initialize's Config after activated by Thread
 local function InitConfig()
   local initObject = {
@@ -125,7 +126,9 @@ local function InitConfig()
     insertDuration = cfg.animations.insertDuration,
     removeAnim = cfg.animations.removeAnimation,
     removeDuration = cfg.animations.removeDuration,
-    maxNotifications = cfg.maxNotifications
+    maxNotifications = cfg.maxNotifications,
+    useHistory = cfg.useHistory,
+    historyPosition = cfg.historyPosition,
   }
   DebugPrint('Sending Init Config: \n' .. json.encode(initObject))
   SendNUIMessage(initObject)
